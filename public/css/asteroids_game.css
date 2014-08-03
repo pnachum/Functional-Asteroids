@@ -13,7 +13,9 @@ canvas {
 	float: left;
 	border: 3px solid lightgreen;
 	margin: 10px;
+  cursor: pointer;
 }
+
 
 
 
