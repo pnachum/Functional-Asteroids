@@ -9,6 +9,13 @@ On the opening menu, click on a mode to select it, which begins the game. Use th
 
 Asteroids is built using HTML canvas, which draws objects at every frame. The game logic is written in Javascript. 
 
+## Notable Features
+* Asteroids will spawn infinitely, with increasing speed and frequency over time (except in the Bossteroid and Super Bossteroid modes). The score multiplier also increases over time. 
+* There is a small amount of friction on the ship (not physically accurate, given the lack of air resistance in space, but it makes for a better game).
+* The game keeps track of the player's score, remaining lives, elapsed time, and score multiplier. These are displayed to the user depending on whether they're relevant to the current game mode. 
+* Upon spawning, the ship will be briefly invincible, indicated by flashing. 
+
+
 ## Future Todos
 
 ### Fix pausing bug
