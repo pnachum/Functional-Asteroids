@@ -3,8 +3,9 @@ Asteroids
 
 ## Overview
 
-A deployed version of Asteroids can be found at philnachumasteroids.herokuapp.com. It's a simple variant on the original arcade game. Click on a mode to select it, which begins the game. Use the left and right arrow keys to rotate the ship, the up arrow key to move, the space bar to fire, and the P key to pause.  
+A deployed version of Asteroids can be found [here](http://philnachumasteroids.herokuapp.com/). It's a simple variant on the original arcade game. 
 
+On the opening menu, click on a mode to select it, which begins the game. Use the left and right arrow keys to rotate the ship, the up arrow key to move, the space bar to fire, and the P key to pause/unpause. 
 
 Asteroids is built using HTML canvas, which draws objects at every frame. The game logic is written in Javascript. 
 
@@ -12,7 +13,7 @@ Asteroids is built using HTML canvas, which draws objects at every frame. The ga
 
 ### Fix pausing bug
 
-Currently, the passage of time is calculated based on the difference between the time at which it is calculated, and the time at which the game was started. This means that time still passes when the game is paused. 
+Currently, the passage of time is calculated based on the difference between the time at which it is calculated, and the time at which the game was started. This means that the in-game timer still counts up even when the game is paused. 
 
 ### Asteroid physics
 
