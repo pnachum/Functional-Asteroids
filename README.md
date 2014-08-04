@@ -12,15 +12,15 @@ Asteroids is built using HTML canvas, which draws objects at every frame. The ga
 
 ### Fix pausing bug
 
-Currently, the passage of time is calculated based on the difference between the time at which it is calculated, and the time at which the game was started. However, this means that time still passes when the game is paused. 
+Currently, the passage of time is calculated based on the difference between the time at which it is calculated, and the time at which the game was started. This means that time still passes when the game is paused. 
 
 ### Asteroid physics
 
-I've previously tried to get the asteroids to bounce off of each other with realistic collision physics. The result was incredibly buggy, mostly due to the possibility of asteroids overlapping. This needs a lot more work. 
+I've previously tried to get the asteroids to bounce off of each other with realistic collision physics based on the asteroids velocity and size (as a proxy for mass). The result was incredibly buggy, mostly due to the possibility of asteroids overlapping. This needs a lot more work. 
 
 ### Leaderboards
 
-Currently, the end game alert prompts the user for their name, but does nothing with it. I'd like to store a leaderboard of the top scores. 
+Currently, the end game alert prompts the user for their name, but does nothing with it. I'd like to store a leaderboard of the top scores, which displays after each game.  
 
 ### Weapon types
 
