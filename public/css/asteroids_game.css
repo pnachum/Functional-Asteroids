@@ -16,7 +16,10 @@ canvas {
   cursor: pointer;
 }
 
-
+#controls {
+  position: absolute;
+  bottom: 50px;
+}
 
 
 .mode-title {
@@ -35,3 +38,4 @@ canvas {
 .hovered {
 	background-color: lightgreen;
 }
+
