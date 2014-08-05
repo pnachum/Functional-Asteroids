@@ -38,9 +38,9 @@
   
   Game.prototype.addRandomAsteroids = function(numAsteroids){
     var output = [];
-		var options = {survival: false};
-		if (this.mode === "Survival"){
-			options.survival = true;
+		var options = {dodgeball: false};
+		if (this.mode === "Dodgeball"){
+			options.dodgeball = true;
 		}
 		
     for (var i = 0; i < numAsteroids; i++){

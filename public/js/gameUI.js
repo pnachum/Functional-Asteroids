@@ -34,7 +34,7 @@
 		if (mode === "Bossteroid" || mode === "Super Bossteroid" || mode === "Classic"){
 			this.drawShipIcons(this.ctx);
 		}
-		if (mode === "Bossteroid" || mode === "Super Bossteroid" || mode === "Survival"){
+		if (mode === "Bossteroid" || mode === "Super Bossteroid" || mode === "Dodgeball"){
 			this.timeText.draw(this.ctx);
 		}
 		this.modeText.draw(this.ctx);

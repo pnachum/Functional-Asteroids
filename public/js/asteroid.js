@@ -51,7 +51,7 @@
   Asteroid.randomAsteroid = function(dimX, dimY, options){
 		var radius; 
 
-		if (options.survival){
+		if (options.dodgeball){
 			radius = randomFromArray([15, 21.2, 30])
 		} else {
 			radius = Asteroid.spawnRadius

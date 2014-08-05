@@ -107,7 +107,6 @@
 	
 	var SETTINGS = AsteroidsGame.SETTINGS = NEW_SETTINGS; 
 	SETTINGS.updateMode = function(newMode) {
-		
 		SETTINGS.mode = newMode; 
 		
 		switch (SETTINGS.mode){
@@ -116,7 +115,7 @@
 				SETTINGS.asteroids.startingMinimumArea = 0; 
 				SETTINGS.asteroids.startingSpawnRadius = 100; 
 				break;
-			case ("Survival"):
+			case ("Dodgeball"):
 				SETTINGS.bullets.standard.maximumNumber = 0;
 				SETTINGS.startingLives = 0;
 				SETTINGS.difficulty.timeInterval = 5;
