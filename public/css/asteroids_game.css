@@ -39,3 +39,8 @@ canvas {
 	background-color: lightgreen;
 }
 
+#game {
+  background-image: url("../images/background.jpg");
+}
+
+background:url(example.jpg)

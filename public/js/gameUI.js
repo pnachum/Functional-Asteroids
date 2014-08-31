@@ -7,10 +7,10 @@
 	var UI = AsteroidsGame.UI = function(game, ctx){
 		this.game = game; 
 		this.ctx = ctx
-		this.scoreText = new GameText("", 20, [5, 30]);
-		this.multiplierText = new GameText("", 20, [5, 60]);
-		this.modeText = new GameText("", 20, [5, 130]);
-		this.timeText = new GameText("", 20, [5, 160])
+		this.scoreText = new GameText("", 20, [5, 30], "black");
+		this.multiplierText = new GameText("", 20, [5, 60], "black");
+		this.modeText = new GameText("", 20, [5, 130], "black");
+		this.timeText = new GameText("", 20, [5, 160], "black")
 		
 	};
 	

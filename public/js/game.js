@@ -12,6 +12,7 @@
   
   var Game = AsteroidsGame.Game = function(ctx, uiContext){
 		Asteroid.setConstants();
+
 		
 		this.startTime = Date.now();
     this.ctx = ctx; 
@@ -25,7 +26,7 @@
     this.bindKeyHandlers();
 		this.score = 0; 
 		this.paused = false; 
-		this.pauseText = new GameText("Paused", 20, [205, 270]);
+		this.pauseText = new GameText("Paused", 20, [205, 270], "red");
 		this.lives = SETTINGS.startingLives; 
 		this.mode = SETTINGS.mode; 
 		this.ui = new UI(this, uiContext);

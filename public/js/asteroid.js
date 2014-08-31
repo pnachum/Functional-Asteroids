@@ -17,6 +17,10 @@
 		// the new smaller asteroids can use the same speed, and not the class variable
 		// speed, which increases over time.  
 		this.spawnedSpeed = spawnedSpeed;
+    
+    
+    this.img = new Image();
+    this.img.src = "images/asteroid.png";
   };
   
   Asteroid.inherits(MovingObject);
@@ -27,9 +31,20 @@
 	  Asteroid.spawnRadius = SETTINGS.asteroids.startingSpawnRadius;
 	  Asteroid.COLOR = SETTINGS.asteroids.color;
 	};
-
-	
-
+  
+  // Asteroid.prototype.draw = function(ctx){
+  //   var dimension = this.radius * 2;
+  //
+  //   ctx.drawImage(
+  //     this.img,
+  //     this.pos[0] - this.radius,
+  //     this.pos[1] - this.radius,
+  //     dimension,
+  //     dimension
+  //   );
+  //
+  //   ctx.fill();
+  // };
   
 	Asteroid.prototype.explode = function(){
 		var pos = this.pos; 
