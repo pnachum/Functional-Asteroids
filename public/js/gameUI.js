@@ -24,7 +24,7 @@
 		this.scoreText.string = "Score: " + game.score;
 		this.multiplierText.string = "x" + game.scoreMultiplier;
 		this.modeText.string = "Mode: " + mode;
-		this.timeText.string = "Time: " + Math.floor((Date.now() - game.startTime) / 1000)
+		this.timeText.string = "Time: " + Math.floor(game.timer / 1000); 
 		
 		
 		if (mode === "Classic"){

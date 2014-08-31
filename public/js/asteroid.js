@@ -17,10 +17,6 @@
 		// the new smaller asteroids can use the same speed, and not the class variable
 		// speed, which increases over time.  
 		this.spawnedSpeed = spawnedSpeed;
-    
-    
-    this.img = new Image();
-    this.img.src = "images/asteroid.png";
   };
   
   Asteroid.inherits(MovingObject);

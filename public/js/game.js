@@ -14,8 +14,11 @@
 		Asteroid.setConstants();
 
 		
-		this.startTime = Date.now();
-    this.elapsedTime = 0; 
+    this.startTime = Date.now();
+    this.elapsedTime = 0;
+    this.timer = 0; 
+    
+    
     this.ctx = ctx; 
     this.bullets = [];
     this.ship = new Ship();
@@ -320,17 +323,21 @@
   };
   
   Game.prototype.step = function(){
+		var now = Date.now(); 
+    this.timer = Math.floor(now - this.startTime) + this.elapsedTime;
 		
 		if (this.lives < 0){
 			this.gameOver({dead: true});
 		}
 
-		var now = Date.now(); 
-		var difficultyTimer = (now - this.startTime) % (SETTINGS.difficulty.timeInterval * 1000); 
+
+		var difficultyTimer = (this.timer) % (SETTINGS.difficulty.timeInterval * 1000); 
 		if (difficultyTimer < 30){
 			this.increaseDifficulty();
+      console.log("increasing")
 		}
-		
+    
+
 		var ship = this.ship; 
 		var invincibilityTimer = (now - this.ship.spawnTime);
 		if (invincibilityTimer > SETTINGS.ship.invincibilityTime * 1000) {
@@ -376,7 +383,7 @@
 			this.paused = false; 
 		} else {
       // Pause
-      this.elapsedTime = Math.floor((Date.now() - this.startTime) / 1000);
+      this.elapsedTime = Math.floor(Date.now() - this.startTime);
 			this.stop(); 
 			this.pauseText.draw(this.ctx);
 			this.paused = true; 
