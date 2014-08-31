@@ -45,7 +45,7 @@
 		},
 		
 		difficulty: {
-			timeInterval: 5, 
+			timeInterval: 10, 
 			asteroidSpeedIncrease: 0.15, 
 			asteroidSpawnRadiusMultiplier: 1.0, 
 			minimumAsteroidAreaMultiplier: 1.25 

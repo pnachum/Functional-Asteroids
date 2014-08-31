@@ -9,7 +9,7 @@
   
  
   
-  var types = ["life", "score", "bullet", "invincible", "rotate"];
+  var types = ["life", "score", "bullet"];
 	var Powerup = AsteroidsGame.Powerup = function(pos, type, game){
     MovingObject.call(this, pos, [0, 0], SETTINGS.powerups.radius, colorMap[type]);
     this.type = type;
@@ -31,8 +31,8 @@
   
   Powerup.randomPowerup = function(game) {
     var position = [random(0, 500), random(0, 500)];
-    if (game.lives >= 5) {
-      // If the player has more than 5 lives, don't spawn extra life powerups
+    if (game.lives >= 2) {
+      // If the player has more than 3 lives, don't spawn extra life powerups
       var type = randomFromArray(types.slice(1));
     } else {
       var type = randomFromArray(types);

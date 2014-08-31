@@ -16,7 +16,7 @@ canvas {
   cursor: pointer;
 }
 
-#controls {
+#instructions {
   display: inline-block;
 }
 
@@ -28,11 +28,36 @@ canvas {
 	margin-bottom: 10px;
 }
 
+#controls {
+  display: inline-block;
+}
+
+#powerups {
+  display: inline-block;
+}
+
+.powerup-description {
+  font-weight: bold;
+}
+
+#green {
+  color: green;
+}
+
+#blue {
+  color: blue;
+}
+
+#red {
+  color: red;
+}
+
+
 .mode-text {
 	padding: 5px;	
 }
 
-.mode-title, .mode-text, h2, #controls * {
+.mode-title, .mode-text, h2, #instructions * {
   font-family: "Arial";
 }
 
@@ -44,4 +69,3 @@ canvas {
   background-image: url("../images/background.jpg");
 }
 
-background:url(example.jpg)
