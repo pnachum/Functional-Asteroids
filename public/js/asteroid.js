@@ -49,9 +49,9 @@
 		var radius; 
 
 		if (options.dodgeball){
-			radius = randomFromArray([15, 21.2, 30])
+			radius = randomFromArray([15, 21.2, 30]);
 		} else {
-			radius = Asteroid.spawnRadius
+			radius = Asteroid.spawnRadius;
 		}
 		
 		

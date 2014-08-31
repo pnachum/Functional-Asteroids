@@ -18,7 +18,7 @@
 	Rotateable.prototype.direction = function(){
     var x = Math.cos(toRadians(this.degree));
     var y = -Math.sin(toRadians(this.degree));
-		return [x, y]
+		return [x, y];
 	};
 	
   Rotateable.prototype.move = function(){
