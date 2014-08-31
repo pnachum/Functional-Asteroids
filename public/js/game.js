@@ -15,6 +15,7 @@
 
 		
 		this.startTime = Date.now();
+    this.elapsedTime = 0; 
     this.ctx = ctx; 
     this.bullets = [];
     this.ship = new Ship();
@@ -26,7 +27,7 @@
     this.bindKeyHandlers();
 		this.score = 0; 
 		this.paused = false; 
-		this.pauseText = new GameText("Paused", 20, [205, 270], "red");
+		this.pauseText = new GameText("Paused", 20, [205, 270], "white");
 		this.lives = SETTINGS.startingLives; 
 		this.mode = SETTINGS.mode; 
 		this.ui = new UI(this, uiContext);
@@ -369,18 +370,19 @@
 	
 	Game.prototype.togglePause = function(){
 		if (this.paused){
+      // Unpause
+      this.startTime = Date.now();
 			this.start();
 			this.paused = false; 
 		} else {
+      // Pause
+      this.elapsedTime = Math.floor((Date.now() - this.startTime) / 1000);
 			this.stop(); 
 			this.pauseText.draw(this.ctx);
 			this.paused = true; 
 		}
 	};
-	
-	Game.prototype.updateUI = function(){
-		this.ui.score = this.score;
-	}
+
 
   
 })(this);  
