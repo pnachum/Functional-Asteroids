@@ -324,7 +324,6 @@
 	
 	Game.prototype.increaseDifficulty = function(){
 		if (this.mode !== "Bossteroid"){
-			this.scoreMultiplier += 1; 
 			var difficulty = SETTINGS.difficulty; 
 			Asteroid.speed += difficulty.asteroidSpeedIncrease; 
 			Asteroid.spawnRadius *= difficulty.asteroidSpawnRadiusMultiplier;
@@ -332,6 +331,10 @@
 		}
 
 	};
+  
+  Game.prototype.increaseMultiplier = function() {
+    this.scoreMultiplier += 1; 
+  };
 	
 	Game.prototype.keyPressListener = function(){
     var ship = this.ship;
@@ -384,7 +387,7 @@
 
 		var difficultyTimer = (this.timer) % (SETTINGS.difficulty.timeInterval * 1000); 
 		if (difficultyTimer < 30){
-      // this.increaseDifficulty();
+      this.increaseDifficulty();
       this.powerups.push(Powerup.randomPowerup(this));
 		}
     

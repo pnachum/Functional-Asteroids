@@ -61,7 +61,7 @@
       game.lives++;
       break;
     case "score":
-      game.increaseDifficulty();
+      game.increaseMultiplier();
       break;
     case "invincible":
       ship.invincible = true; 
