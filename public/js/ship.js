@@ -106,15 +106,5 @@
 		});
   };
 	
-	Ship.prototype.switchColor = function(){
-		if (this.color == "blue") {
-			this.color = "white"; 
-			this.turret.color = "white";
-		} else { 
-			this.color = "blue"; 
-			this.turret.color = "blue";
-		}
-	}
-	
 
 })(this);

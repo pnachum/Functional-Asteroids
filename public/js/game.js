@@ -7,6 +7,7 @@
 	var GameText = AsteroidsGame.GameText;
 	var SETTINGS = AsteroidsGame.SETTINGS; 
 	var UI = AsteroidsGame.UI;
+  var Powerup = AsteroidsGame.Powerup;
 	
 
   
@@ -27,6 +28,7 @@
 		
     this.asteroids = this.addRandomAsteroids(SETTINGS.asteroids.startingNumber);
 		this.debris = [];
+    this.powerups = [];
     this.bindKeyHandlers();
 		this.score = 0; 
 		this.paused = false; 
@@ -70,6 +72,10 @@
 			game.togglePause();
 			
 		});
+    
+    // key("R", function() {
+    //   game.reset(game.ctx);
+    // });
 	};
 
   Game.prototype.checkCollisions = function(){
@@ -104,6 +110,17 @@
 			
 				}	
 			});
+    }
+    
+    var k = 0; 
+    while (k < this.powerups.length) {
+      var pow = this.powerups[k];
+      if (ship.isCollidedWith(pow)){
+        pow.applyEffect();
+        this.powerups.splice(k, 1); 
+      } else {
+        k++;
+      }
     }
 		
 		
@@ -237,6 +254,10 @@
     this.asteroids.forEach(function(asteroid){
       asteroid.draw(game.ctx);
     });
+    
+    this.powerups.forEach(function(pow){
+      pow.draw(game.ctx);
+    })
 		
 		this.drawAndRemove(this.debris);
 		this.drawAndRemove(this.bullets)
@@ -273,6 +294,32 @@
 		}
     this.stop();
 	};
+  
+  Game.prototype.reset = function(ctx) {
+		Asteroid.setConstants();
+    
+    this.startTime = Date.now();
+    this.elapsedTime = 0;
+    this.timer = 0; 
+    
+    
+    this.ctx = ctx; 
+    this.bullets = [];
+    this.ship = new Ship();
+		this.scoreMultiplier = 1; 
+		
+		
+    this.asteroids = this.addRandomAsteroids(SETTINGS.asteroids.startingNumber);
+		this.debris = [];
+    this.bindKeyHandlers();
+		this.score = 0; 
+		this.paused = false; 
+		this.pauseText = new GameText("Paused", 20, [205, 270], "white");
+		this.lives = SETTINGS.startingLives; 
+		this.mode = SETTINGS.mode; 
+		this.ui = new UI(this, uiContext);
+    
+  };
 	
 	
 	Game.prototype.increaseDifficulty = function(){
@@ -337,7 +384,8 @@
 
 		var difficultyTimer = (this.timer) % (SETTINGS.difficulty.timeInterval * 1000); 
 		if (difficultyTimer < 30){
-			this.increaseDifficulty();
+      // this.increaseDifficulty();
+      this.powerups.push(Powerup.randomPowerup(this));
 		}
     
 
@@ -363,6 +411,7 @@
   
   Game.prototype.stop = function(){
     clearInterval(this.intervalID);
+    
   };
 	
 	

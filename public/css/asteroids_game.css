@@ -32,7 +32,7 @@ canvas {
 	padding: 5px;	
 }
 
-.mode-title, .mode-text, #controls * {
+.mode-title, .mode-text, h2, #controls * {
   font-family: "Arial";
 }
 
