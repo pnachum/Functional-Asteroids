@@ -65,13 +65,13 @@
 		
 		ship: {
 			radius: 10, 
-			color: 'blue', 
+			color: 'white', 
 			maxSpeed: 5, 
 			turnSpeed: 10, 
 			acceleration: 0.3, 
 			thrusterRadius: 5, 
 			thrusterColor: 'orange', 
-			turretColor: 'blue',  
+			turretColor: 'white',  
 			turretRadius: 3,  
 			airResistance: 0.07, 
 			invincibilityTime: 3
@@ -134,32 +134,25 @@
 	};
 	
 	
-
-	
-
-	
-	
-	
-	
-	var shipPreset = 3; 
-	
-	switch (shipPreset){
-		case 1:
-			// SETTINGS.shipColor = 'blue';
-			// SETTINGS.turretColor = 'blue';
-			SETTINGS.turnSpeed = 5; 
-			break; 
-		case 2: 
-			// SETTINGS.shipColor = 'red';
-			// SETTINGS.turretColor = 'red';
-			SETTINGS.turnSpeed = 15; 
-			break; 
-		case 3: 
-			// SETTINGS.shipColor = 'green';
-			// SETTINGS.turretColor = 'green';
-			SETTINGS.turnSpeed = 10; 
-			break;
-	}
+  // var shipPreset = 3;
+  //
+  // switch (shipPreset){
+  //   case 1:
+  //     // SETTINGS.shipColor = 'blue';
+  //     // SETTINGS.turretColor = 'blue';
+  //     SETTINGS.turnSpeed = 5;
+  //     break;
+  //   case 2:
+  //     // SETTINGS.shipColor = 'red';
+  //     // SETTINGS.turretColor = 'red';
+  //     SETTINGS.turnSpeed = 15;
+  //     break;
+  //   case 3:
+  //     // SETTINGS.shipColor = 'green';
+  //     // SETTINGS.turretColor = 'green';
+  //     SETTINGS.turnSpeed = 10;
+  //     break;
+  // }
 	
 	
 	

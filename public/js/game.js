@@ -260,12 +260,16 @@
 		});
 	};
 	
-	Game.prototype.gameOver = function(options){
-		var elapsedTime = Math.floor((Date.now() - this.startTime) / 1000); 		
+	Game.prototype.gameOver = function(options){	
+    var time = Math.floor(this.timer / 1000);
 		if (options.dead === true) {
-	    var name = prompt("Game Over! Your score is " + this.score + ". You survived for " + elapsedTime + " seconds. Enter your name!");
+      if (this.mode === "Dodgeball") {
+        var name = prompt("Game Over! You survived for " + time + " seconds. Enter your name!");
+      } else {
+  	    var name = prompt("Game Over! Your score is " + this.score + ". You survived for " + time + " seconds. Enter your name!");
+      }
 		} else {
-	    alert("You win! That took you " + elapsedTime + " seconds.");	
+	    alert("You win! That took you " + time + " seconds.");	
 		}
     this.stop();
 	};
@@ -334,7 +338,6 @@
 		var difficultyTimer = (this.timer) % (SETTINGS.difficulty.timeInterval * 1000); 
 		if (difficultyTimer < 30){
 			this.increaseDifficulty();
-      console.log("increasing")
 		}
     
 
