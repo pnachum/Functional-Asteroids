@@ -1,7 +1,10 @@
 (function (root){
   var AsteroidsGame = root.AsteroidsGame = (root.AsteroidsGame || {});
 
-
+  // The MovingObject superclass provides an interface for all moving objects,
+  // including asteroids, the ship, bullets, etc.
+  // It specifies a position, a velocity (which also represents direction),
+  // a size, and a color.
   var MovingObject = AsteroidsGame.MovingObject = function(pos, vel, radius, color){
     this.pos = pos;
     this.vel = vel;
@@ -38,6 +41,8 @@
     return (distance < this.radius + otherObject.radius);
   };
 
+  // Handles wrapping the object around the edge of the screen, so that when it
+  // goes off of one edge, it re-appears on the opposite side of the screen
   MovingObject.prototype.mapToScreen = function(){
     var radius = this.radius
     if (this.pos[0] >= 500 + radius){

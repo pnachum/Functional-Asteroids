@@ -1,5 +1,3 @@
-
-
 (function (root){
   var AsteroidsGame = root.AsteroidsGame = (root.AsteroidsGame || {});
   var MovingObject = AsteroidsGame.MovingObject;
@@ -25,6 +23,9 @@
     Asteroid.COLOR = SETTINGS.asteroids.color;
   };
 
+  // When an asteroid is hit with a bullet, it either breaks up into two
+  // new asteroids, or if it's small enough, it explodes. In this case, it
+  // is replaced with Debris objects.
   Asteroid.prototype.explode = function(){
     var pos = this.pos;
     var vels = [];
@@ -43,7 +44,7 @@
 
   Asteroid.randomAsteroid = function(dimX, dimY, options){
     var radius;
-
+    // Asteroids in dodgeball have a predefined set of sizes
     if (options.dodgeball){
       radius = randomFromArray([15, 21.2, 30]);
     } else {
@@ -55,6 +56,8 @@
     return new Asteroid(randomPos, randomVel, radius, Asteroid.speed);
   };
 
+  // Pick a random position along the edge of the game for the asteroid to
+  // spawn at
   Asteroid.randomPos = function(dimX, dimY, ship){
     var radius = Asteroid.spawnRadius;
     var randomX = random(-radius, dimX + radius);
@@ -68,8 +71,8 @@
     return randomPos;
   };
 
+  // Pick a random direction for the asteroid to begin moving in
   Asteroid.randomVel = function(dimX, dimY, intensity){
-
     var rangeX = (intensity * dimX) / 125;
     var rangeY = (intensity * dimY) / 125;
     var xDirection = randomFromArray([-1, 1]);

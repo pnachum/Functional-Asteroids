@@ -1,6 +1,6 @@
 (function (root){
   var AsteroidsGame = root.AsteroidsGame = (root.AsteroidsGame || {});
-
+  // Sets up all of the parameters of the game
   var SETTINGS = {
 
     asteroids: {
@@ -62,7 +62,7 @@
   AsteroidsGame.SETTINGS = SETTINGS;
   SETTINGS.updateMode = function(newMode) {
     SETTINGS.mode = newMode;
-
+    // Some settings need to be modified based on the game mode
     switch (SETTINGS.mode){
       case ("Bossteroid"):
         SETTINGS.asteroids.startingNumber = 1;

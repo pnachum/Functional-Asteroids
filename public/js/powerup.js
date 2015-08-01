@@ -14,13 +14,16 @@
     this.game = game;
   };
 
+  // Powerups don't actually move, so their velocity is always [0, 0]
   Powerup.inherits(MovingObject);
 
+  // The bullet powerup is represented by the color of the bullet (red by
+  // default). The extra life powerup is represented by the color of the ship (
+  // blue by default). The score powerup is green.
   var colorMap = Powerup.colorMap = {
     bullet: SETTINGS.bullets.standard.color,
     life: SETTINGS.ship.color,
-    score: "green",
-    invincible: "purple"
+    score: "green"
   };
 
   Powerup.randomPowerup = function(game) {
@@ -41,9 +44,12 @@
 
     switch (this.type) {
     case "bullet":
+      // The bullet powerup makes bullets faster, larger, and travel a longer
+      // distance
       StandardBullet.SPEED *= 1.5;
       StandardBullet.RADIUS *= 2;
       SETTINGS.bullets.standard.distance *= 1.5;
+      // The effect lasts for a limited time
       setTimeout(function() {
         StandardBullet.SPEED /= 1.5;
         StandardBullet.RADIUS /= 2;
@@ -55,12 +61,6 @@
       break;
     case "score":
       game.increaseMultiplier();
-      break;
-    case "invincible":
-      ship.invincible = true;
-      setTimeout(function() {
-        ship.invincible = false;
-      }, 5000);
       break;
     }
   }

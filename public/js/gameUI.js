@@ -2,7 +2,8 @@
   var AsteroidsGame = root.AsteroidsGame = (root.AsteroidsGame || {});
   var GameText = AsteroidsGame.GameText;
   var SETTINGS = AsteroidsGame.SETTINGS;
-
+  // This handles the right-hand panel which displays lives, the score,
+  // and elapsed time
   var UI = AsteroidsGame.UI = function(game, ctx){
     this.game = game;
     this.ctx = ctx
@@ -24,7 +25,7 @@
     this.modeText.string = "Mode: " + mode;
     this.timeText.string = "Time: " + Math.floor(game.timer / 1000);
 
-
+    // Choose which information to display based on the game mode
     if (mode === "Classic"){
       this.scoreText.draw(this.ctx);
       this.multiplierText.draw(this.ctx);
@@ -38,6 +39,7 @@
     this.modeText.draw(this.ctx);
   };
 
+  // The ship icons represent how many lives the player has left
   UI.prototype.drawShipIcons = function(ctx){
     for (var i = 0; i < this.game.lives; i++){
       var shipPos = [20 + 25 * i, 90];
@@ -72,4 +74,3 @@
   }
 
 })(this);
-

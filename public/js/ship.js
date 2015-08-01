@@ -33,13 +33,14 @@
       MovingObject.prototype.draw.call(this, ctx);
       this.turret.draw(ctx);
     }
-
     if (key.isPressed('up')){
       this.thruster.draw(ctx);
     }
   };
 
   Ship.prototype.drawFlashing = function(ctx){
+    // Only draw the ship in some frames if the ship is invincible to make it
+    // flash
     if (this.frame < 3){
       MovingObject.prototype.draw.call(this, ctx);
       this.turret.draw(ctx);
@@ -88,6 +89,8 @@
     this.vel = [newVelX, newVelY];
   };
 
+  // The ship itself doesn't actually rotate. The turret and thruster do,
+  // making it look like its rotating
   Ship.prototype.rotate = function(direction){
     this.turret.rotate(direction);
     this.thruster.rotate(direction);

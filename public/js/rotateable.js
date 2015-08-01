@@ -5,6 +5,8 @@
   var Ship = AsteroidsGame.Ship;
   var SETTINGS = AsteroidsGame.SETTINGS;
 
+  // Rotateable provides the interface used for the ship's bullet and thruster,
+  // which rotate around the ship, instead of moving normally.
   var Rotateable = AsteroidsGame.Rotateable = function(ship, pos, radius, color, degree){
     MovingObject.call(this, pos, [0, 0], radius, color);
     this.degree = degree;

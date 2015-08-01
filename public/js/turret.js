@@ -4,13 +4,14 @@
   var SETTINGS = AsteroidsGame.SETTINGS;
   var StandardBullet = AsteroidsGame.StandardBullet;
 
+  // The turret is the small circle in front of the ship where it shoots
+  // bullets from.
   var Turret = AsteroidsGame.Turret = function (ship){
     var startingPos = [ship.pos[0], ship.pos[1] - ship.radius]
 
     Rotateable.call(this, ship, startingPos, Turret.RADIUS, ship.color, 90);
   };
 
-  // Turret.COLOR = SETTINGS.ship.turretColor;
   Turret.RADIUS = SETTINGS.ship.turretRadius;
 
   Turret.inherits(Rotateable);

@@ -9,6 +9,7 @@
   var UI = AsteroidsGame.UI;
   var Powerup = AsteroidsGame.Powerup;
 
+  // The Game object stores all game state and handles general game logic
   var Game = AsteroidsGame.Game = function(ctx, uiContext){
     Asteroid.setConstants();
 
@@ -57,6 +58,7 @@
     var game = this;
 
     key('space', function(){
+      // There's a limit to how many bullets can be in the game at once
       if (game.bullets.length < SETTINGS.bullets.standard.maximumNumber){
         game.bullets.push(ship.fireBullet());
       }
@@ -67,6 +69,7 @@
     });
   };
 
+  // Handles collisions between bullets and asteroids or the ship and asteroids
   Game.prototype.checkCollisions = function(){
     var ship = this.ship;
     var bullets = this.bullets;
@@ -137,17 +140,24 @@
     otherAsteroid.vel = [u2x, u2y];
   };
 
-
   Game.prototype.destroyAsteroid = function(asteroid, options){
+    // An asteroid can be destroyed either by the ship colliding with it, or a
+    // bullet colliding with it. Points are only given points if it was a bullet
     options = options || {givePoints: true};
 
     var game = this;
-    var newRadius = asteroid.radius * (1 / Math.sqrt(2))
+    var newRadius = asteroid.radius * (1 / Math.sqrt(2));
+    // minimumRadius specifies how small an asteroid can be before it was
+    // actually destroyed
     if (newRadius > SETTINGS.asteroids.minimumRadius) {
       if (options.givePoints) {
         game.score += (2 * game.scoreMultiplier);
       }
+      // The two new asteroids spawn at the position that the old asteroid was
+      // destroyed
       var pos = asteroid.pos;
+      // They spawn at the same speed that the original asteroid spawned at,
+      // but with random directions
       var spawnedSpeed = asteroid.spawnedSpeed;
       var vel1 = Asteroid.randomVel(Game.DIM_X, Game.DIM_Y, spawnedSpeed);
       var vel2 = Asteroid.randomVel(Game.DIM_X, Game.DIM_Y, spawnedSpeed);
@@ -156,6 +166,7 @@
     } else {
       game.debris = game.debris.concat(asteroid.explode());
       if (options.givePoints) {
+        // More points are awarded when an asteroid is fully destroyed
         game.score += (10 * game.scoreMultiplier);
       }
     }
@@ -168,6 +179,7 @@
 
     game.lives -= 1;
     ship.pos = [250, 250];
+    // The ship is made invincible at first.
     ship.invincible = true;
     ship.spawnTime = Date.now();
     ship.vel = [0, 0];
@@ -187,18 +199,20 @@
       pow.draw(game.ctx);
     })
 
+    // Bullets and debris may need to be removed, since they travel for a
+    // limited distance
     this.drawAndRemove(this.debris);
     this.drawAndRemove(this.bullets)
 
     this.ship.draw(this.ctx);
-
   };
 
   Game.prototype.drawAndRemove = function(objects){
     var game = this;
     var objectsToRemove = [];
     objects.forEach(function(object){
-      // bullet and debris' draw method returns false if the object is out of distance
+      // bullet and debris' draw method returns false if the object is out of
+      // distance to travel
       if (!object.draw(game.ctx)){
         objectsToRemove.push(object);
       }
@@ -211,8 +225,11 @@
 
   Game.prototype.gameOver = function(options){
     var time = Math.floor(this.timer / 1000);
+    // The game can end either because the player died, or because the player
+    // defeated the bossteroid
     if (options.dead === true) {
       if (this.mode === "Dodgeball") {
+        // TODO: Do something with name
         var name = prompt("Game Over! You survived for " + time + " seconds. Enter your name!");
       } else {
         var name = prompt("Game Over! Your score is " + this.score + ". You survived for " + time + " seconds. Enter your name!");
@@ -246,7 +263,8 @@
     this.ui = new UI(this, uiContext);
   };
 
-
+  // The game's difficulty increases over time. The asteroids move faster and
+  // spawn larger
   Game.prototype.increaseDifficulty = function(){
     if (this.mode !== "Bossteroid"){
       var difficulty = SETTINGS.difficulty;
@@ -277,6 +295,7 @@
     }
   };
 
+  // Move all the objects in the game
   Game.prototype.move = function(){
     this.asteroids.forEach(function(asteroid){
       asteroid.move();
@@ -322,6 +341,8 @@
     this.move();
     this.draw();
     this.checkCollisions();
+    // Add more asteroids to the game if the total area of the present asteroids
+    // is below some specified minimum
     if (this.sumOfAsteroidAreas() < Asteroid.minimumArea){
       this.asteroids = this.asteroids.concat(this.addRandomAsteroids(1));
     }

@@ -4,6 +4,8 @@
   var MovingObject = AsteroidsGame.MovingObject;
   var SETTINGS = AsteroidsGame.SETTINGS;
 
+  // Debris objects are the small circles which make the asteroid look like
+  // it's exploding. They travel for a limited distance before disappearing
   var Debris = AsteroidsGame.Debris = function(pos, vel){
     var radius = SETTINGS.debris.radius;
 
