@@ -7,7 +7,12 @@
   var randomFromArray = AsteroidsGame.randomFromArray;
   var StandardBullet = AsteroidsGame.StandardBullet;
 
-  var types = ["life", "score", "bullet"];
+  // The types of powerups available in each mode
+  var typesForMode = {
+    "Classic": ["life", "score", "bullet"],
+    "Bossteroid": ["life", "bullet"],
+    "Super Bossteroid": ["life", "bullet"]
+  }
   var Powerup = AsteroidsGame.Powerup = function(pos, type, game){
     MovingObject.call(this, pos, [0, 0], SETTINGS.powerups.radius, colorMap[type]);
     this.type = type;
@@ -27,13 +32,13 @@
   };
 
   Powerup.randomPowerup = function(game) {
-    var position = [random(0, 500), random(0, 500)];
+    var position = [_.random(0, 500), _.random(0, 500)];
+    var types = typesForMode[game.mode];
+    // If the player has more than 3 lives, don't spawn extra life powerups
     if (game.lives >= 2) {
-      // If the player has more than 3 lives, don't spawn extra life powerups
-      var type = randomFromArray(types.slice(1));
-    } else {
-      var type = randomFromArray(types);
+      types = _.without(types, "life");
     }
+    var type = _.sample(types);
 
     return new Powerup(position, type, game);
   };

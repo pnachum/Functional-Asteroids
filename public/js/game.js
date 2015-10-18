@@ -99,7 +99,7 @@
       var pow = this.powerups[k];
       if (ship.isCollidedWith(pow)){
         pow.applyEffect();
-        this.powerups.splice(k, 1);
+        this.powerups.removeItem(pow);
       } else {
         k++;
       }
@@ -328,7 +328,11 @@
     var difficultyTimer = (this.timer) % (SETTINGS.difficulty.timeInterval * 1000);
     if (difficultyTimer < 30){
       this.increaseDifficulty();
-      this.powerups.push(Powerup.randomPowerup(this));
+      // There are no powerups in Dodgeball mode
+      if (this.mode !== "Dodgeball") {
+        this.powerups.push(Powerup.randomPowerup(this));
+      }
+
     }
 
     var ship = this.ship;

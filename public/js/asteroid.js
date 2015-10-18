@@ -46,7 +46,7 @@
     var radius;
     // Asteroids in dodgeball have a predefined set of sizes
     if (options.dodgeball){
-      radius = randomFromArray([15, 21.2, 30]);
+      radius = _.sample([15, 21.2, 30]);
     } else {
       radius = Asteroid.spawnRadius;
     }
@@ -60,13 +60,13 @@
   // spawn at
   Asteroid.randomPos = function(dimX, dimY, ship){
     var radius = Asteroid.spawnRadius;
-    var randomX = random(-radius, dimX + radius);
-    var randomY = random(-radius, dimY + radius);
-    var edgeX = randomFromArray([-radius, dimX + radius]);
-    var edgeY = randomFromArray([-radius, dimY + radius]);
+    var randomX = _.random(-radius, dimX + radius);
+    var randomY = _.random(-radius, dimY + radius);
+    var edgeX = _.sample([-radius, dimX + radius]);
+    var edgeY = _.sample([-radius, dimY + radius]);
     var candidate1 = [edgeX, randomY];
     var candidate2 = [randomX, edgeY];
-    var randomPos = randomFromArray([candidate1, candidate2]);
+    var randomPos = _.sample([candidate1, candidate2]);
 
     return randomPos;
   };
@@ -75,10 +75,10 @@
   Asteroid.randomVel = function(dimX, dimY, intensity){
     var rangeX = (intensity * dimX) / 125;
     var rangeY = (intensity * dimY) / 125;
-    var xDirection = randomFromArray([-1, 1]);
-    var yDirection = randomFromArray([-1, 1]);
-    var randomDx = random(1, rangeX) * xDirection;
-    var randomDy = random(1, rangeY) * yDirection;
+    var xDirection = _.sample([-1, 1]);
+    var yDirection = _.sample([-1, 1]);
+    var randomDx = _.random(1, rangeX) * xDirection;
+    var randomDy = _.random(1, rangeY) * yDirection;
     return [randomDx, randomDy];
   };
 

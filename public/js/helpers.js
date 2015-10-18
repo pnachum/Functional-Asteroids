@@ -7,18 +7,6 @@
     this.prototype = new superclass.surrogate();
   };
 
-  // TODO: Use underscore instead of these custom helpers
-
-  // random integer between min and max inclusive
-  var random = AsteroidsGame.random = function(min, max){
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
-  var randomFromArray = AsteroidsGame.randomFromArray = function(array){
-    var index = random(0, array.length - 1);
-    return array[index];
-  };
-
   Array.prototype.removeItem = function(item){
     var badIndex = this.indexOf(item);
     this.splice(badIndex, 1);
