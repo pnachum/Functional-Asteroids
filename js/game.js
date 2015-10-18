@@ -8,6 +8,7 @@
   var SETTINGS = AsteroidsGame.SETTINGS;
   var UI = AsteroidsGame.UI;
   var Powerup = AsteroidsGame.Powerup;
+  var AudioController = AsteroidsGame.AudioController;
 
   // The Game object stores all game state and handles general game logic
   var Game = AsteroidsGame.Game = function(ctx, uiContext){
@@ -32,6 +33,7 @@
     this.lives = SETTINGS.startingLives;
     this.mode = SETTINGS.mode;
     this.ui = new UI(this, uiContext);
+    this.audioController = new AudioController();
   };
 
   Game.DIM_X = 500;
@@ -60,6 +62,7 @@
       // There's a limit to how many bullets can be in the game at once
       if (game.bullets.length < SETTINGS.bullets.standard.maximumNumber){
         game.bullets.push(ship.fireBullet());
+        game.audioController.laser()
       }
     });
 
@@ -148,6 +151,7 @@
     // minimumRadius specifies how small an asteroid can be before it was
     // actually destroyed, versus being split into two smaller asteroids
     if (newRadius > SETTINGS.asteroids.minimumRadius) {
+      game.audioController.asteroidBreak();
       if (options.givePoints) {
         game.score += (2 * game.scoreMultiplier);
       }
@@ -169,6 +173,7 @@
         // More points are awarded when an asteroid is fully destroyed
         game.score += (10 * game.scoreMultiplier);
       }
+      game.audioController.asteroidDestroy();
     }
     game.asteroids.removeItem(asteroid);
   };
@@ -228,19 +233,20 @@
 
   Game.prototype.gameOver = function(options){
     var time = Math.floor(this.timer / 1000);
+    var stringToAlert;
     // The game can end either because the player died, or because the player
     // defeated the bossteroid
     if (options.dead === true) {
-      var name;
+      this.audioController.gameOver();
       if (this.mode === "Dodgeball") {
-        // TODO: Do something with name
-        name = prompt("Game Over! You survived for " + time + " seconds. Enter your name!");
+        stringToAlert = "Game Over! You survived for " + time + " seconds";
       } else {
-        name = prompt("Game Over! Your score is " + this.score + ". You survived for " + time + " seconds. Enter your name!");
+        stringToAlert = "Game Over! Your score is " + this.score + ". You survived for " + time + " seconds";
       }
     } else {
-      alert("You win! That took you " + time + " seconds.");
+      stringToAlert = "You win! That took you " + time + " seconds.";
     }
+    alert(stringToAlert);
     this.stop();
   };
 
