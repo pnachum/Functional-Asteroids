@@ -5,16 +5,18 @@ Asteroids
 
 A deployed version of Asteroids can be found [here](http://philnachumasteroids.herokuapp.com/). It's a simple variant on the original arcade game.
 
+Asteroids is built using HTML canvas, which draws objects at every frame. The game logic is written in Javascript.
+
 ## How to play
 
 On the opening menu, click on a mode to select it, which begins the game. Use the left and right arrow keys to rotate the ship, the up arrow key to move, the space bar to fire, and the P key to pause/unpause.
 
-Asteroids is built using HTML canvas, which draws objects at every frame. The game logic is written in Javascript.
-
 ## Notable Features
+
+* There are multiple game modes to choose from
 * Asteroids will spawn infinitely, with increasing speed and frequency over time (except in the Bossteroid and Super Bossteroid modes). The score multiplier also increases over time.
 * Every moving object, including asteroids, the ship, and bullets, will wrap around to the other side of the screen when it goes off the edge.
-* There is a small amount of friction on the ship (not physically accurate, given the lack of air resistance in space, but it makes for a better game).
+* Powerups are periodically placed in the game, which can be picked up for bonuses
 * The game keeps track of the player's score, remaining lives, elapsed time, and score multiplier. These are displayed to the user depending on whether they're relevant to the current game mode.
 * Upon spawning, the ship will be briefly invincible, indicated by flashing.
 
