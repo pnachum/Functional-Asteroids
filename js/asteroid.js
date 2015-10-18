@@ -42,6 +42,10 @@
     });
   };
 
+  Asteroid.prototype.area = function() {
+    return Math.PI * Math.pow(this.radius, 2);
+  }
+
   Asteroid.randomAsteroid = function(dimX, dimY, options){
     var radius;
     // Asteroids in dodgeball have a predefined set of sizes
@@ -66,9 +70,7 @@
     var edgeY = _.sample([-radius, dimY + radius]);
     var candidate1 = [edgeX, randomY];
     var candidate2 = [randomX, edgeY];
-    var randomPos = _.sample([candidate1, candidate2]);
-
-    return randomPos;
+    return _.sample([candidate1, candidate2]);
   };
 
   // Pick a random direction for the asteroid to begin moving in

@@ -7,12 +7,8 @@
   var randomFromArray = AsteroidsGame.randomFromArray;
   var StandardBullet = AsteroidsGame.StandardBullet;
 
-  // The types of powerups available in each mode
-  var typesForMode = {
-    "Classic": ["life", "score", "bullet"],
-    "Bossteroid": ["life", "bullet"],
-    "Super Bossteroid": ["life", "bullet"]
-  }
+  // Powerups are colored circles that occasionally appear on the screen.
+  // Moving the ship over them provides some bonus
   var Powerup = AsteroidsGame.Powerup = function(pos, type, game){
     MovingObject.call(this, pos, [0, 0], SETTINGS.powerups.radius, colorMap[type]);
     this.type = type;
@@ -31,10 +27,17 @@
     score: "green"
   };
 
+  // The types of powerups available in each mode
+  var typesForMode = Powerup.typesForMode = {
+    "Classic": ["life", "score", "bullet"],
+    "Bossteroid": ["life", "bullet"],
+    "Super Bossteroid": ["life", "bullet"]
+  };
+
   Powerup.randomPowerup = function(game) {
     var position = [_.random(0, 500), _.random(0, 500)];
     var types = typesForMode[game.mode];
-    // If the player has more than 3 lives, don't spawn extra life powerups
+    // If the player has 2 or more lives, don't spawn extra life powerups
     if (game.lives >= 2) {
       types = _.without(types, "life");
     }
@@ -68,6 +71,6 @@
       game.increaseMultiplier();
       break;
     }
-  }
+  };
 
 })(this);

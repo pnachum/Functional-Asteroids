@@ -80,6 +80,7 @@
     var newVelX = this.vel[0] + impulse[0];
     var newVelY = this.vel[1] + impulse[1];
 
+    // Enforce that the ship's speed does not exceed MAXSPEED
     var minX = Math.min(Ship.MAXSPEED, Math.abs(newVelX))
     newVelX = newVelX >= 0 ? minX : -minX;
 

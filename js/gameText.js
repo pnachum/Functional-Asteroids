@@ -1,6 +1,7 @@
 (function (root){
   var AsteroidsGame = root.AsteroidsGame = (root.AsteroidsGame || {});
 
+  // The GameText class handles any text that is displayed in a canvas
   var GameText = AsteroidsGame.GameText = function(string, size, pos, color){
     this.string = string;
     this.size = size;

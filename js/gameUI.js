@@ -2,7 +2,8 @@
   var AsteroidsGame = root.AsteroidsGame = (root.AsteroidsGame || {});
   var GameText = AsteroidsGame.GameText;
   var SETTINGS = AsteroidsGame.SETTINGS;
-  // This handles the right-hand panel which displays lives, the score,
+
+  // The UI class handles the right-hand panel which displays lives, the score,
   // and elapsed time
   var UI = AsteroidsGame.UI = function(game, ctx){
     this.game = game;
@@ -30,10 +31,10 @@
       this.scoreText.draw(this.ctx);
       this.multiplierText.draw(this.ctx);
     }
-    if (mode === "Bossteroid" || mode === "Super Bossteroid" || mode === "Classic"){
+    if (_.contains(["Bossteroid", "Super Bossteroid", "Classic"], mode)) {
       this.drawShipIcons(this.ctx);
     }
-    if (mode === "Bossteroid" || mode === "Super Bossteroid" || mode === "Dodgeball"){
+    if (_.contains(["Bossteroid", "Super Bossteroid", "Dodgeball"], mode)){
       this.timeText.draw(this.ctx);
     }
     this.modeText.draw(this.ctx);

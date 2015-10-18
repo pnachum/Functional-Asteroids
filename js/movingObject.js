@@ -12,9 +12,9 @@
     this.radius = radius;
   };
 
-  MovingObject.prototype.distance = function(other){
-    var xDiff = this.pos[0] - other.pos[0];
-    var yDiff = this.pos[1] - other.pos[1];
+  MovingObject.prototype.distance = function(otherObject){
+    var xDiff = this.pos[0] - otherObject.pos[0];
+    var yDiff = this.pos[1] - otherObject.pos[1];
     return Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
   };
 
