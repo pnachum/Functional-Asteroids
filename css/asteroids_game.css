@@ -1,18 +1,18 @@
 .hidden {
-	display: none;
+  display: none;
 }
 
 canvas {
-	border: 2px solid #000000
+  border: 2px solid #000000
 }
 
 .mode-button {
-	width: 200px;
-	height: 120px;
-	display: block;
-	float: left;
-	border: 3px solid lightgreen;
-	margin: 10px;
+  width: 200px;
+  height: 120px;
+  display: block;
+  float: left;
+  border: 3px solid lightgreen;
+  margin: 10px;
   cursor: pointer;
 }
 
@@ -22,10 +22,10 @@ canvas {
 
 
 .mode-title {
-	text-align: center;
-	font-size: 20px;
-	margin-top: 10px;
-	margin-bottom: 10px;
+  text-align: center;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #controls {
@@ -52,9 +52,8 @@ canvas {
   color: red;
 }
 
-
 .mode-text {
-	padding: 5px;	
+  padding: 5px;
 }
 
 .mode-title, .mode-text, h2, #instructions * {
@@ -62,10 +61,9 @@ canvas {
 }
 
 .hovered {
-	background-color: lightgreen;
+  background-color: lightgreen;
 }
 
 #game {
   background-image: url("../images/background.jpg");
 }
-
