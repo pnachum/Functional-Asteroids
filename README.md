@@ -14,8 +14,7 @@ On the opening menu, click on a mode to select it, which begins the game. Use th
 ## Notable Features
 
 * There are multiple game modes to choose from
-* Asteroids will spawn infinitely, with increasing speed and frequency over time (except in the Bossteroid and Super Bossteroid modes). The score multiplier also increases over time.
-* Every moving object, including asteroids, the ship, and bullets, will wrap around to the other side of the screen when it goes off the edge.
+* The game has various sound effects
 * Powerups are periodically placed in the game, which can be picked up for bonuses
 * The game keeps track of the player's score, remaining lives, elapsed time, and score multiplier. These are displayed to the user depending on whether they're relevant to the current game mode.
 * Upon spawning, the ship will be briefly invincible, indicated by flashing.
@@ -33,7 +32,3 @@ Currently, the end game alert prompts the user for their name, but does nothing 
 ### Weapon types
 
 In addition to choosing a mode at the beginning of the game, players should also be able to choose a weapon type.
-
-### Music and sound effects
-
-In particular, I'd love it if the Bossteroid and Super Bossteroid game modes played the theme from 2001: A Space Odyssey. Hopefully there aren't any copyright issues.
