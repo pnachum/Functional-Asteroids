@@ -3,7 +3,7 @@ Asteroids
 
 ## Overview
 
-A deployed version of Asteroids can be found [here](http://philnachumasteroids.herokuapp.com/). It's a simple variant on the original arcade game.
+A deployed version of Asteroids can be found [here](https://philnachumasteroids.firebaseapp.com/). It's a simple variant on the original arcade game.
 
 Asteroids is built using HTML canvas, which draws objects at every frame. The game logic is written in Javascript.
 
