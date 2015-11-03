@@ -25,9 +25,13 @@ On the opening menu, click on a mode to select it, which begins the game. Use th
 
 I've previously tried to get the asteroids to bounce off of each other with realistic collision physics based on the asteroids velocity and size (as a proxy for mass). The result was incredibly buggy, mostly due to the possibility of asteroids overlapping. This needs a lot more work.
 
-### Leaderboards
+### Additional powerups
 
-Currently, the end game alert prompts the user for their name, but does nothing with it. I'd like to store a leaderboard of the top scores, which displays after each game.
+I'd like to come up with more types of powerups. Temporary invincibility is one idea
+
+### Alternative enemy types
+
+Currently the only enemy type is simple asteroids. More complex and varied enemies would be interesting. 
 
 ### Weapon types
 
