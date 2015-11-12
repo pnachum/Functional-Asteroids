@@ -42,6 +42,21 @@
     });
   };
 
+  Asteroid.prototype.split = function(dimX, dimY, newRadius) {
+    // The two new asteroids spawn at the position that the old asteroid was
+    // destroyed
+    var pos = this.pos;
+    // They spawn at the same speed that the original asteroid spawned at,
+    // but with random directions
+    var spawnedSpeed = this.spawnedSpeed;
+    var vel1 = Asteroid.randomVel(dimX, dimY, spawnedSpeed);
+    var vel2 = Asteroid.randomVel(dimX, dimY, spawnedSpeed);
+
+    var asteroid_one = new Asteroid(pos.slice(), vel1, newRadius, spawnedSpeed);
+    var asteroid_two = new Asteroid(pos.slice(), vel2, newRadius, spawnedSpeed);
+    return [asteroid_one, asteroid_two];
+  }
+
   Asteroid.prototype.area = function() {
     return Math.PI * Math.pow(this.radius, 2);
   }

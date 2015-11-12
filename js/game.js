@@ -155,16 +155,8 @@
       if (options.givePoints) {
         game.score += (2 * game.scoreMultiplier);
       }
-      // The two new asteroids spawn at the position that the old asteroid was
-      // destroyed
-      var pos = asteroid.pos;
-      // They spawn at the same speed that the original asteroid spawned at,
-      // but with random directions
-      var spawnedSpeed = asteroid.spawnedSpeed;
-      var vel1 = Asteroid.randomVel(Game.DIM_X, Game.DIM_Y, spawnedSpeed);
-      var vel2 = Asteroid.randomVel(Game.DIM_X, Game.DIM_Y, spawnedSpeed);
-      game.asteroids.push(new Asteroid(pos.slice(), vel1, newRadius, spawnedSpeed));
-      game.asteroids.push(new Asteroid(pos.slice(), vel2, newRadius, spawnedSpeed));
+      var newAsteroids = asteroid.split(Game.DIM_X, Game.DIM_Y, newRadius);
+      this.asteroids = this.asteroids.concat(newAsteroids);
     } else {
       // If the asteroid was small enough to actually be destroyed, it turns
       // into debris
