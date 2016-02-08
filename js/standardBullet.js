@@ -1,40 +1,62 @@
-(function (root){
-  var AsteroidsGame = root.AsteroidsGame = (root.AsteroidsGame || {});
-  var MovingObject = AsteroidsGame.MovingObject;
-  var toRadians = AsteroidsGame.toRadians;
-  var random = AsteroidsGame.random;
-  var SETTINGS = AsteroidsGame.SETTINGS;
+const MovingObject = require('./movingObject'),
+  SETTINGS = require('./settings');
 
-  var StandardBullet = AsteroidsGame.StandardBullet = function (turret){
-    MovingObject.call(this, turret.pos, setVel(turret), StandardBullet.RADIUS, StandardBullet.COLOR);
+class StandardBullet extends MovingObject {
+
+  static get SPEED() {
+    return SETTINGS.bullets.standard.speed;
+  }
+
+  static set SPEED(val) {
+    SETTINGS.bullets.standard.speed = val;
+  }
+
+  static get RADIUS() {
+    return SETTINGS.bullets.standard.radius;
+  }
+
+  static set RADIUS(val) {
+    SETTINGS.bullets.standard.radius = val;
+  }
+
+  static get DISTANCE() {
+    return SETTINGS.bullets.standard.distance;
+  }
+
+  static set DISTANCE(val) {
+    SETTINGS.bullets.standard.distance = val;
+  }
+
+  static get COLOR() {
+    return SETTINGS.bullets.standard.color;
+  }
+
+  static setVel(turret){
+    return turret.direction().map(function(d){
+      return StandardBullet.SPEED * d;
+    });
+  }
+
+  constructor(turret) {
+    super(turret.pos, StandardBullet.setVel(turret), StandardBullet.RADIUS, StandardBullet.COLOR);
     this.turret = turret;
     this.availableDistance = SETTINGS.bullets.standard.distance;
-  };
+  }
 
-  StandardBullet.SPEED = SETTINGS.bullets.standard.speed;
-  StandardBullet.RADIUS = SETTINGS.bullets.standard.radius;
-  StandardBullet.COLOR = SETTINGS.bullets.standard.color;
-
-  StandardBullet.inherits(MovingObject);
-
-  StandardBullet.prototype.draw = function(ctx){
+  draw(ctx) {
     if (this.availableDistance > 0){
-      MovingObject.prototype.draw.call(this, ctx);
+      super.draw(ctx);
       return true;
     } else {
       return false;
     }
-  };
+  }
 
-  StandardBullet.prototype.move = function(){
-    MovingObject.prototype.move.call(this);
+  move() {
+    super.move();
     this.availableDistance -= StandardBullet.SPEED;
-  };
+  }
 
-  var setVel = function(turret){
-    return turret.direction().map(function(d){
-      return StandardBullet.SPEED * d;
-    });
-  };
+}
 
-})(this);
+module.exports = StandardBullet;

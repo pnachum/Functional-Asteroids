@@ -1,42 +1,34 @@
-(function (root){
-  var AsteroidsGame = root.AsteroidsGame = (root.AsteroidsGame || {});
+const MovingObject = require('./movingObject'),
+  SETTINGS = require('./settings'),
+  StandardBullet = require('./standardBullet');
 
-  var MovingObject = AsteroidsGame.MovingObject;
-  var SETTINGS = AsteroidsGame.SETTINGS;
-  var random = AsteroidsGame.random;
-  var randomFromArray = AsteroidsGame.randomFromArray;
-  var StandardBullet = AsteroidsGame.StandardBullet;
-
-  // Powerups are colored circles that occasionally appear on the screen.
-  // Moving the ship over them provides some bonus
-  var Powerup = AsteroidsGame.Powerup = function(pos, type, game){
-    MovingObject.call(this, pos, [0, 0], SETTINGS.powerups.radius, colorMap[type]);
-    this.type = type;
-    this.game = game;
-  };
-
-  // Powerups don't actually move, so their velocity is always [0, 0]
-  Powerup.inherits(MovingObject);
+// Powerups are colored circles that occasionally appear on the screen.
+// Moving the ship over them provides some bonus
+class Powerup extends MovingObject {
 
   // The bullet powerup is represented by the color of the bullet (red by
   // default). The extra life powerup is represented by the color of the ship (
   // blue by default). The score powerup is green.
-  var colorMap = Powerup.colorMap = {
-    bullet: SETTINGS.bullets.standard.color,
-    life: SETTINGS.ship.color,
-    score: "green"
-  };
+  static get colorMap() {
+    return {
+      bullet: SETTINGS.bullets.standard.color,
+      life: SETTINGS.ship.color,
+      score: "green"
+    };
+  }
 
   // The types of powerups available in each mode
-  var typesForMode = Powerup.typesForMode = {
-    "Classic": ["life", "score", "bullet"],
-    "Bossteroid": ["life", "bullet"],
-    "Super Bossteroid": ["life", "bullet"]
-  };
+  static get typesForMode() {
+    return {
+      "Classic": ["life", "score", "bullet"],
+      "Bossteroid": ["life", "bullet"],
+      "Super Bossteroid": ["life", "bullet"]
+    };
+  }
 
-  Powerup.randomPowerup = function(game) {
+  static randomPowerup(game) {
     var position = [_.random(0, 500), _.random(0, 500)];
-    var types = typesForMode[game.mode];
+    var types = Powerup.typesForMode[game.mode];
     // If the player has 2 or more lives, don't spawn extra life powerups
     if (game.lives >= 2) {
       types = _.without(types, "life");
@@ -46,7 +38,14 @@
     return new Powerup(position, type, game);
   };
 
-  Powerup.prototype.applyEffect = function() {
+  constructor(pos, type, game){
+    // Powerups don't actually move, so their velocity is always [0, 0]
+    super(pos, [0, 0], SETTINGS.powerups.radius, Powerup.colorMap[type]);
+    this.type = type;
+    this.game = game;
+  }
+
+  applyEffect() {
     var game = this.game;
     var ship = game.ship;
 
@@ -56,12 +55,12 @@
       // distance
       StandardBullet.SPEED *= 1.5;
       StandardBullet.RADIUS *= 2;
-      SETTINGS.bullets.standard.distance *= 1.5;
+      StandardBullet.DISTANCE *= 1.5;
       // The effect lasts for a limited time
       setTimeout(function() {
         StandardBullet.SPEED /= 1.5;
         StandardBullet.RADIUS /= 2;
-        SETTINGS.bullets.standard.distance /= 1.5;
+        StandardBullet.DISTANCE /= 1.5;
       }, 5000);
       break;
     case "life":
@@ -71,6 +70,7 @@
       game.increaseMultiplier();
       break;
     }
-  };
+  }
+}
 
-})(this);
+module.exports = Powerup;

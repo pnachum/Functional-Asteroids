@@ -1,23 +1,23 @@
-(function (root){
-  var AsteroidsGame = root.AsteroidsGame = (root.AsteroidsGame || {});
-  var Rotateable = AsteroidsGame.Rotateable;
-  var SETTINGS = AsteroidsGame.SETTINGS;
-  var StandardBullet = AsteroidsGame.StandardBullet;
+const Rotateable = require('./rotateable'),
+  SETTINGS = require('./settings'),
+  StandardBullet = require('./standardBullet');
 
-  // The turret is the small circle in front of the ship where it shoots
-  // bullets from.
-  var Turret = AsteroidsGame.Turret = function (ship){
-    var startingPos = [ship.pos[0], ship.pos[1] - ship.radius]
+// The turret is the small circle in front of the ship where it shoots
+// bullets from.
+class Turret extends Rotateable {
 
-    Rotateable.call(this, ship, startingPos, Turret.RADIUS, ship.color, 90);
-  };
+  static get RADIUS() {
+    return SETTINGS.ship.turretRadius;
+  }
 
-  Turret.RADIUS = SETTINGS.ship.turretRadius;
+  constructor(ship) {
+    var startingPos = [ship.pos[0], ship.pos[1] - ship.radius];
+    super(ship, startingPos, Turret.RADIUS, ship.color, 90);
+  }
 
-  Turret.inherits(Rotateable);
-
-  Turret.prototype.fireBullet = function(){
+  fireBullet(){
     return new StandardBullet(this);
-  };
+  }
+}
 
-})(this);
+module.exports = Turret;

@@ -1,17 +1,23 @@
-(function (root){
-  var AsteroidsGame = root.AsteroidsGame = (root.AsteroidsGame || {});
-  var Rotateable = AsteroidsGame.Rotateable;
-  var SETTINGS = AsteroidsGame.SETTINGS;
-  // The thruster is the yellow circle that appears behind the ship when it's
-  // moving
-  var Thruster = AsteroidsGame.Thruster = function(ship){
+const Rotateable = require('./rotateable'),
+  SETTINGS = require('./settings');
+
+// The thruster is the yellow circle that appears behind the ship when it's
+// moving
+class Thruster extends Rotateable {
+
+  static get RADIUS() {
+    return SETTINGS.ship.thrusterRadius;
+  }
+
+  static get COLOR() {
+    return SETTINGS.ship.thrusterColor;
+  }
+
+  constructor(ship){
     var startingPos = [ship.pos[0], ship.pos[1] + ship.radius]
-    Rotateable.call(this, ship, startingPos, Thruster.RADIUS, Thruster.COLOR, 270);
-  };
+    super(ship, startingPos, Thruster.RADIUS, Thruster.COLOR, 270);
+  }
 
-  Thruster.RADIUS = SETTINGS.ship.thrusterRadius;
-  Thruster.COLOR = SETTINGS.ship.thrusterColor;
+}
 
-  Thruster.inherits(Rotateable);
-
-})(this);
+module.exports = Thruster;

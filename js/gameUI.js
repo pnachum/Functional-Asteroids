@@ -1,23 +1,28 @@
-(function (root){
-  var AsteroidsGame = root.AsteroidsGame = (root.AsteroidsGame || {});
-  var GameText = AsteroidsGame.GameText;
-  var SETTINGS = AsteroidsGame.SETTINGS;
+const GameText = require('./gameText'),
+  SETTINGS = require('./settings');
 
-  // The UI class handles the right-hand panel which displays lives, the score,
-  // and elapsed time
-  var UI = AsteroidsGame.UI = function(game, ctx){
+// The UI class handles the right-hand panel which displays lives, the score,
+// and elapsed time
+class UI {
+
+  static get DIM_X() {
+    return 250;
+  }
+
+  static get DIM_Y() {
+    return 500;
+  }
+
+  constructor(game, ctx){
     this.game = game;
     this.ctx = ctx
     this.scoreText = new GameText("", 20, [5, 30], "black");
     this.multiplierText = new GameText("", 20, [5, 60], "black");
     this.modeText = new GameText("", 20, [5, 130], "black");
     this.timeText = new GameText("", 20, [5, 160], "black")
-  };
+  }
 
-  UI.DIM_X = 250;
-  UI.DIM_Y = 500;
-
-  UI.prototype.draw = function(){
+  draw(){
     this.ctx.clearRect(0, 0, UI.DIM_X, UI.DIM_Y);
     var game = this.game;
     var mode = game.mode;
@@ -31,17 +36,17 @@
       this.scoreText.draw(this.ctx);
       this.multiplierText.draw(this.ctx);
     }
-    if (_.contains(["Bossteroid", "Super Bossteroid", "Classic"], mode)) {
+    if (_.includes(["Bossteroid", "Super Bossteroid", "Classic"], mode)) {
       this.drawShipIcons(this.ctx);
     }
-    if (_.contains(["Bossteroid", "Super Bossteroid", "Dodgeball"], mode)){
+    if (_.includes(["Bossteroid", "Super Bossteroid", "Dodgeball"], mode)){
       this.timeText.draw(this.ctx);
     }
     this.modeText.draw(this.ctx);
   };
 
   // The ship icons represent how many lives the player has left
-  UI.prototype.drawShipIcons = function(ctx){
+  drawShipIcons(ctx){
     for (var i = 0; i < this.game.lives; i++){
       var shipPos = [20 + 25 * i, 90];
       var shipRadius = this.game.ship.radius;
@@ -73,5 +78,6 @@
       ctx.fill();
     }
   }
+}
 
-})(this);
+module.exports = UI;

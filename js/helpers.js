@@ -1,19 +1,14 @@
-(function (root){
-  var AsteroidsGame = root.AsteroidsGame = (root.AsteroidsGame || {});
-
-  Object.prototype.inherits = function(superclass){
-    superclass.surrogate = superclass.surrogate || function Surrogate(){};
-    superclass.surrogate.prototype = superclass.prototype;
-    this.prototype = new superclass.surrogate();
-  };
-
-  Array.prototype.removeItem = function(item){
-    var badIndex = this.indexOf(item);
-    this.splice(badIndex, 1);
-  };
-
-  var toRadians = AsteroidsGame.toRadians = function(degrees){
+const Helpers = {
+  toRadians(degrees){
     return degrees * (Math.PI / 180);
-  };
+  },
 
-})(this);
+  removeFromArray(array, item) {
+    const badIndex = array.indexOf(item);
+    if (badIndex >= 0) {
+      array.splice(badIndex, 1);
+    }
+  }
+};
+
+module.exports = Helpers;

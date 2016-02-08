@@ -1,29 +1,28 @@
-(function (root){
-  var AsteroidsGame = root.AsteroidsGame = (root.AsteroidsGame || {});
+// The AudioController is responsible for storing and playing sounds
+class AudioController {
 
-  // The AudioController is responsible for storing and playing sounds
-  var AudioController = AsteroidsGame.AudioController = function(){};
-
-  AudioController.prototype.laser = function() {
+  laser() {
     this.playSound('laser');
   };
 
-  AudioController.prototype.asteroidBreak = function() {
+  asteroidBreak() {
     this.playSound('asteroidBreak');
   };
 
-  AudioController.prototype.asteroidDestroy = function() {
+  asteroidDestroy() {
     this.playSound('asteroidDestroy');
   };
 
-  AudioController.prototype.gameOver = function() {
+  gameOver() {
     this.playSound('gameOver');
   };
 
-  AudioController.prototype.playSound = function(sound) {
+  playSound(sound) {
     var soundPath = 'audio/' + sound + '.mp3';
     var audio = new Audio(soundPath);
     audio.play();
   };
 
-})(this);
+}
+
+module.exports = AudioController;

@@ -1,17 +1,31 @@
-(function (root){
-  var AsteroidsGame = root.AsteroidsGame = (root.AsteroidsGame || {});
-  var Asteroid = AsteroidsGame.Asteroid;
-  var Ship = AsteroidsGame.Ship;
-  var StandardBullet = AsteroidsGame.StandardBullet;
-  var toRadians = AsteroidsGame.toRadians
-  var GameText = AsteroidsGame.GameText;
-  var SETTINGS = AsteroidsGame.SETTINGS;
-  var UI = AsteroidsGame.UI;
-  var Powerup = AsteroidsGame.Powerup;
-  var AudioController = AsteroidsGame.AudioController;
+const Asteroid = require("./asteroid"),
+  Ship = require("./ship"),
+  StandardBullet = require("./standardBullet"),
+  GameText = require("./gameText"),
+  SETTINGS = require("./settings"),
+  UI = require("./gameUI"),
+  Powerup = require("./powerup"),
+  AudioController = require("./audioController"),
+  key = require('keymaster'),
+  _ = require('lodash');
 
-  // The Game object stores all game state and handles general game logic
-  var Game = AsteroidsGame.Game = function(ctx, uiContext){
+const {toRadians, removeFromArray} = require("./helpers");
+
+// The Game object stores all game state and handles general game logic
+class Game {
+  static get DIM_X() {
+    return 500;
+  }
+
+  static get DIM_Y() {
+    return 500;
+  }
+
+  static get FPS() {
+    return 30;
+  }
+
+  constructor(ctx, uiContext) {
     Asteroid.setConstants();
 
     this.startTime = Date.now();
@@ -34,13 +48,9 @@
     this.mode = SETTINGS.mode;
     this.ui = new UI(this, uiContext);
     this.audioController = new AudioController();
-  };
+  }
 
-  Game.DIM_X = 500;
-  Game.DIM_Y = 500;
-  Game.FPS = 30;
-
-  Game.prototype.addRandomAsteroids = function(numAsteroids){
+  addRandomAsteroids(numAsteroids){
     var output = [];
     var options = {dodgeball: false};
     if (this.mode === "Dodgeball"){
@@ -52,9 +62,9 @@
       output.push(randomAsteroid);
     }
     return output;
-  };
+  }
 
-  Game.prototype.bindKeyHandlers = function(){
+  bindKeyHandlers(){
     var ship = this.ship;
     var game = this;
 
@@ -69,10 +79,10 @@
     key("P", function(){
       game.togglePause();
     });
-  };
+  }
 
   // Handles collisions between bullets and asteroids or the ship and asteroids
-  Game.prototype.checkCollisions = function(){
+  checkCollisions(){
     var ship = this.ship;
     var bullets = this.bullets;
     var game = this;
@@ -100,7 +110,7 @@
       var powerup = this.powerups[k];
       if (ship.isCollidedWith(powerup)){
         powerup.applyEffect();
-        this.powerups.removeItem(powerup);
+        removeFromArray(this.powerups, powerup);
       } else {
         k++;
       }
@@ -111,14 +121,14 @@
     });
 
     bulletsToRemove.forEach(function(bullet){
-      game.bullets.removeItem(bullet);
+      removeFromArray(game.bullets, bullet);
     });
-  };
+  }
 
   // TODO: Make this work
   // This is supposed to make colliding asteroids bounch off of each other,
   // but it doesn't work
-  // Game.prototype.asteroidCollision = function(asteroid, otherAsteroid){
+  // asteroidCollision(asteroid, otherAsteroid){
   //   var v1 = asteroid.vel;
   //   var v2 = otherAsteroid.vel;
   //   var c1 = asteroid.pos;
@@ -139,9 +149,9 @@
 
   //   asteroid.vel = [u1x, u1y];
   //   otherAsteroid.vel = [u2x, u2y];
-  // };
+  // }
 
-  Game.prototype.destroyAsteroid = function(asteroid, options){
+  destroyAsteroid(asteroid, options){
     // An asteroid can be destroyed either by the ship colliding with it, or a
     // bullet colliding with it. Points are only given points if it was a bullet
     options = options || {givePoints: true};
@@ -167,10 +177,10 @@
       }
       game.audioController.asteroidDestroy();
     }
-    game.asteroids.removeItem(asteroid);
-  };
+    removeFromArray(game.asteroids, asteroid);
+  }
 
-  Game.prototype.died = function(){
+  died(){
     var game = this;
     var ship = this.ship;
 
@@ -183,7 +193,7 @@
     ship.vel = [0, 0];
   }
 
-  Game.prototype.draw = function(){
+  draw(){
     this.ui.draw();
     var ctx = this.ctx;
 
@@ -203,11 +213,11 @@
     this.drawAndRemove(this.bullets);
 
     this.ship.draw(ctx);
-  };
+  }
 
   // Debris and bullet objects may need to be removed since they travel for
   // a limited distance
-  Game.prototype.drawAndRemove = function(objects){
+  drawAndRemove(objects){
     var game = this;
     var objectsToRemove = [];
     objects.forEach(function(object){
@@ -219,11 +229,11 @@
     });
 
     objectsToRemove.forEach(function(object){
-      objects.removeItem(object);
+      removeFromArray(objects, object);
     });
-  };
+  }
 
-  Game.prototype.gameOver = function(options){
+  gameOver(options){
     var time = Math.floor(this.timer / 1000);
     var stringToAlert;
     // The game can end either because the player died, or because the player
@@ -240,24 +250,24 @@
     }
     alert(stringToAlert);
     this.stop();
-  };
+  }
 
   // The game's difficulty increases over time. The asteroids move faster and
   // spawn larger
-  Game.prototype.increaseDifficulty = function(){
-    if (!_.contains(["Bossteroid", "Super Bossteroid"], this.mode)) {
+  increaseDifficulty(){
+    if (!_.includes(["Bossteroid", "Super Bossteroid"], this.mode)) {
       var difficulty = SETTINGS.difficulty;
       Asteroid.speed += difficulty.asteroidSpeedIncrease;
       Asteroid.spawnRadius *= difficulty.asteroidSpawnRadiusMultiplier;
       Asteroid.minimumArea *= difficulty.minimumAsteroidAreaMultiplier;
     }
-  };
+  }
 
-  Game.prototype.increaseMultiplier = function() {
+  increaseMultiplier() {
     this.scoreMultiplier += 1;
-  };
+  }
 
-  Game.prototype.keyPressListener = function(){
+  keyPressListener(){
     var ship = this.ship;
     var game = this;
 
@@ -272,10 +282,10 @@
     if (key.isPressed('right')){
       ship.rotate(-1)
     }
-  };
+  }
 
   // Move all the objects in the game
-  Game.prototype.move = function(){
+  move(){
     var asteroids = this.asteroids;
     var debris = this.debris;
     var bullets = this.bullets;
@@ -285,15 +295,15 @@
     movableObjects.forEach(function(object) {
       object.move();
     });
-  };
+  }
 
-  Game.prototype.start = function(){
+  start(){
     var interval = Math.floor(1000/Game.FPS);
     var that = this;
     this.intervalID = window.setInterval(that.step.bind(that), interval);
-  };
+  }
 
-  Game.prototype.step = function(){
+  step(){
     var now = Date.now();
     this.timer = Math.floor(now - this.startTime) + this.elapsedTime;
 
@@ -332,13 +342,13 @@
     if ((mode === "Bossteroid" || mode === "Super Bossteroid") && numAsteroids === 0){
       this.gameOver({dead: false});
     }
-  };
+  }
 
-  Game.prototype.stop = function(){
+  stop(){
     clearInterval(this.intervalID);
-  };
+  }
 
-  Game.prototype.sumOfAsteroidAreas = function(){
+  sumOfAsteroidAreas(){
     var areas = this.asteroids.map(function(asteroid){
       return asteroid.area();
     });
@@ -348,9 +358,9 @@
     }, 0);
 
     return sum;
-  };
+  }
 
-  Game.prototype.togglePause = function(){
+  togglePause(){
     if (this.paused){
       // Unpause
       this.startTime = Date.now();
@@ -363,6 +373,7 @@
       this.pauseText.draw(this.ctx);
       this.paused = true;
     }
-  };
+  }
+}
 
-})(this);
+module.exports = Game;

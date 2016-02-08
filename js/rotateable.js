@@ -1,27 +1,25 @@
-(function (root){
-  var AsteroidsGame = root.AsteroidsGame = (root.AsteroidsGame || {});
-  var MovingObject = AsteroidsGame.MovingObject;
-  var toRadians = AsteroidsGame.toRadians;
-  var Ship = AsteroidsGame.Ship;
-  var SETTINGS = AsteroidsGame.SETTINGS;
+const MovingObject = require('./movingObject'),
+  Ship = require('./ship'),
+  SETTINGS = require('./settings'),
+  toRadians = require('./helpers').toRadians;
 
-  // Rotateable provides the interface used for the ship's bullet and thruster,
-  // which rotate around the ship, instead of moving normally.
-  var Rotateable = AsteroidsGame.Rotateable = function(ship, pos, radius, color, degree){
-    MovingObject.call(this, pos, [0, 0], radius, color);
+// Rotateable provides the interface used for the ship's bullet and thruster,
+// which rotate around the ship, instead of moving normally.
+class Rotateable extends MovingObject {
+
+  constructor(ship, pos, radius, color, degree){
+    super(pos, [0, 0], radius, color);
     this.degree = degree;
     this.ship = ship;
-  };
+  }
 
-  Rotateable.inherits(MovingObject);
-
-  Rotateable.prototype.direction = function(){
+  direction(){
     var x = Math.cos(toRadians(this.degree));
     var y = -Math.sin(toRadians(this.degree));
     return [x, y];
-  };
+  }
 
-  Rotateable.prototype.move = function(){
+  move(){
     var ship = this.ship;
     var shipX = ship.pos[0];
     var shipY = ship.pos[1];
@@ -30,10 +28,11 @@
     var distY = ship.radius * Math.sin(toRadians(this.degree));
 
     this.pos = [shipX + distX, shipY - distY];
-  };
+  }
 
-  Rotateable.prototype.rotate = function(direction){
+  rotate(direction){
     this.degree = (this.degree + (direction * SETTINGS.ship.turnSpeed)) % 360;
-  };
+  }
+}
 
-})(this);
+module.exports = Rotateable;

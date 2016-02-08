@@ -1,32 +1,42 @@
-(function (root){
-  var AsteroidsGame = root.AsteroidsGame = (root.AsteroidsGame || {});
-  var SETTINGS = AsteroidsGame.SETTINGS;
-  var MovingObject = AsteroidsGame.MovingObject;
-  var Turret = AsteroidsGame.Turret;
-  var Thruster = AsteroidsGame.Thruster;
-  var toRadians = AsteroidsGame.toRadians;
+const SETTINGS = require('./settings'),
+  MovingObject = require('./movingObject'),
+  Turret = require('./turret'),
+  Thruster = require('./thruster'),
+  toRadians = require('./helpers').toRadians,
+  key = require('keymaster');
 
-  var Ship = AsteroidsGame.Ship = function(){
-    MovingObject.call(this, Ship.CENTER, [0, 0], Ship.RADIUS, Ship.COLOR);
+class Ship extends MovingObject {
+
+  static get RADIUS() {
+    return SETTINGS.ship.radius;
+  }
+
+  static get COLOR() {
+    return SETTINGS.ship.color;
+  }
+
+  static get CENTER() {
+    return [250, 250];
+  }
+
+  static get MAXSPEED() {
+    return SETTINGS.ship.maxSpeed;
+  }
+
+  constructor(){
+    super(Ship.CENTER, [0, 0], Ship.RADIUS, Ship.COLOR);
     this.turret = new Turret(this);
     this.thruster = new Thruster(this);
     this.invincible = true;
     this.spawnTime = Date.now();
     this.frame = 0;
-  };
+  }
 
-  Ship.RADIUS = SETTINGS.ship.radius;
-  Ship.COLOR = SETTINGS.ship.color;
-  Ship.CENTER = [250, 250];
-  Ship.MAXSPEED = SETTINGS.ship.maxSpeed;
-
-  Ship.inherits(MovingObject);
-
-  Ship.prototype.direction = function(){
+  direction() {
     return this.turret.direction();
   }
 
-  Ship.prototype.draw = function(ctx){
+  draw(ctx) {
     if (this.invincible){
       this.drawFlashing(ctx);
     } else {
@@ -36,9 +46,9 @@
     if (key.isPressed('up')){
       this.thruster.draw(ctx);
     }
-  };
+  }
 
-  Ship.prototype.drawFlashing = function(ctx){
+  drawFlashing(ctx) {
     // Only draw the ship in some frames if the ship is invincible to make it
     // flash
     if (this.frame < 3){
@@ -48,11 +58,11 @@
     this.frame = (this.frame + 1) % 5;
   }
 
-  Ship.prototype.fireBullet = function(){
+  fireBullet() {
     return this.turret.fireBullet();
-  };
+  }
 
-  Ship.prototype.move = function(){
+  move() {
     MovingObject.prototype.move.call(this);
     this.turret.move();
     this.thruster.move();
@@ -74,9 +84,9 @@
     } else {
       this.vel[1] = 0;
     }
-  };
+  }
 
-  Ship.prototype.power = function(impulse){
+  power(impulse) {
     var newVelX = this.vel[0] + impulse[0];
     var newVelY = this.vel[1] + impulse[1];
 
@@ -88,20 +98,21 @@
     newVelY = newVelY >= 0 ? minY : -minY;
 
     this.vel = [newVelX, newVelY];
-  };
+  }
 
   // The ship itself doesn't actually rotate. The turret and thruster do,
   // making it look like its rotating
-  Ship.prototype.rotate = function(direction){
+  rotate(direction) {
     this.turret.rotate(direction);
     this.thruster.rotate(direction);
   };
 
-  Ship.prototype.setVel = function(){
+  setVel() {
     var accel = SETTINGS.ship.acceleration;
     return this.direction().map(function(d){
       return d * accel;
     });
-  };
+  }
+}
 
-})(this);
+module.exports = Ship;
