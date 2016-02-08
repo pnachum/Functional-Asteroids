@@ -13,7 +13,7 @@ class UI {
     return 500;
   }
 
-  constructor(game, ctx){
+  constructor(game, ctx) {
     this.game = game;
     this.ctx = ctx
     this.scoreText = new GameText("", 20, [5, 30], "black");
@@ -22,36 +22,37 @@ class UI {
     this.timeText = new GameText("", 20, [5, 160], "black")
   }
 
-  draw(){
-    this.ctx.clearRect(0, 0, UI.DIM_X, UI.DIM_Y);
-    var game = this.game;
-    var mode = game.mode;
-    this.scoreText.string = "Score: " + game.score;
-    this.multiplierText.string = "x" + game.scoreMultiplier;
-    this.modeText.string = "Mode: " + mode;
-    this.timeText.string = "Time: " + Math.floor(game.timer / 1000);
+  draw() {
+    const game = this.game;
+    const mode = game.mode;
+    const ctx = this.ctx;
+    ctx.clearRect(0, 0, UI.DIM_X, UI.DIM_Y);
+    this.scoreText.string = `Score: ${game.score}`;
+    this.multiplierText.string = `x${game.scoreMultiplier}`;
+    this.modeText.string = `Mode: ${mode}`;
+    this.timeText.string = `Time: ${Math.floor(game.timer / 1000)}`;
 
     // Choose which information to display based on the game mode
     if (mode === "Classic"){
-      this.scoreText.draw(this.ctx);
-      this.multiplierText.draw(this.ctx);
+      this.scoreText.draw(ctx);
+      this.multiplierText.draw(ctx);
     }
     if (_.includes(["Bossteroid", "Super Bossteroid", "Classic"], mode)) {
-      this.drawShipIcons(this.ctx);
+      this.drawShipIcons(ctx);
     }
-    if (_.includes(["Bossteroid", "Super Bossteroid", "Dodgeball"], mode)){
-      this.timeText.draw(this.ctx);
+    if (_.includes(["Bossteroid", "Super Bossteroid", "Dodgeball"], mode)) {
+      this.timeText.draw(ctx);
     }
-    this.modeText.draw(this.ctx);
-  };
+    this.modeText.draw(ctx);
+  }
 
   // The ship icons represent how many lives the player has left
-  drawShipIcons(ctx){
-    for (var i = 0; i < this.game.lives; i++){
-      var shipPos = [20 + 25 * i, 90];
-      var shipRadius = this.game.ship.radius;
-      var turretRadius = this.game.ship.turret.radius;
-      var color = SETTINGS.ship.color;
+  drawShipIcons(ctx) {
+    for (let i = 0; i < this.game.lives; i++) {
+      const shipPos = [20 + 25 * i, 90];
+      const shipRadius = this.game.ship.radius;
+      const turretRadius = this.game.ship.turret.radius;
+      const color = SETTINGS.ship.color;
 
       ctx.fillStyle = color;
       ctx.beginPath();

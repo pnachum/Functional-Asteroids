@@ -8,9 +8,9 @@ class GameText {
     this.color = color;
   }
 
-  draw(ctx){
+  draw(ctx) {
     ctx.fillStyle = this.color;
-    ctx.font = this.size + "pt Arial ";
+    ctx.font = `${this.size}pt Arial `;
     ctx.fillText(this.string, this.pos[0], this.pos[1]);
   }
 }

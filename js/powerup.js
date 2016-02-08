@@ -27,18 +27,18 @@ class Powerup extends MovingObject {
   }
 
   static randomPowerup(game) {
-    var position = [_.random(0, 500), _.random(0, 500)];
+    const position = [_.random(0, 500), _.random(0, 500)];
     var types = Powerup.typesForMode[game.mode];
     // If the player has 2 or more lives, don't spawn extra life powerups
     if (game.lives >= 2) {
       types = _.without(types, "life");
     }
-    var type = _.sample(types);
+    const type = _.sample(types);
 
     return new Powerup(position, type, game);
-  };
+  }
 
-  constructor(pos, type, game){
+  constructor(pos, type, game) {
     // Powerups don't actually move, so their velocity is always [0, 0]
     super(pos, [0, 0], SETTINGS.powerups.radius, Powerup.colorMap[type]);
     this.type = type;
@@ -46,8 +46,7 @@ class Powerup extends MovingObject {
   }
 
   applyEffect() {
-    var game = this.game;
-    var ship = game.ship;
+    const game = this.game;
 
     switch (this.type) {
     case "bullet":

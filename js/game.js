@@ -1,6 +1,5 @@
 const Asteroid = require("./asteroid"),
   Ship = require("./ship"),
-  StandardBullet = require("./standardBullet"),
   GameText = require("./gameText"),
   SETTINGS = require("./settings"),
   UI = require("./gameUI"),
@@ -50,64 +49,58 @@ class Game {
     this.audioController = new AudioController();
   }
 
-  addRandomAsteroids(numAsteroids){
-    var output = [];
-    var options = {dodgeball: false};
-    if (this.mode === "Dodgeball"){
-      options.dodgeball = true;
-    }
+  addRandomAsteroids(numAsteroids) {
+    const options = {
+      dodgeball: this.mode === "Dodgeball"
+    };
 
-    for (var i = 0; i < numAsteroids; i++){
-      var randomAsteroid = Asteroid.randomAsteroid(Game.DIM_X, Game.DIM_Y, options);
-      output.push(randomAsteroid);
-    }
-    return output;
+    return _.range(numAsteroids).map( (i) => {
+      return Asteroid.randomAsteroid(Game.DIM_X, Game.DIM_Y, options);
+    });
   }
 
-  bindKeyHandlers(){
-    var ship = this.ship;
-    var game = this;
+  bindKeyHandlers() {
+    const ship = this.ship;
 
-    key('space', function(){
+    key('space', () => {
       // There's a limit to how many bullets can be in the game at once
-      if (game.bullets.length < SETTINGS.bullets.standard.maximumNumber){
-        game.bullets.push(ship.fireBullet());
-        game.audioController.laser()
+      if (this.bullets.length < SETTINGS.bullets.standard.maximumNumber){
+        this.bullets.push(ship.fireBullet());
+        this.audioController.laser()
       }
     });
 
-    key("P", function(){
-      game.togglePause();
+    key("P", () => {
+      this.togglePause();
     });
   }
 
   // Handles collisions between bullets and asteroids or the ship and asteroids
-  checkCollisions(){
-    var ship = this.ship;
-    var bullets = this.bullets;
-    var game = this;
-    var asteroidsToDestroy = [];
-    var bulletsToRemove = [];
+  checkCollisions() {
+    const ship = this.ship;
+    const bullets = this.bullets;
+    const asteroidsToDestroy = [];
+    const bulletsToRemove = [];
 
     // Check for collisions between each asteroid and the ship or a bullet
-    this.asteroids.forEach(function(asteroid) {
+    for (let asteroid of this.asteroids) {
       if (!ship.invincible && ship.isCollidedWith(asteroid)) {
-        game.died();
-        game.destroyAsteroid(asteroid, {givePoints: false});
+        this.died();
+        this.destroyAsteroid(asteroid, {givePoints: false});
       }
 
-      bullets.forEach(function(bullet){
+      for (let bullet of bullets) {
         if (bullet.isCollidedWith(asteroid)){
           bulletsToRemove.push(bullet);
           asteroidsToDestroy.push(asteroid);
         }
-      });
-    });
+      }
+    }
 
     // Check for collisions between each powerup and the ship.
     var k = 0;
     while (k < this.powerups.length) {
-      var powerup = this.powerups[k];
+      let powerup = this.powerups[k];
       if (ship.isCollidedWith(powerup)){
         powerup.applyEffect();
         removeFromArray(this.powerups, powerup);
@@ -116,13 +109,9 @@ class Game {
       }
     }
 
-    asteroidsToDestroy.forEach(function(asteroid){
-      game.destroyAsteroid(asteroid);
-    });
+    asteroidsToDestroy.forEach( (asteroid) => this.destroyAsteroid(asteroid));
 
-    bulletsToRemove.forEach(function(bullet){
-      removeFromArray(game.bullets, bullet);
-    });
+    bulletsToRemove.forEach( (bullet) => removeFromArray(this.bullets, bullet));
   }
 
   // TODO: Make this work
@@ -151,40 +140,38 @@ class Game {
   //   otherAsteroid.vel = [u2x, u2y];
   // }
 
-  destroyAsteroid(asteroid, options){
+  destroyAsteroid(asteroid, options) {
     // An asteroid can be destroyed either by the ship colliding with it, or a
     // bullet colliding with it. Points are only given points if it was a bullet
     options = options || {givePoints: true};
 
-    var game = this;
-    var newRadius = asteroid.radius * (1 / Math.sqrt(2));
+    const newRadius = asteroid.radius * (1 / Math.sqrt(2));
     // minimumRadius specifies how small an asteroid can be before it was
     // actually destroyed, versus being split into two smaller asteroids
     if (newRadius > SETTINGS.asteroids.minimumRadius) {
-      game.audioController.asteroidBreak();
+      this.audioController.asteroidBreak();
       if (options.givePoints) {
-        game.score += (2 * game.scoreMultiplier);
+        this.score += (2 * this.scoreMultiplier);
       }
       var newAsteroids = asteroid.split(Game.DIM_X, Game.DIM_Y, newRadius);
       this.asteroids = this.asteroids.concat(newAsteroids);
     } else {
       // If the asteroid was small enough to actually be destroyed, it turns
       // into debris
-      game.debris = game.debris.concat(asteroid.explode());
+      this.debris = this.debris.concat(asteroid.explode());
       if (options.givePoints) {
         // More points are awarded when an asteroid is fully destroyed
-        game.score += (10 * game.scoreMultiplier);
+        this.score += (10 * this.scoreMultiplier);
       }
-      game.audioController.asteroidDestroy();
+      this.audioController.asteroidDestroy();
     }
-    removeFromArray(game.asteroids, asteroid);
+    removeFromArray(this.asteroids, asteroid);
   }
 
-  died(){
-    var game = this;
+  died() {
     var ship = this.ship;
 
-    game.lives -= 1;
+    this.lives -= 1;
     // Set the ship's position to the middle of the screen
     ship.pos = [250, 250];
     // The ship is made invincible at first.
@@ -193,19 +180,15 @@ class Game {
     ship.vel = [0, 0];
   }
 
-  draw(){
+  draw() {
     this.ui.draw();
-    var ctx = this.ctx;
+    const ctx = this.ctx;
 
     ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
 
-    this.asteroids.forEach(function(asteroid){
-      asteroid.draw(ctx);
-    });
+    this.asteroids.forEach( (asteroid) => asteroid.draw(ctx));
 
-    this.powerups.forEach(function(powerup){
-      powerup.draw(ctx);
-    });
+    this.powerups.forEach( (powerup) => powerup.draw(ctx));
 
     // Bullets and debris may need to be removed, since they travel for a
     // limited distance
@@ -217,36 +200,28 @@ class Game {
 
   // Debris and bullet objects may need to be removed since they travel for
   // a limited distance
-  drawAndRemove(objects){
-    var game = this;
-    var objectsToRemove = [];
-    objects.forEach(function(object){
-      // bullet and debris' draw method returns false if the object is out of
-      // distance to travel
-      if (!object.draw(game.ctx)){
-        objectsToRemove.push(object);
-      }
-    });
+  drawAndRemove(objects) {
+    // bullet and debris' draw method returns false if the object is out of
+    // distance to travel
+    const objectsToRemove = objects.filter( (object) => !object.draw(this.ctx));
 
-    objectsToRemove.forEach(function(object){
-      removeFromArray(objects, object);
-    });
+    objectsToRemove.forEach( (object) => removeFromArray(objects, object));
   }
 
-  gameOver(options){
-    var time = Math.floor(this.timer / 1000);
+  gameOver(options) {
+    const time = Math.floor(this.timer / 1000);
     var stringToAlert;
     // The game can end either because the player died, or because the player
     // defeated the bossteroid
-    if (options.dead === true) {
+    if (options.dead) {
       this.audioController.gameOver();
       if (this.mode === "Dodgeball") {
-        stringToAlert = "Game Over! You survived for " + time + " seconds";
+        stringToAlert = `Game Over! You survived for ${time} seconds`;
       } else {
-        stringToAlert = "Game Over! Your score is " + this.score + ". You survived for " + time + " seconds";
+        stringToAlert = `Game Over! Your score is ${this.score}. You survived for ${time} seconds`;
       }
     } else {
-      stringToAlert = "You win! That took you " + time + " seconds.";
+      stringToAlert = `You win! That took you ${time} seconds.`;
     }
     alert(stringToAlert);
     this.stop();
@@ -254,9 +229,9 @@ class Game {
 
   // The game's difficulty increases over time. The asteroids move faster and
   // spawn larger
-  increaseDifficulty(){
+  increaseDifficulty() {
     if (!_.includes(["Bossteroid", "Super Bossteroid"], this.mode)) {
-      var difficulty = SETTINGS.difficulty;
+      const difficulty = SETTINGS.difficulty;
       Asteroid.speed += difficulty.asteroidSpeedIncrease;
       Asteroid.spawnRadius *= difficulty.asteroidSpawnRadiusMultiplier;
       Asteroid.minimumArea *= difficulty.minimumAsteroidAreaMultiplier;
@@ -267,9 +242,8 @@ class Game {
     this.scoreMultiplier += 1;
   }
 
-  keyPressListener(){
-    var ship = this.ship;
-    var game = this;
+  keyPressListener() {
+    const ship = this.ship;
 
     if (key.isPressed('up')){
       ship.power(ship.setVel());
@@ -285,33 +259,30 @@ class Game {
   }
 
   // Move all the objects in the game
-  move(){
-    var asteroids = this.asteroids;
-    var debris = this.debris;
-    var bullets = this.bullets;
-    var ship = [this.ship];
+  move() {
+    const asteroids = this.asteroids;
+    const debris = this.debris;
+    const bullets = this.bullets;
+    const ship = [this.ship];
 
-    var movableObjects = asteroids.concat(debris).concat(bullets).concat(ship);
-    movableObjects.forEach(function(object) {
-      object.move();
-    });
+    const movableObjects = asteroids.concat(debris).concat(bullets).concat(ship);
+    movableObjects.forEach( (object) => object.move());
   }
 
-  start(){
-    var interval = Math.floor(1000/Game.FPS);
-    var that = this;
-    this.intervalID = window.setInterval(that.step.bind(that), interval);
+  start() {
+    const interval = Math.floor(1000/Game.FPS);
+    this.intervalID = window.setInterval(this.step.bind(this), interval);
   }
 
-  step(){
-    var now = Date.now();
+  step() {
+    const now = Date.now();
     this.timer = Math.floor(now - this.startTime) + this.elapsedTime;
 
     if (this.lives < 0){
       this.gameOver({dead: true});
     }
 
-    var difficultyTimer = (this.timer) % (SETTINGS.difficulty.timeInterval * 1000);
+    const difficultyTimer = (this.timer) % (SETTINGS.difficulty.timeInterval * 1000);
     // Increase difficulty every 30 seconds
     if (difficultyTimer < 30){
       this.increaseDifficulty();
@@ -321,8 +292,8 @@ class Game {
       }
     }
 
-    var ship = this.ship;
-    var invincibilityTimer = (now - this.ship.spawnTime);
+    const ship = this.ship;
+    const invincibilityTimer = (now - this.ship.spawnTime);
     if (invincibilityTimer > SETTINGS.ship.invincibilityTime * 1000) {
       ship.invincible = false;
     }
@@ -337,27 +308,19 @@ class Game {
       this.asteroids = this.asteroids.concat(this.addRandomAsteroids(1));
     }
 
-    var mode = this.mode;
-    var numAsteroids = this.asteroids.length;
+    const mode = this.mode;
+    const numAsteroids = this.asteroids.length;
     if ((mode === "Bossteroid" || mode === "Super Bossteroid") && numAsteroids === 0){
       this.gameOver({dead: false});
     }
   }
 
-  stop(){
+  stop() {
     clearInterval(this.intervalID);
   }
 
-  sumOfAsteroidAreas(){
-    var areas = this.asteroids.map(function(asteroid){
-      return asteroid.area();
-    });
-
-    var sum = areas.reduce(function(a, b){
-      return a + b;
-    }, 0);
-
-    return sum;
+  sumOfAsteroidAreas() {
+    return _.sumBy(this.asteroids, (asteroid) => asteroid.area());
   }
 
   togglePause(){

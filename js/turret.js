@@ -11,11 +11,11 @@ class Turret extends Rotateable {
   }
 
   constructor(ship) {
-    var startingPos = [ship.pos[0], ship.pos[1] - ship.radius];
+    const startingPos = [ship.pos[0], ship.pos[1] - ship.radius];
     super(ship, startingPos, Turret.RADIUS, ship.color, 90);
   }
 
-  fireBullet(){
+  fireBullet() {
     return new StandardBullet(this);
   }
 }

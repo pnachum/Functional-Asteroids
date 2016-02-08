@@ -1,5 +1,5 @@
 const Helpers = {
-  toRadians(degrees){
+  toRadians(degrees) {
     return degrees * (Math.PI / 180);
   },
 

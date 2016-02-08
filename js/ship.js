@@ -2,7 +2,6 @@ const SETTINGS = require('./settings'),
   MovingObject = require('./movingObject'),
   Turret = require('./turret'),
   Thruster = require('./thruster'),
-  toRadians = require('./helpers').toRadians,
   key = require('keymaster');
 
 class Ship extends MovingObject {
@@ -23,7 +22,7 @@ class Ship extends MovingObject {
     return SETTINGS.ship.maxSpeed;
   }
 
-  constructor(){
+  constructor() {
     super(Ship.CENTER, [0, 0], Ship.RADIUS, Ship.COLOR);
     this.turret = new Turret(this);
     this.thruster = new Thruster(this);
@@ -40,7 +39,7 @@ class Ship extends MovingObject {
     if (this.invincible){
       this.drawFlashing(ctx);
     } else {
-      MovingObject.prototype.draw.call(this, ctx);
+      super.draw(ctx);
       this.turret.draw(ctx);
     }
     if (key.isPressed('up')){
@@ -52,7 +51,7 @@ class Ship extends MovingObject {
     // Only draw the ship in some frames if the ship is invincible to make it
     // flash
     if (this.frame < 3){
-      MovingObject.prototype.draw.call(this, ctx);
+      super.draw(ctx);
       this.turret.draw(ctx);
     }
     this.frame = (this.frame + 1) % 5;
@@ -63,26 +62,20 @@ class Ship extends MovingObject {
   }
 
   move() {
-    MovingObject.prototype.move.call(this);
+    super.move();
     this.turret.move();
     this.thruster.move();
 
-    var airResistance = SETTINGS.ship.airResistance;
+    const airResistance = SETTINGS.ship.airResistance;
 
-    if (this.vel[0] > airResistance){
-      this.vel[0] -= airResistance;
-    } else if (this.vel[0] < -airResistance) {
-      this.vel[0] += airResistance;
-    } else {
-      this.vel[0] = 0;
-    }
-
-    if (this.vel[1] > airResistance){
-      this.vel[1] -= airResistance;
-    } else if (this.vel[1] < -airResistance){
-      this.vel[1] += airResistance;
-    } else {
-      this.vel[1] = 0;
+    for (let i of [0, 1]) {
+      if (this.vel[i] > airResistance){
+        this.vel[i] -= airResistance;
+      } else if (this.vel[i] < -airResistance) {
+        this.vel[i] += airResistance;
+      } else {
+        this.vel[i] = 0;
+      }
     }
   }
 
@@ -91,10 +84,10 @@ class Ship extends MovingObject {
     var newVelY = this.vel[1] + impulse[1];
 
     // Enforce that the ship's speed does not exceed MAXSPEED
-    var minX = Math.min(Ship.MAXSPEED, Math.abs(newVelX))
+    const minX = Math.min(Ship.MAXSPEED, Math.abs(newVelX))
     newVelX = newVelX >= 0 ? minX : -minX;
 
-    var minY = Math.min(Ship.MAXSPEED, Math.abs(newVelY))
+    const minY = Math.min(Ship.MAXSPEED, Math.abs(newVelY))
     newVelY = newVelY >= 0 ? minY : -minY;
 
     this.vel = [newVelX, newVelY];
@@ -105,13 +98,11 @@ class Ship extends MovingObject {
   rotate(direction) {
     this.turret.rotate(direction);
     this.thruster.rotate(direction);
-  };
+  }
 
   setVel() {
-    var accel = SETTINGS.ship.acceleration;
-    return this.direction().map(function(d){
-      return d * accel;
-    });
+    const accel = SETTINGS.ship.acceleration;
+    return this.direction().map( (d) => d * accel);
   }
 }
 

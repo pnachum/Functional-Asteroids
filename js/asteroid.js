@@ -20,33 +20,31 @@ class Asteroid extends MovingObject {
       radius = Asteroid.spawnRadius;
     }
 
-    var randomPos = Asteroid.randomPos(dimX, dimY);
-    var randomVel = Asteroid.randomVel(dimX, dimY, Asteroid.speed);
+    const randomPos = Asteroid.randomPos(dimX, dimY);
+    const randomVel = Asteroid.randomVel(dimX, dimY, Asteroid.speed);
     return new Asteroid(randomPos, randomVel, radius, Asteroid.speed);
   }
 
   // Pick a random position along the edge of the game for the asteroid to
   // spawn at
   static randomPos(dimX, dimY, ship) {
-    var radius = Asteroid.spawnRadius;
-    var randomX = _.random(-radius, dimX + radius);
-    var randomY = _.random(-radius, dimY + radius);
-    var edgeX = _.sample([-radius, dimX + radius]);
-    var edgeY = _.sample([-radius, dimY + radius]);
-    var candidate1 = [edgeX, randomY];
-    var candidate2 = [randomX, edgeY];
+    const radius = Asteroid.spawnRadius;
+    const randomX = _.random(-radius, dimX + radius);
+    const randomY = _.random(-radius, dimY + radius);
+    const edgeX = _.sample([-radius, dimX + radius]);
+    const edgeY = _.sample([-radius, dimY + radius]);
+    const candidate1 = [edgeX, randomY];
+    const candidate2 = [randomX, edgeY];
     return _.sample([candidate1, candidate2]);
   }
 
   // Pick a random direction for the asteroid to begin moving in
   static randomVel(dimX, dimY, intensity) {
-    var rangeX = (intensity * dimX) / 125;
-    var rangeY = (intensity * dimY) / 125;
-    var xDirection = _.sample([-1, 1]);
-    var yDirection = _.sample([-1, 1]);
-    var randomDx = _.random(1, rangeX) * xDirection;
-    var randomDy = _.random(1, rangeY) * yDirection;
-    return [randomDx, randomDy];
+    return [dimX, dimY].map( (dim) => {
+      const range = (intensity * dim) / 125;
+      const direction = _.sample([-1, 1]);
+      return _.random(1, range) * direction;
+    });
   }
 
   constructor(pos, vel, radius, spawnedSpeed) {
@@ -60,35 +58,32 @@ class Asteroid extends MovingObject {
   // When an asteroid is hit with a bullet, it either breaks up into two
   // new asteroids, or if it's small enough, it explodes. In this case, it
   // is replaced with Debris objects.
-  explode(){
-    var pos = this.pos;
-    var vels = [];
-    var numDebris = SETTINGS.debris.number;
-    var angle = 360 / numDebris;
+  explode() {
+    const pos = this.pos;
+    const vels = [];
+    const numDebris = SETTINGS.debris.number;
+    const angle = 360 / numDebris;
 
-    for (var i = 0; i < numDebris; i++){
-      var degree = angle * i;
+    for (let i = 0; i < numDebris; i++){
+      let degree = angle * i;
       vels.push([Math.cos(degree), Math.sin(degree)]);
     }
 
-    return vels.map(function(vel){
-      return new Debris(pos.slice(), vel);
-    });
+    return vels.map( (vel) => new Debris(pos.slice(), vel));
   }
 
   split(dimX, dimY, newRadius) {
     // The two new asteroids spawn at the position that the old asteroid was
     // destroyed
-    var pos = this.pos;
+    const pos = this.pos;
     // They spawn at the same speed that the original asteroid spawned at,
     // but with random directions
-    var spawnedSpeed = this.spawnedSpeed;
-    var vel1 = Asteroid.randomVel(dimX, dimY, spawnedSpeed);
-    var vel2 = Asteroid.randomVel(dimX, dimY, spawnedSpeed);
-
-    var asteroid_one = new Asteroid(pos.slice(), vel1, newRadius, spawnedSpeed);
-    var asteroid_two = new Asteroid(pos.slice(), vel2, newRadius, spawnedSpeed);
-    return [asteroid_one, asteroid_two];
+    const spawnedSpeed = this.spawnedSpeed;
+    const vel1 = Asteroid.randomVel(dimX, dimY, spawnedSpeed);
+    const vel2 = Asteroid.randomVel(dimX, dimY, spawnedSpeed);
+    return [vel1, vel2].map((vel) => {
+      return new Asteroid(pos.slice(), vel, newRadius, spawnedSpeed)
+    });
   }
 
   area() {

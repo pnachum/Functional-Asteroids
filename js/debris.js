@@ -9,25 +9,25 @@ class Debris extends MovingObject {
     return SETTINGS.debris.speed;
   }
 
-  constructor(pos, vel){
-    var radius = SETTINGS.debris.radius;
+  constructor(pos, vel) {
+    const radius = SETTINGS.debris.radius;
     // Debris has the same color as the asteroids
-    var color = SETTINGS.asteroids.color;
+    const color = SETTINGS.asteroids.color;
 
     super(pos, vel, radius, color);
     this.availableDistance = SETTINGS.debris.distance;
   }
 
-  move(){
-    MovingObject.prototype.move.call(this);
+  move() {
+    super.move();
     this.availableDistance -= Debris.SPEED;
   }
 
-  draw(ctx){
+  draw(ctx) {
     // If the debris has available distance left to travel, just call the
     // MovingObject's draw function. Otherwise, don't call it.
     if (this.availableDistance > 0){
-      MovingObject.prototype.draw.call(this, ctx);
+      super.draw(ctx);
       return true;
     } else {
       return false;

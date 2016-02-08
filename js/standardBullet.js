@@ -31,10 +31,8 @@ class StandardBullet extends MovingObject {
     return SETTINGS.bullets.standard.color;
   }
 
-  static setVel(turret){
-    return turret.direction().map(function(d){
-      return StandardBullet.SPEED * d;
-    });
+  static setVel(turret) {
+    return turret.direction().map( (d) => StandardBullet.SPEED * d);
   }
 
   constructor(turret) {

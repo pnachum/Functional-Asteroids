@@ -36,14 +36,14 @@ class MovingObject {
       return false;
     }
 
-    var distance = this.distance(otherObject)
-    return (distance < this.radius + otherObject.radius);
+    const distance = this.distance(otherObject)
+    return distance < this.radius + otherObject.radius;
   }
 
   // Handles wrapping the object around the edge of the screen, so that when it
   // goes off of one edge, it re-appears on the opposite side of the screen
   mapToScreen() {
-    var radius = this.radius
+    const radius = this.radius
     if (this.pos[0] >= 500 + radius){
       this.pos[0] -= (500 + 2 * radius)
     } else if (this.pos[0] <= 0 - radius) {

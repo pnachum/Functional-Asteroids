@@ -3,25 +3,25 @@ class AudioController {
 
   laser() {
     this.playSound('laser');
-  };
+  }
 
   asteroidBreak() {
     this.playSound('asteroidBreak');
-  };
+  }
 
   asteroidDestroy() {
     this.playSound('asteroidDestroy');
-  };
+  }
 
   gameOver() {
     this.playSound('gameOver');
-  };
+  }
 
   playSound(sound) {
-    var soundPath = 'audio/' + sound + '.mp3';
-    var audio = new Audio(soundPath);
+    const soundPath = `audio/${sound}.mp3`;
+    const audio = new Audio(soundPath);
     audio.play();
-  };
+  }
 
 }
 

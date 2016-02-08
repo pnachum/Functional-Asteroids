@@ -1,5 +1,4 @@
 const MovingObject = require('./movingObject'),
-  Ship = require('./ship'),
   SETTINGS = require('./settings'),
   toRadians = require('./helpers').toRadians;
 
@@ -7,30 +6,29 @@ const MovingObject = require('./movingObject'),
 // which rotate around the ship, instead of moving normally.
 class Rotateable extends MovingObject {
 
-  constructor(ship, pos, radius, color, degree){
+  constructor(ship, pos, radius, color, degree) {
     super(pos, [0, 0], radius, color);
     this.degree = degree;
     this.ship = ship;
   }
 
-  direction(){
+  direction() {
     var x = Math.cos(toRadians(this.degree));
     var y = -Math.sin(toRadians(this.degree));
     return [x, y];
   }
 
-  move(){
-    var ship = this.ship;
-    var shipX = ship.pos[0];
-    var shipY = ship.pos[1];
+  move() {
+    const ship = this.ship;
+    const [shipX, shipY] = ship.pos;
 
-    var distX = ship.radius * Math.cos(toRadians(this.degree));
-    var distY = ship.radius * Math.sin(toRadians(this.degree));
+    const distX = ship.radius * Math.cos(toRadians(this.degree));
+    const distY = ship.radius * Math.sin(toRadians(this.degree));
 
     this.pos = [shipX + distX, shipY - distY];
   }
 
-  rotate(direction){
+  rotate(direction) {
     this.degree = (this.degree + (direction * SETTINGS.ship.turnSpeed)) % 360;
   }
 }
