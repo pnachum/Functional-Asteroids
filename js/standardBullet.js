@@ -1,7 +1,7 @@
-const MovingObject = require('./movingObject'),
-  SETTINGS = require('./settings');
+import MovingObject from './movingObject';
+import SETTINGS from './settings';
 
-class StandardBullet extends MovingObject {
+export default class StandardBullet extends MovingObject {
 
   static get SPEED() {
     return SETTINGS.bullets.standard.speed;
@@ -54,7 +54,4 @@ class StandardBullet extends MovingObject {
     super.move();
     this.availableDistance -= StandardBullet.SPEED;
   }
-
 }
-
-module.exports = StandardBullet;

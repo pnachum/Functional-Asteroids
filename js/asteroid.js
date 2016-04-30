@@ -1,8 +1,8 @@
-const MovingObject = require('./movingObject'),
-  SETTINGS = require('./settings'),
-  Debris = require('./debris');
+import MovingObject from './movingObject';
+import SETTINGS from './settings';
+import Debris from './debris';
 
-class Asteroid extends MovingObject {
+export default class Asteroid extends MovingObject {
 
   static setConstants() {
     Asteroid.minimumArea = SETTINGS.asteroids.startingMinimumArea;
@@ -90,5 +90,3 @@ class Asteroid extends MovingObject {
     return Math.PI * Math.pow(this.radius, 2);
   }
 }
-
-module.exports = Asteroid;

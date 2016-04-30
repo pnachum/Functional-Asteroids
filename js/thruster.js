@@ -1,9 +1,9 @@
-const Rotateable = require('./rotateable'),
-  SETTINGS = require('./settings');
+import Rotateable from './rotateable';
+import SETTINGS from './settings';
 
 // The thruster is the yellow circle that appears behind the ship when it's
 // moving
-class Thruster extends Rotateable {
+export default class Thruster extends Rotateable {
 
   static get RADIUS() {
     return SETTINGS.ship.thrusterRadius;
@@ -17,7 +17,4 @@ class Thruster extends Rotateable {
     const startingPos = [ship.pos[0], ship.pos[1] + ship.radius]
     super(ship, startingPos, Thruster.RADIUS, Thruster.COLOR, 270);
   }
-
 }
-
-module.exports = Thruster;

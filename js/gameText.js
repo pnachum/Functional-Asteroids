@@ -1,5 +1,5 @@
 // The GameText class handles any text that is displayed in a canvas
-class GameText {
+export default class GameText {
 
   constructor(string, size, pos, color) {
     this.string = string;
@@ -14,5 +14,3 @@ class GameText {
     ctx.fillText(this.string, this.pos[0], this.pos[1]);
   }
 }
-
-module.exports = GameText;

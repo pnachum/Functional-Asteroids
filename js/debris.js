@@ -1,9 +1,9 @@
-const MovingObject = require('./movingObject'),
-  SETTINGS = require('./settings');
+import MovingObject from './movingObject';
+import SETTINGS from './settings';
 
 // Debris objects are the small circles which make the asteroid look like
 // it's exploding. They travel for a limited distance before disappearing
-class Debris extends MovingObject {
+export default class Debris extends MovingObject {
 
   static get SPEED() {
     return SETTINGS.debris.speed;
@@ -34,5 +34,3 @@ class Debris extends MovingObject {
     }
   }
 }
-
-module.exports = Debris;

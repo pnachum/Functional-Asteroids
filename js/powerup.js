@@ -1,10 +1,10 @@
-const MovingObject = require('./movingObject'),
-  SETTINGS = require('./settings'),
-  StandardBullet = require('./standardBullet');
+import MovingObject from './movingObject';
+import SETTINGS from './settings';
+import StandardBullet from './standardBullet';
 
 // Powerups are colored circles that occasionally appear on the screen.
 // Moving the ship over them provides some bonus
-class Powerup extends MovingObject {
+export default class Powerup extends MovingObject {
 
   // The bullet powerup is represented by the color of the bullet (red by
   // default). The extra life powerup is represented by the color of the ship (
@@ -71,5 +71,3 @@ class Powerup extends MovingObject {
     }
   }
 }
-
-module.exports = Powerup;

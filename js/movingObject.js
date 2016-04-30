@@ -2,7 +2,7 @@
 // including asteroids, the ship, bullets, etc.
 // It specifies a position, a velocity (which also represents direction),
 // a size, and a color.
-class MovingObject {
+export default class MovingObject {
 
   constructor(pos, vel, radius, color) {
     this.pos = pos;
@@ -62,7 +62,4 @@ class MovingObject {
     this.pos[1] += this.vel[1];
     this.mapToScreen();
   }
-
 }
-
-module.exports = MovingObject;

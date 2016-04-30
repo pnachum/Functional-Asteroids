@@ -1,5 +1,5 @@
 // The AudioController is responsible for storing and playing sounds
-class AudioController {
+export default class AudioController {
 
   laser() {
     this.playSound('laser');
@@ -22,7 +22,4 @@ class AudioController {
     const audio = new Audio(soundPath);
     audio.play();
   }
-
 }
-
-module.exports = AudioController;

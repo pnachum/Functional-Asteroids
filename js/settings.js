@@ -82,4 +82,4 @@ const SETTINGS = {
   }
 };
 
-module.exports = SETTINGS;
+export default SETTINGS;

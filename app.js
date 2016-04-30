@@ -1,6 +1,6 @@
-const $ = require('jquery'),
-  Game = require('./js/game'),
-  SETTINGS = require('./js/settings');
+import $ from 'jquery';
+import Game from './js/game';
+import SETTINGS from './js/settings';
 
 $(document).ready(function(){
 

@@ -1,10 +1,10 @@
-const MovingObject = require('./movingObject'),
-  SETTINGS = require('./settings'),
-  toRadians = require('./helpers').toRadians;
+import MovingObject from'./movingObject';
+import SETTINGS from'./settings';
+import { toRadians } from'./helpers';
 
 // Rotateable provides the interface used for the ship's bullet and thruster,
 // which rotate around the ship, instead of moving normally.
-class Rotateable extends MovingObject {
+export default class Rotateable extends MovingObject {
 
   constructor(ship, pos, radius, color, degree) {
     super(pos, [0, 0], radius, color);
@@ -32,5 +32,3 @@ class Rotateable extends MovingObject {
     this.degree = (this.degree + (direction * SETTINGS.ship.turnSpeed)) % 360;
   }
 }
-
-module.exports = Rotateable;

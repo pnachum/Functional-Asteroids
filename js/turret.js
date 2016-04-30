@@ -1,10 +1,10 @@
-const Rotateable = require('./rotateable'),
-  SETTINGS = require('./settings'),
-  StandardBullet = require('./standardBullet');
+import Rotateable from './rotateable';
+import SETTINGS from './settings';
+import StandardBullet from './standardBullet';
 
 // The turret is the small circle in front of the ship where it shoots
 // bullets from.
-class Turret extends Rotateable {
+export default class Turret extends Rotateable {
 
   static get RADIUS() {
     return SETTINGS.ship.turretRadius;
@@ -19,5 +19,3 @@ class Turret extends Rotateable {
     return new StandardBullet(this);
   }
 }
-
-module.exports = Turret;

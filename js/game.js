@@ -1,17 +1,16 @@
-const Asteroid = require("./asteroid"),
-  Ship = require("./ship"),
-  GameText = require("./gameText"),
-  SETTINGS = require("./settings"),
-  UI = require("./gameUI"),
-  Powerup = require("./powerup"),
-  AudioController = require("./audioController"),
-  key = require('keymaster'),
-  _ = require('lodash');
-
-const {toRadians, removeFromArray} = require("./helpers");
+import Asteroid from "./asteroid";
+import Ship from "./ship";
+import GameText from "./gameText";
+import SETTINGS from "./settings";
+import UI from "./gameUI";
+import Powerup from "./powerup";
+import AudioController from "./audioController";
+import key from 'keymaster';
+import _ from 'lodash';
+import { toRadians, removeFromArray } from "./helpers";
 
 // The Game object stores all game state and handles general game logic
-class Game {
+export default class Game {
   static get DIM_X() {
     return 500;
   }
@@ -338,5 +337,3 @@ class Game {
     }
   }
 }
-
-module.exports = Game;

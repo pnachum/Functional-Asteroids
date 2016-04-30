@@ -1,10 +1,10 @@
-const SETTINGS = require('./settings'),
-  MovingObject = require('./movingObject'),
-  Turret = require('./turret'),
-  Thruster = require('./thruster'),
-  key = require('keymaster');
+import SETTINGS from './settings';
+import MovingObject from './movingObject';
+import Turret from './turret';
+import Thruster from './thruster';
+import key from 'keymaster';
 
-class Ship extends MovingObject {
+export default class Ship extends MovingObject {
 
   static get RADIUS() {
     return SETTINGS.ship.radius;
@@ -105,5 +105,3 @@ class Ship extends MovingObject {
     return this.direction().map( (d) => d * accel);
   }
 }
-
-module.exports = Ship;

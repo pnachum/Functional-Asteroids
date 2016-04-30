@@ -1,9 +1,9 @@
-const GameText = require('./gameText'),
-  SETTINGS = require('./settings');
+import GameText from './gameText';
+import SETTINGS from './settings';
 
 // The UI class handles the right-hand panel which displays lives, the score,
 // and elapsed time
-class UI {
+export default class UI {
 
   static get DIM_X() {
     return 250;
@@ -80,5 +80,3 @@ class UI {
     }
   }
 }
-
-module.exports = UI;
