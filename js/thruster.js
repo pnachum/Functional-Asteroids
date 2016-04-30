@@ -14,7 +14,7 @@ export default class Thruster extends Rotateable {
   }
 
   constructor(ship) {
-    const startingPos = [ship.pos[0], ship.pos[1] + ship.radius]
+    const startingPos = [ship.pos[0], ship.pos[1] + ship.radius];
     super(ship, startingPos, Thruster.RADIUS, Thruster.COLOR, 270);
   }
 }

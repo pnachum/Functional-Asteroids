@@ -1,6 +1,7 @@
 import MovingObject from './movingObject';
 import SETTINGS from './settings';
 import Debris from './debris';
+import { sample, random, times } from 'lodash';
 
 export default class Asteroid extends MovingObject {
 
@@ -12,13 +13,8 @@ export default class Asteroid extends MovingObject {
   }
 
   static randomAsteroid(dimX, dimY, options) {
-    var radius;
     // Asteroids in dodgeball have a predefined set of sizes
-    if (options.dodgeball){
-      radius = _.sample([15, 21.2, 30]);
-    } else {
-      radius = Asteroid.spawnRadius;
-    }
+    const radius = options.dodgeball ? sample([15, 21.2, 30]) : Asteroid.spawnRadius;
 
     const randomPos = Asteroid.randomPos(dimX, dimY);
     const randomVel = Asteroid.randomVel(dimX, dimY, Asteroid.speed);
@@ -29,21 +25,21 @@ export default class Asteroid extends MovingObject {
   // spawn at
   static randomPos(dimX, dimY, ship) {
     const radius = Asteroid.spawnRadius;
-    const randomX = _.random(-radius, dimX + radius);
-    const randomY = _.random(-radius, dimY + radius);
-    const edgeX = _.sample([-radius, dimX + radius]);
-    const edgeY = _.sample([-radius, dimY + radius]);
+    const randomX = random(-radius, dimX + radius);
+    const randomY = random(-radius, dimY + radius);
+    const edgeX = sample([-radius, dimX + radius]);
+    const edgeY = sample([-radius, dimY + radius]);
     const candidate1 = [edgeX, randomY];
     const candidate2 = [randomX, edgeY];
-    return _.sample([candidate1, candidate2]);
+    return sample([candidate1, candidate2]);
   }
 
   // Pick a random direction for the asteroid to begin moving in
   static randomVel(dimX, dimY, intensity) {
     return [dimX, dimY].map( (dim) => {
       const range = (intensity * dim) / 125;
-      const direction = _.sample([-1, 1]);
-      return _.random(1, range) * direction;
+      const direction = sample([-1, 1]);
+      return random(1, range) * direction;
     });
   }
 
@@ -64,12 +60,11 @@ export default class Asteroid extends MovingObject {
     const numDebris = SETTINGS.debris.number;
     const angle = 360 / numDebris;
 
-    for (let i = 0; i < numDebris; i++){
-      let degree = angle * i;
-      vels.push([Math.cos(degree), Math.sin(degree)]);
-    }
-
-    return vels.map( (vel) => new Debris(pos.slice(), vel));
+    return times(numDebris + 1, (i) => {
+      const degree = angle * i;
+      const velocity = [Math.cos(degree), Math.sin(degree)];
+      return new Debris(pos.slice(), velocity);
+    });
   }
 
   split(dimX, dimY, newRadius) {
@@ -81,9 +76,7 @@ export default class Asteroid extends MovingObject {
     const spawnedSpeed = this.spawnedSpeed;
     const vel1 = Asteroid.randomVel(dimX, dimY, spawnedSpeed);
     const vel2 = Asteroid.randomVel(dimX, dimY, spawnedSpeed);
-    return [vel1, vel2].map((vel) => {
-      return new Asteroid(pos.slice(), vel, newRadius, spawnedSpeed)
-    });
+    return [vel1, vel2].map((vel) => new Asteroid(pos.slice(), vel, newRadius, spawnedSpeed));
   }
 
   area() {

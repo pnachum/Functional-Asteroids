@@ -13,8 +13,8 @@ export default class Rotateable extends MovingObject {
   }
 
   direction() {
-    var x = Math.cos(toRadians(this.degree));
-    var y = -Math.sin(toRadians(this.degree));
+    const x = Math.cos(toRadians(this.degree));
+    const y = -Math.sin(toRadians(this.degree));
     return [x, y];
   }
 

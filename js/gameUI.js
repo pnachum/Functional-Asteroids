@@ -1,5 +1,6 @@
 import GameText from './gameText';
 import SETTINGS from './settings';
+import { includes, times } from 'lodash';
 
 // The UI class handles the right-hand panel which displays lives, the score,
 // and elapsed time
@@ -15,11 +16,11 @@ export default class UI {
 
   constructor(game, ctx) {
     this.game = game;
-    this.ctx = ctx
+    this.ctx = ctx;
     this.scoreText = new GameText("", 20, [5, 30], "black");
     this.multiplierText = new GameText("", 20, [5, 60], "black");
     this.modeText = new GameText("", 20, [5, 130], "black");
-    this.timeText = new GameText("", 20, [5, 160], "black")
+    this.timeText = new GameText("", 20, [5, 160], "black");
   }
 
   draw() {
@@ -33,14 +34,14 @@ export default class UI {
     this.timeText.string = `Time: ${Math.floor(game.timer / 1000)}`;
 
     // Choose which information to display based on the game mode
-    if (mode === "Classic"){
+    if (mode === "Classic") {
       this.scoreText.draw(ctx);
       this.multiplierText.draw(ctx);
     }
-    if (_.includes(["Bossteroid", "Super Bossteroid", "Classic"], mode)) {
+    if (includes(["Bossteroid", "Super Bossteroid", "Classic"], mode)) {
       this.drawShipIcons(ctx);
     }
-    if (_.includes(["Bossteroid", "Super Bossteroid", "Dodgeball"], mode)) {
+    if (includes(["Bossteroid", "Super Bossteroid", "Dodgeball"], mode)) {
       this.timeText.draw(ctx);
     }
     this.modeText.draw(ctx);
@@ -48,12 +49,12 @@ export default class UI {
 
   // The ship icons represent how many lives the player has left
   drawShipIcons(ctx) {
-    for (let i = 0; i < this.game.lives; i++) {
-      const shipPos = [20 + 25 * i, 90];
-      const shipRadius = this.game.ship.radius;
-      const turretRadius = this.game.ship.turret.radius;
-      const color = SETTINGS.ship.color;
+    const shipRadius = this.game.ship.radius;
+    const turretRadius = this.game.ship.turret.radius;
+    const color = SETTINGS.ship.color;
 
+    times(this.game.lives, (i) => {
+      const shipPos = [20 + 25 * i, 90];
       ctx.fillStyle = color;
       ctx.beginPath();
       ctx.arc(
@@ -77,6 +78,6 @@ export default class UI {
         false
         );
       ctx.fill();
-    }
+    });
   }
 }

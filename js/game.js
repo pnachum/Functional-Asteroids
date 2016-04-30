@@ -6,7 +6,7 @@ import UI from "./gameUI";
 import Powerup from "./powerup";
 import AudioController from "./audioController";
 import key from 'keymaster';
-import _ from 'lodash';
+import { times, sumBy, includes } from 'lodash';
 import { toRadians, removeFromArray } from "./helpers";
 
 // The Game object stores all game state and handles general game logic
@@ -50,12 +50,10 @@ export default class Game {
 
   addRandomAsteroids(numAsteroids) {
     const options = {
-      dodgeball: this.mode === "Dodgeball"
+      dodgeball: this.mode === "Dodgeball",
     };
 
-    return _.range(numAsteroids).map( (i) => {
-      return Asteroid.randomAsteroid(Game.DIM_X, Game.DIM_Y, options);
-    });
+    return times(numAsteroids, () => Asteroid.randomAsteroid(Game.DIM_X, Game.DIM_Y, options));
   }
 
   bindKeyHandlers() {
@@ -82,22 +80,22 @@ export default class Game {
     const bulletsToRemove = [];
 
     // Check for collisions between each asteroid and the ship or a bullet
-    for (let asteroid of this.asteroids) {
+    this.asteroids.forEach((asteroid) => {
       if (!ship.invincible && ship.isCollidedWith(asteroid)) {
         this.died();
-        this.destroyAsteroid(asteroid, {givePoints: false});
+        this.destroyAsteroid(asteroid, { givePoints: false });
       }
 
-      for (let bullet of bullets) {
+      bullets.forEach((bullet) => {
         if (bullet.isCollidedWith(asteroid)){
           bulletsToRemove.push(bullet);
           asteroidsToDestroy.push(asteroid);
         }
-      }
-    }
+      });
+    });
 
     // Check for collisions between each powerup and the ship.
-    var k = 0;
+    let k = 0;
     while (k < this.powerups.length) {
       let powerup = this.powerups[k];
       if (ship.isCollidedWith(powerup)){
@@ -108,9 +106,8 @@ export default class Game {
       }
     }
 
-    asteroidsToDestroy.forEach( (asteroid) => this.destroyAsteroid(asteroid));
-
-    bulletsToRemove.forEach( (bullet) => removeFromArray(this.bullets, bullet));
+    asteroidsToDestroy.forEach((asteroid) => this.destroyAsteroid(asteroid));
+    bulletsToRemove.forEach((bullet) => removeFromArray(this.bullets, bullet));
   }
 
   // TODO: Make this work
@@ -142,7 +139,7 @@ export default class Game {
   destroyAsteroid(asteroid, options) {
     // An asteroid can be destroyed either by the ship colliding with it, or a
     // bullet colliding with it. Points are only given points if it was a bullet
-    options = options || {givePoints: true};
+    options = options || { givePoints: true };
 
     const newRadius = asteroid.radius * (1 / Math.sqrt(2));
     // minimumRadius specifies how small an asteroid can be before it was
@@ -152,7 +149,7 @@ export default class Game {
       if (options.givePoints) {
         this.score += (2 * this.scoreMultiplier);
       }
-      var newAsteroids = asteroid.split(Game.DIM_X, Game.DIM_Y, newRadius);
+      const newAsteroids = asteroid.split(Game.DIM_X, Game.DIM_Y, newRadius);
       this.asteroids = this.asteroids.concat(newAsteroids);
     } else {
       // If the asteroid was small enough to actually be destroyed, it turns
@@ -168,7 +165,7 @@ export default class Game {
   }
 
   died() {
-    var ship = this.ship;
+    const ship = this.ship;
 
     this.lives -= 1;
     // Set the ship's position to the middle of the screen
@@ -185,9 +182,9 @@ export default class Game {
 
     ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
 
-    this.asteroids.forEach( (asteroid) => asteroid.draw(ctx));
+    this.asteroids.forEach((asteroid) => asteroid.draw(ctx));
 
-    this.powerups.forEach( (powerup) => powerup.draw(ctx));
+    this.powerups.forEach((powerup) => powerup.draw(ctx));
 
     // Bullets and debris may need to be removed, since they travel for a
     // limited distance
@@ -202,14 +199,14 @@ export default class Game {
   drawAndRemove(objects) {
     // bullet and debris' draw method returns false if the object is out of
     // distance to travel
-    const objectsToRemove = objects.filter( (object) => !object.draw(this.ctx));
+    const objectsToRemove = objects.filter((object) => !object.draw(this.ctx));
 
-    objectsToRemove.forEach( (object) => removeFromArray(objects, object));
+    objectsToRemove.forEach((object) => removeFromArray(objects, object));
   }
 
   gameOver(options) {
     const time = Math.floor(this.timer / 1000);
-    var stringToAlert;
+    let stringToAlert;
     // The game can end either because the player died, or because the player
     // defeated the bossteroid
     if (options.dead) {
@@ -229,7 +226,7 @@ export default class Game {
   // The game's difficulty increases over time. The asteroids move faster and
   // spawn larger
   increaseDifficulty() {
-    if (!_.includes(["Bossteroid", "Super Bossteroid"], this.mode)) {
+    if (!includes(["Bossteroid", "Super Bossteroid"], this.mode)) {
       const difficulty = SETTINGS.difficulty;
       Asteroid.speed += difficulty.asteroidSpeedIncrease;
       Asteroid.spawnRadius *= difficulty.asteroidSpawnRadiusMultiplier;
@@ -244,7 +241,7 @@ export default class Game {
   keyPressListener() {
     const ship = this.ship;
 
-    if (key.isPressed('up')){
+    if (key.isPressed('up')) {
       ship.power(ship.setVel());
     }
 
@@ -252,7 +249,7 @@ export default class Game {
       ship.rotate(1);
     }
 
-    if (key.isPressed('right')){
+    if (key.isPressed('right')) {
       ship.rotate(-1)
     }
   }
@@ -265,25 +262,25 @@ export default class Game {
     const ship = [this.ship];
 
     const movableObjects = asteroids.concat(debris).concat(bullets).concat(ship);
-    movableObjects.forEach( (object) => object.move());
+    movableObjects.forEach((object) => object.move());
   }
 
   start() {
     const interval = Math.floor(1000/Game.FPS);
-    this.intervalID = window.setInterval(this.step.bind(this), interval);
+    this.intervalID = setInterval(this.step.bind(this), interval);
   }
 
   step() {
     const now = Date.now();
     this.timer = Math.floor(now - this.startTime) + this.elapsedTime;
 
-    if (this.lives < 0){
-      this.gameOver({dead: true});
+    if (this.lives < 0) {
+      this.gameOver({ dead: true });
     }
 
     const difficultyTimer = (this.timer) % (SETTINGS.difficulty.timeInterval * 1000);
     // Increase difficulty every 30 seconds
-    if (difficultyTimer < 30){
+    if (difficultyTimer < 30) {
       this.increaseDifficulty();
       // There are no powerups in Dodgeball mode
       if (this.mode !== "Dodgeball") {
@@ -307,10 +304,8 @@ export default class Game {
       this.asteroids = this.asteroids.concat(this.addRandomAsteroids(1));
     }
 
-    const mode = this.mode;
-    const numAsteroids = this.asteroids.length;
-    if ((mode === "Bossteroid" || mode === "Super Bossteroid") && numAsteroids === 0){
-      this.gameOver({dead: false});
+    if (includes(["Bossteroid", "Super Bossteroid"], this.mode) && this.asteroids.length === 0) {
+      this.gameOver({ dead: false });
     }
   }
 
@@ -319,11 +314,11 @@ export default class Game {
   }
 
   sumOfAsteroidAreas() {
-    return _.sumBy(this.asteroids, (asteroid) => asteroid.area());
+    return sumBy(this.asteroids, (asteroid) => asteroid.area());
   }
 
   togglePause(){
-    if (this.paused){
+    if (this.paused) {
       // Unpause
       this.startTime = Date.now();
       this.start();

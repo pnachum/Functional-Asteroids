@@ -8,7 +8,7 @@ const SETTINGS = {
     minimumRadius: 10,
     color: 'sienna',
     spawnBufferRange: 200,
-    startingSpeed: 0.5
+    startingSpeed: 0.5,
   },
 
   ship: {
@@ -22,7 +22,7 @@ const SETTINGS = {
     turretColor: 'blue',
     turretRadius: 3,
     airResistance: 0.07,
-    invincibilityTime: 3
+    invincibilityTime: 3,
   },
 
   bullets: {
@@ -31,7 +31,7 @@ const SETTINGS = {
       color: 'red',
       speed: 20,
       maximumNumber: 5,
-      distance: 400
+      distance: 400,
     }
   },
 
@@ -39,18 +39,24 @@ const SETTINGS = {
     radius: 1,
     distance: 400,
     number: 10,
-    speed: 20
+    speed: 20,
   },
 
   difficulty: {
     timeInterval: 10,
     asteroidSpeedIncrease: 0.15,
     asteroidSpawnRadiusMultiplier: 1.0,
-    minimumAsteroidAreaMultiplier: 1.25
+    minimumAsteroidAreaMultiplier: 1.25,
   },
 
   powerups: {
-    radius: 10
+    radius: 10,
+    bullet: {
+      speedMultiplier: 1.5,
+      radiusMultiplier: 2,
+      distanceMultiplier: 1.5,
+      duration: 5000,
+    }
   },
 
   startingLives: 2,
@@ -58,24 +64,24 @@ const SETTINGS = {
   updateMode(newMode) {
     this.mode = newMode;
     // Some settings need to be modified based on the game mode
-    switch (this.mode){
-      case ("Bossteroid"):
+    switch (newMode){
+      case ('Bossteroid'):
         this.asteroids.startingNumber = 1;
         this.asteroids.startingMinimumArea = 0;
         this.asteroids.startingSpawnRadius = 100;
         break;
-      case ("Dodgeball"):
+      case ('Dodgeball'):
         this.bullets.standard.maximumNumber = 0;
         this.startingLives = 0;
         this.difficulty.timeInterval = 5;
         break;
-      case ("Super Bossteroid"):
+      case ('Super Bossteroid'):
         this.asteroids.startingNumber = 1;
         this.asteroids.startingMinimumArea = 0;
         this.asteroids.startingSpawnRadius = 173;
         this.startingLives = 6;
         break;
-      case ("Classic"):
+      case ('Classic'):
         this.asteroids.startingNumber = 2;
         break;
     }

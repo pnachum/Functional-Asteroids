@@ -12,8 +12,8 @@ export default class MovingObject {
   }
 
   distance(otherObject) {
-    var xDiff = this.pos[0] - otherObject.pos[0];
-    var yDiff = this.pos[1] - otherObject.pos[1];
+    const xDiff = this.pos[0] - otherObject.pos[0];
+    const yDiff = this.pos[1] - otherObject.pos[1];
     return Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
   }
 
@@ -34,26 +34,25 @@ export default class MovingObject {
   isCollidedWith(otherObject) {
     if (this === otherObject) {
       return false;
+    } else {
+      return this.distance(otherObject) < this.radius + otherObject.radius;
     }
-
-    const distance = this.distance(otherObject)
-    return distance < this.radius + otherObject.radius;
   }
 
   // Handles wrapping the object around the edge of the screen, so that when it
   // goes off of one edge, it re-appears on the opposite side of the screen
   mapToScreen() {
-    const radius = this.radius
-    if (this.pos[0] >= 500 + radius){
-      this.pos[0] -= (500 + 2 * radius)
+    const radius = this.radius;
+    if (this.pos[0] >= 500 + radius) {
+      this.pos[0] -= (500 + 2 * radius);
     } else if (this.pos[0] <= 0 - radius) {
-      this.pos[0] += (500 + 2 * radius)
+      this.pos[0] += (500 + 2 * radius);
     }
 
     if (this.pos[1] >= 500 + radius){
-      this.pos[1] -= (500 + 2 * radius)
+      this.pos[1] -= (500 + 2 * radius);
     } else if (this.pos[1] <= 0 - radius) {
-      this.pos[1] += (500 + 2 * radius)
+      this.pos[1] += (500 + 2 * radius);
     }
   }
 

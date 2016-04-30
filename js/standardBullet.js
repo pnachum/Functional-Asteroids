@@ -32,7 +32,7 @@ export default class StandardBullet extends MovingObject {
   }
 
   static setVel(turret) {
-    return turret.direction().map( (d) => StandardBullet.SPEED * d);
+    return turret.direction().map((d) => StandardBullet.SPEED * d);
   }
 
   constructor(turret) {

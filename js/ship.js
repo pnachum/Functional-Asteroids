@@ -36,21 +36,21 @@ export default class Ship extends MovingObject {
   }
 
   draw(ctx) {
-    if (this.invincible){
+    if (this.invincible) {
       this.drawFlashing(ctx);
     } else {
       super.draw(ctx);
       this.turret.draw(ctx);
     }
-    if (key.isPressed('up')){
+    if (key.isPressed('up')) {
       this.thruster.draw(ctx);
     }
   }
 
   drawFlashing(ctx) {
     // Only draw the ship in some frames if the ship is invincible to make it
-    // flash
-    if (this.frame < 3){
+    // flash.
+    if (this.frame < 3) {
       super.draw(ctx);
       this.turret.draw(ctx);
     }
@@ -68,26 +68,26 @@ export default class Ship extends MovingObject {
 
     const airResistance = SETTINGS.ship.airResistance;
 
-    for (let i of [0, 1]) {
-      if (this.vel[i] > airResistance){
+    [0, 1].forEach((i) => {
+      if (this.vel[i] > airResistance) {
         this.vel[i] -= airResistance;
       } else if (this.vel[i] < -airResistance) {
         this.vel[i] += airResistance;
       } else {
         this.vel[i] = 0;
       }
-    }
+    });
   }
 
   power(impulse) {
-    var newVelX = this.vel[0] + impulse[0];
-    var newVelY = this.vel[1] + impulse[1];
+    let newVelX = this.vel[0] + impulse[0];
+    let newVelY = this.vel[1] + impulse[1];
 
     // Enforce that the ship's speed does not exceed MAXSPEED
-    const minX = Math.min(Ship.MAXSPEED, Math.abs(newVelX))
+    const minX = Math.min(Ship.MAXSPEED, Math.abs(newVelX));
     newVelX = newVelX >= 0 ? minX : -minX;
 
-    const minY = Math.min(Ship.MAXSPEED, Math.abs(newVelY))
+    const minY = Math.min(Ship.MAXSPEED, Math.abs(newVelY));
     newVelY = newVelY >= 0 ? minY : -minY;
 
     this.vel = [newVelX, newVelY];
@@ -102,6 +102,6 @@ export default class Ship extends MovingObject {
 
   setVel() {
     const accel = SETTINGS.ship.acceleration;
-    return this.direction().map( (d) => d * accel);
+    return this.direction().map((d) => d * accel);
   }
 }
