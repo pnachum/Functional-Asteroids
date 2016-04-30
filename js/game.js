@@ -61,9 +61,9 @@ export default class Game {
 
     key('space', () => {
       // There's a limit to how many bullets can be in the game at once
-      if (this.bullets.length < SETTINGS.bullets.standard.maximumNumber){
+      if (this.bullets.length < SETTINGS.bullets.standard.maximumNumber) {
         this.bullets.push(ship.fireBullet());
-        this.audioController.laser()
+        this.audioController.laser();
       }
     });
 
