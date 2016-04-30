@@ -3,9 +3,9 @@ Asteroids
 
 ## Overview
 
-A deployed version of Asteroids can be found [here](https://philnachumasteroids.firebaseapp.com/). It's a simple variant on the original arcade game.
+A simple variant on the original arcade game. A deployed version of Asteroids can be found [here](https://philnachumasteroids.firebaseapp.com/). 
 
-Asteroids is built using HTML canvas, which draws objects at every frame. The game logic is written in Javascript.
+Asteroids is built using HTML canvas, which draws objects at every frame. The game logic is written in Javascript, using Babel to transpile ES2015. 
 
 ## How to play
 
@@ -18,6 +18,13 @@ On the opening menu, click on a mode to select it, which begins the game. Use th
 * Powerups are periodically placed in the game, which can be picked up for bonuses
 * The game keeps track of the player's score, remaining lives, elapsed time, and score multiplier. These are displayed to the user depending on whether they're relevant to the current game mode.
 * Upon spawning, the ship will be briefly invincible, indicated by flashing.
+
+## Running locally
+
+* Clone the repo
+* `npm install`
+* `webpack`
+* `open index.html`
 
 ## Future Todos
 
