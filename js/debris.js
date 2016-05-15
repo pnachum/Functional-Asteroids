@@ -5,9 +5,7 @@ import SETTINGS from './settings';
 // it's exploding. They travel for a limited distance before disappearing
 export default class Debris extends MovingObject {
 
-  static get SPEED() {
-    return SETTINGS.debris.speed;
-  }
+  static SPEED = SETTINGS.debris.speed;
 
   constructor(pos, vel) {
     const radius = SETTINGS.debris.radius;

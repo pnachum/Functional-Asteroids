@@ -10,22 +10,18 @@ export default class Powerup extends MovingObject {
   // The bullet powerup is represented by the color of the bullet (red by
   // default). The extra life powerup is represented by the color of the ship (
   // blue by default). The score powerup is green.
-  static get colorMap() {
-    return {
-      bullet: SETTINGS.bullets.standard.color,
-      life: SETTINGS.ship.color,
-      score: 'green',
-    };
-  }
+  static colorMap = {
+    bullet: SETTINGS.bullets.standard.color,
+    life: SETTINGS.ship.color,
+    score: 'green',
+  };
 
   // The types of powerups available in each mode
-  static get typesForMode() {
-    return {
-      'Classic': ['life', 'score', 'bullet'],
-      'Bossteroid': ['life', 'bullet'],
-      'Super Bossteroid': ['life', 'bullet'],
-    };
-  }
+  static typesForMode = {
+    'Classic': ['life', 'score', 'bullet'],
+    'Bossteroid': ['life', 'bullet'],
+    'Super Bossteroid': ['life', 'bullet'],
+  };
 
   static randomPowerup(game) {
     const position = [random(0, 500), random(0, 500)];

@@ -11,17 +11,10 @@ import { toRadians, removeFromArray } from "./helpers";
 
 // The Game object stores all game state and handles general game logic
 export default class Game {
-  static get DIM_X() {
-    return 500;
-  }
 
-  static get DIM_Y() {
-    return 500;
-  }
-
-  static get FPS() {
-    return 30;
-  }
+  static DIM_X = 500;
+  static DIM_Y = 500;
+  static FPS = 30;
 
   constructor(ctx, uiContext) {
     Asteroid.setConstants();

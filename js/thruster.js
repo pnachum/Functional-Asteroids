@@ -5,13 +5,8 @@ import SETTINGS from './settings';
 // moving
 export default class Thruster extends Rotateable {
 
-  static get RADIUS() {
-    return SETTINGS.ship.thrusterRadius;
-  }
-
-  static get COLOR() {
-    return SETTINGS.ship.thrusterColor;
-  }
+  static RADIUS = SETTINGS.ship.thrusterRadius;
+  static COLOR = SETTINGS.ship.thrusterColor;
 
   constructor(ship) {
     const startingPos = [ship.pos[0], ship.pos[1] + ship.radius];

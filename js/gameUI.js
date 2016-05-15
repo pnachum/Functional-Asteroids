@@ -6,13 +6,8 @@ import { includes, times } from 'lodash';
 // and elapsed time
 export default class UI {
 
-  static get DIM_X() {
-    return 250;
-  }
-
-  static get DIM_Y() {
-    return 500;
-  }
+  static DIM_X = 250;
+  static DIM_Y = 500;
 
   constructor(game, ctx) {
     this.game = game;

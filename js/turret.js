@@ -6,9 +6,7 @@ import StandardBullet from './standardBullet';
 // bullets from.
 export default class Turret extends Rotateable {
 
-  static get RADIUS() {
-    return SETTINGS.ship.turretRadius;
-  }
+  static RADIUS = SETTINGS.ship.turretRadius;
 
   constructor(ship) {
     const startingPos = [ship.pos[0], ship.pos[1] - ship.radius];

@@ -6,21 +6,10 @@ import key from 'keymaster';
 
 export default class Ship extends MovingObject {
 
-  static get RADIUS() {
-    return SETTINGS.ship.radius;
-  }
-
-  static get COLOR() {
-    return SETTINGS.ship.color;
-  }
-
-  static get CENTER() {
-    return [250, 250];
-  }
-
-  static get MAXSPEED() {
-    return SETTINGS.ship.maxSpeed;
-  }
+  static RADIUS = SETTINGS.ship.radius;
+  static COLOR = SETTINGS.ship.color;
+  static CENTER = [250, 250];
+  static MAXSPEED = SETTINGS.ship.maxSpeed;
 
   constructor() {
     super(Ship.CENTER, [0, 0], Ship.RADIUS, Ship.COLOR);
