@@ -1,13 +1,17 @@
 import { combineReducers } from 'redux';
-import { MOVE, ADD_ASTEROID } from './action_creators';
+import { MOVE, ADD_ASTEROID, ADD_RANDOM_ASTEROIDS } from './action_creators';
 import mapToScreen from '../utils/mapToScreen';
+import randomAsteroid from '../utils/randomAsteroid';
+import { times } from 'lodash';
+import { DIMENSION } from '../constants';
 
 function asteroids(state = [], action) {
   switch (action.type) {
     case MOVE:
       return state.map(ast => asteroid(ast, action));
-    case ADD_ASTEROID:
-      return [...state, action.asteroid];
+    case ADD_RANDOM_ASTEROIDS:
+      const newAsteroids = times(action.numAsteroids, () => randomAsteroid(DIMENSION, DIMENSION));
+      return state.concat(newAsteroids);
     default:
       return state;
   }
