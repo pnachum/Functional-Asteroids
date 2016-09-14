@@ -1,8 +1,14 @@
 import { createStore } from 'redux';
 import asteroidsApp from './reducers';
-import { move, addAsteroid, addRandomAsteroids } from './action_creators';
+import {
+  move,
+  addRandomAsteroids,
+  thrustShip,
+  rotateShip,
+} from './action_creators';
 import { DIMENSION, FRAMES_PER_SECOND, SETTINGS } from '../constants';
 import { initContext, clear, drawObject } from '../utils/canvas';
+import key from 'keymaster';
 
 let store = createStore(asteroidsApp);
 let intervalId;
@@ -20,10 +26,11 @@ function initGame() {
 
 function step() {
   store.dispatch(move());
+  keyPressListener();
 }
 
 function draw() {
-  const { asteroids } = store.getState();
+  const { asteroids, ship } = store.getState();
   clear();
   asteroids.forEach(asteroid => {
     drawObject({
@@ -32,6 +39,27 @@ function draw() {
       radius: asteroid.radius,
     });
   });
+  drawObject({
+    color: SETTINGS.ship.color,
+    pos: ship.pos,
+    radius: SETTINGS.ship.radius,
+  });
+
+}
+
+function keyPressListener() {
+
+  if (key.isPressed('up')) {
+    store.dispatch(thrustShip());
+  }
+
+  if (key.isPressed('left')) {
+    store.dispatch(rotateShip(1));
+  }
+
+  if (key.isPressed('right')) {
+    store.dispatch(rotateShip(-1));
+  }
 }
 
 let unsubscribe = store.subscribe(draw);
