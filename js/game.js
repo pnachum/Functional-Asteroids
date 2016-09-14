@@ -46,7 +46,7 @@ export default class Game {
       dodgeball: this.mode === "Dodgeball",
     };
 
-    return times(numAsteroids, () => Asteroid.randomAsteroid(Game.DIM_X, Game.DIM_Y, options));
+    return times(numAsteroids, () => Asteroid.randomAsteroid(Game.DIM_X, Game.DIM_Y, this.ship, options));
   }
 
   bindKeyHandlers() {

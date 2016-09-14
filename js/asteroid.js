@@ -12,13 +12,13 @@ export default class Asteroid extends MovingObject {
     Asteroid.COLOR = SETTINGS.asteroids.color;
   }
 
-  static randomAsteroid(dimX, dimY, options) {
+  static randomAsteroid(dimX, dimY, ship, options) {
     // Asteroids in dodgeball have a predefined set of sizes
     const radius = options.dodgeball ? sample([15, 21.2, 30]) : Asteroid.spawnRadius;
 
     const randomPos = Asteroid.randomPos(dimX, dimY);
     const randomVel = Asteroid.randomVel(dimX, dimY, Asteroid.speed);
-    return new Asteroid(randomPos, randomVel, radius, Asteroid.speed);
+    return new Asteroid(randomPos, randomVel, radius, Asteroid.speed, ship);
   }
 
   // Pick a random position along the edge of the game for the asteroid to
@@ -43,12 +43,13 @@ export default class Asteroid extends MovingObject {
     });
   }
 
-  constructor(pos, vel, radius, spawnedSpeed) {
+  constructor(pos, vel, radius, spawnedSpeed, ship) {
     super(pos, vel, radius, Asteroid.COLOR);
     // Asteroid stores the speed multiplier it spawned at so that when it is destroyed,
     // the new smaller asteroids can use the same speed, and not the class variable
     // speed, which increases over time.
     this.spawnedSpeed = spawnedSpeed;
+    this.ship = ship;
   }
 
   // When an asteroid is hit with a bullet, it either breaks up into two
@@ -76,10 +77,21 @@ export default class Asteroid extends MovingObject {
     const spawnedSpeed = this.spawnedSpeed;
     const vel1 = Asteroid.randomVel(dimX, dimY, spawnedSpeed);
     const vel2 = Asteroid.randomVel(dimX, dimY, spawnedSpeed);
-    return [vel1, vel2].map((vel) => new Asteroid(pos.slice(), vel, newRadius, spawnedSpeed));
+    return [vel1, vel2].map((vel) => new Asteroid(pos.slice(), vel, newRadius, spawnedSpeed, this.ship));
   }
 
   area() {
     return Math.PI * Math.pow(this.radius, 2);
+  }
+
+  velocityToPoint(origin, destination) {
+    return destination.map((num, index) => (num - origin[index]) / 125);
+  }
+
+  move() {
+    if (this.ageFrames > 30) {
+      this.vel = this.velocityToPoint(this.pos, this.ship.pos);
+    }
+    super.move();
   }
 }

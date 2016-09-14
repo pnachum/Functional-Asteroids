@@ -9,6 +9,7 @@ export default class MovingObject {
     this.vel = vel;
     this.color = color;
     this.radius = radius;
+    this.ageFrames = 0;
   }
 
   distance(otherObject) {
@@ -59,6 +60,7 @@ export default class MovingObject {
   move() {
     this.pos[0] += this.vel[0];
     this.pos[1] += this.vel[1];
+    this.ageFrames += 1;
     this.mapToScreen();
   }
 }
