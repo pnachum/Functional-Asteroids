@@ -21,7 +21,6 @@ export const SETTINGS = {
     acceleration: 0.3,
     thrusterRadius: 5,
     thrusterColor: 'orange',
-    turretColor: 'blue',
     turretRadius: 3,
     airResistance: 0.07,
     invincibilityTime: 3,

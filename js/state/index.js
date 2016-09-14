@@ -9,6 +9,7 @@ import {
 import { DIMENSION, FRAMES_PER_SECOND, SETTINGS } from '../constants';
 import { initContext, clear, drawObject } from '../utils/canvas';
 import key from 'keymaster';
+import { getTurretPosition } from '../utils/math';
 
 let store = createStore(asteroidsApp);
 let intervalId;
@@ -32,6 +33,7 @@ function step() {
 function draw() {
   const { asteroids, ship } = store.getState();
   clear();
+  // Draw asteroids
   asteroids.forEach(asteroid => {
     drawObject({
       color: SETTINGS.asteroids.color,
@@ -39,10 +41,21 @@ function draw() {
       radius: asteroid.radius,
     });
   });
+
+  // Draw ship
+  const shipRadius = SETTINGS.ship.radius;
+  const shipColor = SETTINGS.ship.color;
   drawObject({
-    color: SETTINGS.ship.color,
+    color: shipColor,
     pos: ship.pos,
-    radius: SETTINGS.ship.radius,
+    radius: shipRadius,
+  });
+
+  // Draw turret
+  drawObject({
+    color: shipColor,
+    pos: getTurretPosition(shipRadius, ship.pos, ship.degrees),
+    radius: SETTINGS.ship.turretRadius,
   });
 
 }
