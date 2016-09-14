@@ -5,11 +5,12 @@ import {
   addRandomAsteroids,
   thrustShip,
   rotateShip,
+  stopThrustingShip,
 } from './action_creators';
 import { DIMENSION, FRAMES_PER_SECOND, SETTINGS } from '../constants';
 import { initContext, clear, drawObject } from '../utils/canvas';
 import key from 'keymaster';
-import { getTurretPosition } from '../utils/math';
+import { getRotateablePosition } from '../utils/math';
 
 let store = createStore(asteroidsApp);
 let intervalId;
@@ -54,16 +55,27 @@ function draw() {
   // Draw turret
   drawObject({
     color: shipColor,
-    pos: getTurretPosition(shipRadius, ship.pos, ship.degrees),
+    pos: getRotateablePosition(shipRadius, ship.pos, ship.degrees),
     radius: SETTINGS.ship.turretRadius,
   });
 
+  // Draw thruster
+  if (ship.isThrusting) {
+    drawObject({
+      color: SETTINGS.ship.thrusterColor,
+      // The thruster is behind the ship, so add 180 to its degrees
+      pos: getRotateablePosition(shipRadius, ship.pos, ship.degrees + 180),
+      radius: SETTINGS.ship.thrusterRadius,
+    });
+  }
 }
 
 function keyPressListener() {
 
   if (key.isPressed('up')) {
     store.dispatch(thrustShip());
+  } else {
+    store.dispatch(stopThrustingShip());
   }
 
   if (key.isPressed('left')) {
