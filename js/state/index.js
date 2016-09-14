@@ -11,6 +11,7 @@ import { DIMENSION, FRAMES_PER_SECOND, SETTINGS } from '../constants';
 import { initContext, clear, drawObject } from '../utils/canvas';
 import key from 'keymaster';
 import { getRotateablePosition } from '../utils/math';
+import draw from '../draw';
 
 let store = createStore(asteroidsApp);
 let intervalId;
@@ -31,47 +32,7 @@ function step() {
   keyPressListener();
 }
 
-function draw() {
-  const { asteroids, ship } = store.getState();
-  clear();
-  // Draw asteroids
-  asteroids.forEach(asteroid => {
-    drawObject({
-      color: SETTINGS.asteroids.color,
-      pos: asteroid.pos,
-      radius: asteroid.radius,
-    });
-  });
-
-  // Draw ship
-  const shipRadius = SETTINGS.ship.radius;
-  const shipColor = SETTINGS.ship.color;
-  drawObject({
-    color: shipColor,
-    pos: ship.pos,
-    radius: shipRadius,
-  });
-
-  // Draw turret
-  drawObject({
-    color: shipColor,
-    pos: getRotateablePosition(shipRadius, ship.pos, ship.degrees),
-    radius: SETTINGS.ship.turretRadius,
-  });
-
-  // Draw thruster
-  if (ship.isThrusting) {
-    drawObject({
-      color: SETTINGS.ship.thrusterColor,
-      // The thruster is behind the ship, so add 180 to its degrees
-      pos: getRotateablePosition(shipRadius, ship.pos, ship.degrees + 180),
-      radius: SETTINGS.ship.thrusterRadius,
-    });
-  }
-}
-
 function keyPressListener() {
-
   if (key.isPressed('up')) {
     store.dispatch(thrustShip());
   } else {
@@ -87,4 +48,7 @@ function keyPressListener() {
   }
 }
 
-let unsubscribe = store.subscribe(draw);
+let unsubscribe = store.subscribe(() => {
+  clear();
+  draw(store.getState());
+});
