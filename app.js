@@ -1,7 +1,7 @@
 import $ from 'jquery';
 // import Game from './js/game';
 // import SETTINGS from './js/settings';
-import start from './js/index';
+import beginGame from './js/index';
 
 $(function() {
   $('.mode-button').on('click', (event) => {
@@ -11,7 +11,7 @@ $(function() {
     $('canvas').toggleClass('hidden');
     const game = document.getElementById('game');
     const gameContext = game.getContext('2d');
-    start(gameContext);
+    beginGame(gameContext);
 
     // const ui = document.getElementById('ui');
     // const uiContext = ui.getContext('2d');

@@ -5,6 +5,7 @@ export const THRUST_SHIP = 'THRUST_SHIP';
 export const ROTATE_SHIP = 'ROTATE_SHIP';
 export const STOP_THRUSTING_SHIP = 'STOP_THRUSTING_SHIP';
 export const SHOOT = 'SHOOT';
+export const TOGGLE_PAUSE = 'TOGGLE_PAUSE';
 
 export function move() {
   return { type: MOVE };
@@ -32,4 +33,8 @@ export function stopThrustingShip() {
 
 export function shoot(ship) {
   return { type: SHOOT, ship };
+}
+
+export function togglePause() {
+  return { type: TOGGLE_PAUSE };
 }

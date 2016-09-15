@@ -8,6 +8,7 @@ import {
   rotateShip,
   stopThrustingShip,
   shoot,
+  togglePause,
 } from './actionCreators';
 import { FRAMES_PER_SECOND, SETTINGS } from './constants';
 import { initContext, clear } from './utils/canvas';
@@ -38,9 +39,14 @@ function bindKeyHandlers() {
     store.dispatch(shoot(ship));
   });
 
-  // key("P", () => {
-  //   this.togglePause();
-  // });
+  key('P', () => {
+    store.dispatch(togglePause());
+    if (store.getState().isPaused) {
+      stop();
+    } else {
+      start();
+    }
+  });
 }
 
 function step() {
@@ -48,16 +54,20 @@ function step() {
   keyPressListener();
 }
 
-function initGame() {
-  store.dispatch(addRandomAsteroids(SETTINGS.asteroids.startingNumber));
-  bindKeyHandlers();
+function stop() {
+  clearInterval(intervalId);
+}
+
+function start() {
   const interval = Math.floor(1000 / FRAMES_PER_SECOND);
   intervalId = setInterval(step, interval);
 }
 
-export default function start(ctx) {
+export default function beginGame(ctx) {
   initContext(ctx);
-  initGame();
+  store.dispatch(addRandomAsteroids(SETTINGS.asteroids.startingNumber));
+  bindKeyHandlers();
+  start();
 }
 
 let unsubscribe = store.subscribe(() => {

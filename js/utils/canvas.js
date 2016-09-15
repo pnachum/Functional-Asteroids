@@ -23,3 +23,9 @@ export function drawObject({ color, pos, radius }) {
   );
   ctx.fill();
 }
+
+export function drawText({ text, size, pos, color }) {
+  ctx.fillStyle = color;
+  ctx.font = `${size}pt Arial `;
+  ctx.fillText(text, ...pos);
+}
