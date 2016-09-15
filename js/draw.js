@@ -1,17 +1,7 @@
+import { compact } from 'lodash';
 import { SETTINGS } from './constants';
 import { getRotateablePosition } from './utils/math';
-import { compact } from 'lodash';
 import { drawObject } from './utils/canvas';
-
-export default function draw({ asteroids, ship }) {
-  const drawableInfos = [
-    ...asteroids.map(asteroidDrawInfo),
-    shipDrawInfo(ship),
-    turretDrawInfo(ship),
-    thrusterDrawInfo(ship),
-  ];
-  compact(drawableInfos).forEach(drawObject);
-}
 
 // Convert an asteroid's state into the data needed to draw it.
 function asteroidDrawInfo({ pos, radius }) {
@@ -50,7 +40,7 @@ function turretDrawInfo({ pos, degrees }) {
       radius: shipRadius,
       color,
       turretRadius,
-    }
+    },
   } = SETTINGS;
   return {
     pos: getRotateablePosition(shipRadius, pos, degrees),
@@ -75,7 +65,16 @@ function thrusterDrawInfo({ isThrusting, pos, degrees }) {
       pos: getRotateablePosition(shipRadius, pos, degrees + 180),
       radius: thrusterRadius,
     };
-  } else {
-    return null;
   }
+  return null;
+}
+
+export default function draw({ asteroids, ship }) {
+  const drawableInfos = [
+    ...asteroids.map(asteroidDrawInfo),
+    shipDrawInfo(ship),
+    turretDrawInfo(ship),
+    thrusterDrawInfo(ship),
+  ];
+  compact(drawableInfos).forEach(drawObject);
 }

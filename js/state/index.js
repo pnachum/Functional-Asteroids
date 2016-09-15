@@ -1,4 +1,5 @@
 import { createStore } from 'redux';
+import key from 'keymaster';
 import asteroidsApp from './reducers';
 import {
   move,
@@ -7,30 +8,12 @@ import {
   rotateShip,
   stopThrustingShip,
 } from './action_creators';
-import { DIMENSION, FRAMES_PER_SECOND, SETTINGS } from '../constants';
-import { initContext, clear, drawObject } from '../utils/canvas';
-import key from 'keymaster';
-import { getRotateablePosition } from '../utils/math';
+import { FRAMES_PER_SECOND, SETTINGS } from '../constants';
+import { initContext, clear } from '../utils/canvas';
 import draw from '../draw';
 
-let store = createStore(asteroidsApp);
+const store = createStore(asteroidsApp);
 let intervalId;
-
-export default function start(ctx) {
-  initContext(ctx);
-  initGame();
-}
-
-function initGame() {
-  store.dispatch(addRandomAsteroids(SETTINGS.asteroids.startingNumber));
-  const interval = Math.floor(1000 / FRAMES_PER_SECOND);
-  intervalId = setInterval(step, interval);
-}
-
-function step() {
-  store.dispatch(move());
-  keyPressListener();
-}
 
 function keyPressListener() {
   if (key.isPressed('up')) {
@@ -46,6 +29,22 @@ function keyPressListener() {
   if (key.isPressed('right')) {
     store.dispatch(rotateShip(-1));
   }
+}
+
+function step() {
+  store.dispatch(move());
+  keyPressListener();
+}
+
+function initGame() {
+  store.dispatch(addRandomAsteroids(SETTINGS.asteroids.startingNumber));
+  const interval = Math.floor(1000 / FRAMES_PER_SECOND);
+  intervalId = setInterval(step, interval);
+}
+
+export default function start(ctx) {
+  initContext(ctx);
+  initGame();
 }
 
 let unsubscribe = store.subscribe(() => {

@@ -1,10 +1,10 @@
+export function toRadians(degrees) {
+  return degrees * (Math.PI / 180);
+}
+
 export function direction(degrees) {
   const radians = toRadians(degrees);
   return [Math.cos(radians), -Math.sin(radians)];
-}
-
-export function toRadians(degrees) {
-  return degrees * (Math.PI / 180);
 }
 
 // Get the position of a rotateable (ie the turret or the thruster), given the radius, and position

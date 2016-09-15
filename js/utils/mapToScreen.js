@@ -5,11 +5,10 @@ import { DIMENSION } from '../constants';
 export default function mapToScreen(pos, radius, dimension = DIMENSION) {
   return pos.map(d => {
     if (d >= dimension + radius) {
-      return d - (dimension + 2 * radius);
+      return d - (dimension + (2 * radius));
     } else if (d <= 0 - radius) {
-      return d + (dimension + 2 * radius);
-    } else {
-      return d;
+      return d + (dimension + (2 * radius));
     }
+    return d;
   });
 }

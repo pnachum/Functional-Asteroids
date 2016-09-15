@@ -2,7 +2,6 @@ export const DIMENSION = 500;
 export const FRAMES_PER_SECOND = 30;
 
 export const SETTINGS = {
-
   asteroids: {
     startingNumber: 2,
     startingMinimumArea: 5000,
@@ -33,7 +32,7 @@ export const SETTINGS = {
       speed: 20,
       maximumNumber: 5,
       distance: 400,
-    }
+    },
   },
 
   debris: {
@@ -57,8 +56,8 @@ export const SETTINGS = {
       radiusMultiplier: 2,
       distanceMultiplier: 1.5,
       duration: 5000,
-    }
+    },
   },
 
   startingLives: 2,
-}
+};
