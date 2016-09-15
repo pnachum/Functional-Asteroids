@@ -10,13 +10,28 @@ const defaultShip = {
   isThrusting: false,
 };
 
+function airResistedVelocity(oldVel, airResistance) {
+  return oldVel.map(d => {
+    if (d > airResistance) {
+      return d - airResistance;
+    } else if (d < -airResistance) {
+      return d + airResistance;
+    }
+    return 0;
+  });
+}
+
 export default function ship(state = defaultShip, action) {
   switch (action.type) {
     case MOVE:
-      return movingObject({
+      const moved = movingObject({
         ...state,
         radius: SETTINGS.ship.radius,
       }, action);
+      return {
+        ...moved,
+        vel: airResistedVelocity(moved.vel, SETTINGS.ship.airResistance),
+      }
     case THRUST_SHIP:
       const vel = computeNewVel(
         state.vel,
