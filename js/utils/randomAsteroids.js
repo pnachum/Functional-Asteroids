@@ -1,38 +1,40 @@
-import { random, sample } from 'lodash';
+import { random, sample, times } from 'lodash';
 import { SETTINGS } from '../constants';
 
 // Pick a random position along the edge of the game for the asteroid to
 // spawn at
-function randomPos(dimX, dimY) {
+function randomPos(dimension) {
   const radius = SETTINGS.asteroids.startingSpawnRadius;
-  const randomX = random(-radius, dimX + radius);
-  const randomY = random(-radius, dimY + radius);
-  const edgeX = sample([-radius, dimX + radius]);
-  const edgeY = sample([-radius, dimY + radius]);
+  const [randomX, randomY] = times(2, () => random(-radius, dimension + radius));
+  const [edgeX, edgeY] = times(2, () => sample([-radius, dimension + radius]));
   const candidate1 = [edgeX, randomY];
   const candidate2 = [randomX, edgeY];
   return sample([candidate1, candidate2]);
 }
 
 // Pick a random direction for the asteroid to begin moving in
-function randomVel(dimX, dimY, intensity) {
-  return [dimX, dimY].map(dim => {
-    const range = (intensity * dim) / 125;
+function randomVel(dimension, intensity) {
+  return times(2, () => {
+    const range = (intensity * dimension) / 125;
     const direction = sample([-1, 1]);
     return random(1, range) * direction;
   });
 }
 
-export default function randomAsteroid(dimX, dimY) {
+function randomAsteroid(dimension) {
   // Asteroids in dodgeball have a predefined set of sizes
   // const radius = options.dodgeball ? sample([15, 21.2, 30]) : Asteroid.spawnRadius;
 
-  const pos = randomPos(dimX, dimY);
-  const vel = randomVel(dimX, dimY, SETTINGS.asteroids.startingSpeed);
+  const pos = randomPos(dimension);
+  const vel = randomVel(dimension, SETTINGS.asteroids.startingSpeed);
   const radius = SETTINGS.asteroids.startingSpawnRadius;
   return {
     pos,
     vel,
     radius,
   };
+}
+
+export default function randomAsteroids(num, dimension) {
+  return times(num, () => randomAsteroid(dimension));
 }

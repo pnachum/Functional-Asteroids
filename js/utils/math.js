@@ -13,3 +13,16 @@ export function getRotateablePosition(radius, pos, degrees) {
   const distances = direction(degrees).map(d => d * radius);
   return pos.map((d, i) => d + distances[i]);
 }
+
+export function distance(obj1, obj2) {
+  [xDiff, yDiff] = obj1.pos.map((d, i) => d - obj2.pos[i]);
+  return Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
+}
+
+export function isCollided(obj1, obj2) {
+  if (obj1 === obj2) {
+    return false;
+  } else {
+    return distance(obj1, obj2) < obj1.radius + obj2.radius;
+  }
+}
