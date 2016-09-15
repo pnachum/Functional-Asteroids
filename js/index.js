@@ -7,6 +7,7 @@ import {
   thrustShip,
   rotateShip,
   stopThrustingShip,
+  shoot,
 } from './actionCreators';
 import { FRAMES_PER_SECOND, SETTINGS } from './constants';
 import { initContext, clear } from './utils/canvas';
@@ -31,6 +32,17 @@ function keyPressListener() {
   }
 }
 
+function bindKeyHandlers() {
+  key('space', () => {
+    const { ship } = store.getState();
+    store.dispatch(shoot(ship));
+  });
+
+  // key("P", () => {
+  //   this.togglePause();
+  // });
+}
+
 function step() {
   store.dispatch(move());
   keyPressListener();
@@ -38,6 +50,7 @@ function step() {
 
 function initGame() {
   store.dispatch(addRandomAsteroids(SETTINGS.asteroids.startingNumber));
+  bindKeyHandlers();
   const interval = Math.floor(1000 / FRAMES_PER_SECOND);
   intervalId = setInterval(step, interval);
 }

@@ -69,9 +69,24 @@ function thrusterDrawInfo({ isThrusting, pos, degrees }) {
   return null;
 }
 
-export default function draw({ asteroids, ship }) {
+function bulletDrawInfo({ pos }) {
+  const {
+    bullets: {
+      radius,
+      color,
+    },
+  } = SETTINGS;
+  return {
+    color,
+    radius,
+    pos,
+  };
+}
+
+export default function draw({ asteroids, ship, bullets }) {
   const drawableInfos = [
     ...asteroids.map(asteroidDrawInfo),
+    ...bullets.map(bulletDrawInfo),
     shipDrawInfo(ship),
     turretDrawInfo(ship),
     thrusterDrawInfo(ship),

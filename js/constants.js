@@ -26,13 +26,11 @@ export const SETTINGS = {
   },
 
   bullets: {
-    standard: {
-      radius: 2,
-      color: 'red',
-      speed: 20,
-      maximumNumber: 5,
-      distance: 400,
-    },
+    radius: 2,
+    color: 'red',
+    speed: 20,
+    maximumNumber: 5,
+    distance: 400,
   },
 
   debris: {

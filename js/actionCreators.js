@@ -4,6 +4,7 @@ export const ADD_RANDOM_ASTEROIDS = 'ADD_RANDOM_ASTEROIDS';
 export const THRUST_SHIP = 'THRUST_SHIP';
 export const ROTATE_SHIP = 'ROTATE_SHIP';
 export const STOP_THRUSTING_SHIP = 'STOP_THRUSTING_SHIP';
+export const SHOOT = 'SHOOT';
 
 export function move() {
   return { type: MOVE };
@@ -27,4 +28,8 @@ export function rotateShip(direction) {
 
 export function stopThrustingShip() {
   return { type: STOP_THRUSTING_SHIP };
+}
+
+export function shoot(ship) {
+  return { type: SHOOT, ship };
 }

@@ -1,6 +1,7 @@
 import { MOVE } from '../actionCreators';
 import mapToScreen from '../utils/mapToScreen';
 
+// state must have a vel, a radius, and a pos
 export default function movingObject(state, action) {
   switch (action.type) {
     case MOVE:
