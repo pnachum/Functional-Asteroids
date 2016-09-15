@@ -21,6 +21,7 @@ function airResistedVelocity(oldVel, airResistance) {
   });
 }
 
+// state is object with { pos, vel, degrees, isTruthsting }
 export default function ship(state = defaultShip, action) {
   const {
     radius: shipRadius,
@@ -38,7 +39,7 @@ export default function ship(state = defaultShip, action) {
       return {
         ...moved,
         vel: airResistedVelocity(moved.vel, airResistance),
-      }
+      };
     case THRUST_SHIP:
       const vel = computeNewVel(
         state.vel,

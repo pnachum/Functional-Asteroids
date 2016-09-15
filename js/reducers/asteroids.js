@@ -4,6 +4,7 @@ import randomAsteroid from '../utils/randomAsteroid';
 import { DIMENSION } from '../constants';
 import { MOVE, ADD_RANDOM_ASTEROIDS } from '../actionCreators';
 
+// state is array of objects with { pos, vel, radius }
 export default function asteroids(state = [], action) {
   switch (action.type) {
     case MOVE:

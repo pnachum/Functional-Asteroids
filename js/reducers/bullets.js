@@ -3,6 +3,7 @@ import { MOVE, SHOOT } from '../actionCreators';
 import { SETTINGS } from '../constants';
 import { getRotateablePosition, direction } from '../utils/math';
 
+// state is object with { pos, vel, distance }
 function bullet(state, action) {
   const {
     radius: bulletRadius,
@@ -20,6 +21,7 @@ function bullet(state, action) {
   }
 }
 
+// state is array of objects with { pos, vel, distance }
 export default function bullets(state = [], action) {
   const {
     bullets: {
