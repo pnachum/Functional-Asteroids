@@ -11,7 +11,7 @@ import {
   togglePause,
 } from './actionCreators';
 import { FRAMES_PER_SECOND, SETTINGS } from './constants';
-import { initContext, clear } from './utils/canvas';
+import { initContext } from './utils/canvas';
 import draw from './draw';
 
 const store = createStore(rootReducer);
@@ -50,7 +50,8 @@ function bindKeyHandlers() {
 }
 
 function step() {
-  store.dispatch(move());
+  const { asteroids, bullets, ship } = store.getState();
+  store.dispatch(move({ asteroids, bullets, ship }));
   keyPressListener();
 }
 
@@ -71,6 +72,5 @@ export default function beginGame(ctx) {
 }
 
 let unsubscribe = store.subscribe(() => {
-  clear();
   draw(store.getState());
 });

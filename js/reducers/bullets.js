@@ -1,7 +1,11 @@
 import movingObject from './movingObject';
 import { MOVE, SHOOT } from '../actionCreators';
 import { SETTINGS } from '../constants';
-import { getRotateablePosition, direction } from '../utils/math';
+import {
+  getRotateablePosition,
+  direction,
+  isCollidedWithAny
+} from '../utils/math';
 
 // state is object with { pos, vel, distance }
 function bullet(state, action) {
@@ -25,6 +29,7 @@ function bullet(state, action) {
 export default function bullets(state = [], action) {
   const {
     bullets: {
+      radius: bulletRadius,
       speed,
       distance,
     },
@@ -35,9 +40,12 @@ export default function bullets(state = [], action) {
 
   switch (action.type) {
     case MOVE:
+      const { asteroids } = action;
+
       return state
         .map(b => bullet(b, action))
-        .filter(b => b.distance > 0);
+        .filter(b => b.distance > 0)
+        // .filter(b => !isCollidedWithAny({...b, radius: bulletRadius} , asteroids));
     case SHOOT:
       const { pos, degrees } = action.ship;
       const turretPos = getRotateablePosition(shipRadius, pos, degrees);

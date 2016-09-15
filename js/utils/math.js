@@ -15,7 +15,7 @@ export function getRotateablePosition(radius, pos, degrees) {
 }
 
 export function distance(obj1, obj2) {
-  [xDiff, yDiff] = obj1.pos.map((d, i) => d - obj2.pos[i]);
+  const [xDiff, yDiff] = obj1.pos.map((d, i) => d - obj2.pos[i]);
   return Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
 }
 
@@ -25,4 +25,13 @@ export function isCollided(obj1, obj2) {
   } else {
     return distance(obj1, obj2) < obj1.radius + obj2.radius;
   }
+}
+
+// Return the targets which collide with the object
+export function collidedTargets(obj, targets) {
+  return targets.filter(target => isCollided(obj, target));
+}
+
+export function isCollidedWithAny(obj, targets) {
+  return collidedTargets(obj, targets).length > 0;
 }

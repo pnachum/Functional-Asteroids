@@ -1,7 +1,7 @@
 import { compact } from 'lodash';
 import { SETTINGS } from './constants';
 import { getRotateablePosition } from './utils/math';
-import { drawObject, drawText } from './utils/canvas';
+import { drawObject, drawText, clear } from './utils/canvas';
 
 // Convert an asteroid's state into the data needed to draw it.
 function asteroidDrawInfo({ pos, radius }) {
@@ -93,6 +93,7 @@ function drawPause() {
 }
 
 export default function draw({ asteroids, ship, bullets, isPaused }) {
+  clear();
   const drawableInfos = [
     ...asteroids.map(asteroidDrawInfo),
     ...bullets.map(bulletDrawInfo),

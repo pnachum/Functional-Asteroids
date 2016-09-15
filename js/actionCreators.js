@@ -7,8 +7,8 @@ export const STOP_THRUSTING_SHIP = 'STOP_THRUSTING_SHIP';
 export const SHOOT = 'SHOOT';
 export const TOGGLE_PAUSE = 'TOGGLE_PAUSE';
 
-export function move() {
-  return { type: MOVE };
+export function move({ asteroids, bullets, ship }) {
+  return { type: MOVE, asteroids, bullets, ship };
 }
 
 export function addAsteroid(asteroid) {
