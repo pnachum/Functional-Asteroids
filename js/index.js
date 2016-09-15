@@ -1,18 +1,18 @@
 import { createStore } from 'redux';
 import key from 'keymaster';
-import asteroidsApp from './reducers';
+import rootReducer from './reducers/root';
 import {
   move,
   addRandomAsteroids,
   thrustShip,
   rotateShip,
   stopThrustingShip,
-} from './action_creators';
-import { FRAMES_PER_SECOND, SETTINGS } from '../constants';
-import { initContext, clear } from '../utils/canvas';
-import draw from '../draw';
+} from './actionCreators';
+import { FRAMES_PER_SECOND, SETTINGS } from './constants';
+import { initContext, clear } from './utils/canvas';
+import draw from './draw';
 
-const store = createStore(asteroidsApp);
+const store = createStore(rootReducer);
 let intervalId;
 
 function keyPressListener() {

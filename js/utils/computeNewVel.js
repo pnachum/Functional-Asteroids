@@ -1,5 +1,6 @@
 import { direction } from './math';
 
+// Computes the new velocity of the ship when it accelerates
 export default function computeNewVel(oldVel, degree, accel, maxSpeed) {
   const impulse = direction(degree).map(d => d * accel);
   const newVel = oldVel.map((d, i) => d + impulse[i]);

@@ -1,7 +1,7 @@
 import $ from 'jquery';
-import Game from './js/game';
-import SETTINGS from './js/settings';
-import start from './js/state/index';
+// import Game from './js/game';
+// import SETTINGS from './js/settings';
+import start from './js/index';
 
 $(function() {
   $('.mode-button').on('click', (event) => {
