@@ -22,26 +22,33 @@ function airResistedVelocity(oldVel, airResistance) {
 }
 
 export default function ship(state = defaultShip, action) {
+  const {
+    radius: shipRadius,
+    airResistance,
+    acceleration,
+    maxSpeed,
+    turnSpeed,
+  } = SETTINGS.ship;
   switch (action.type) {
     case MOVE:
       const moved = movingObject({
         ...state,
-        radius: SETTINGS.ship.radius,
+        radius: shipRadius,
       }, action);
       return {
         ...moved,
-        vel: airResistedVelocity(moved.vel, SETTINGS.ship.airResistance),
+        vel: airResistedVelocity(moved.vel, airResistance),
       }
     case THRUST_SHIP:
       const vel = computeNewVel(
         state.vel,
         state.degrees,
-        SETTINGS.ship.acceleration,
-        SETTINGS.ship.maxSpeed
+        acceleration,
+        maxSpeed
       );
       return {...state, isThrusting: true, vel };
     case ROTATE_SHIP:
-      const degrees = (state.degrees + (action.direction * SETTINGS.ship.turnSpeed)) % 360;
+      const degrees = (state.degrees + (action.direction * turnSpeed)) % 360;
       return {...state, degrees };
     case STOP_THRUSTING_SHIP:
       return {...state, isThrusting: false};

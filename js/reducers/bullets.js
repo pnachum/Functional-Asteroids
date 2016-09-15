@@ -15,7 +15,6 @@ export default function bullets(state = [], action) {
     }
   } = SETTINGS;
 
-
   switch (action.type) {
     case MOVE:
       return state.map(bullet => {
