@@ -35,8 +35,7 @@ export default function asteroids(state = [], action) {
 
       return notHitAsteroids.concat(subAsteroids);
     case ADD_RANDOM_ASTEROIDS:
-      const newAsteroids = randomAsteroids(action.numAsteroids);
-      return state.concat(newAsteroids);
+      return state.concat(randomAsteroids(action.numAsteroids));
     default:
       return state;
   }
