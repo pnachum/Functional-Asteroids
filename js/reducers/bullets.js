@@ -3,27 +3,39 @@ import { MOVE, SHOOT } from '../actionCreators';
 import { SETTINGS } from '../constants';
 import { getRotateablePosition, direction } from '../utils/math';
 
+function bullet(state, action) {
+  const {
+    radius: bulletRadius,
+    speed,
+  } = SETTINGS.bullets;
+  switch (action.type) {
+    case MOVE:
+      const moved = movingObject({
+        ...state,
+        radius: bulletRadius,
+      }, action);
+      return {...moved, distance: moved.distance - speed };
+    default:
+      return state;
+  }
+}
+
 export default function bullets(state = [], action) {
   const {
     bullets: {
-      radius: bulletRadius,
       speed,
       distance,
     },
     ship: {
       radius: shipRadius,
-    }
+    },
   } = SETTINGS;
 
   switch (action.type) {
     case MOVE:
-      return state.map(bullet => {
-        const moved = movingObject({
-          ...bullet,
-          radius: bulletRadius,
-        }, action);
-        return {...moved, distance: moved.distance - speed };
-      }).filter(bullet => bullet.distance > 0);
+      return state
+        .map(b => bullet(b, action))
+        .filter(b => b.distance > 0);
     case SHOOT:
       const { pos, degrees } = action.ship;
       const turretPos = getRotateablePosition(shipRadius, pos, degrees);
