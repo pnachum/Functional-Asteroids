@@ -3,13 +3,6 @@ import newPosition from '../utils/newPosition';
 import computeNewVel from '../utils/computeNewVel';
 import { SETTINGS } from '../constants';
 
-const defaultShip = {
-  pos: SETTINGS.ship.startingPosition,
-  vel: [0, 0],
-  degrees: 90,
-  isThrusting: false,
-};
-
 function airResistedVelocity(oldVel, airResistance) {
   return oldVel.map(d => {
     if (d > airResistance) {
@@ -22,7 +15,7 @@ function airResistedVelocity(oldVel, airResistance) {
 }
 
 // state is object with { pos, vel, degrees, isTruthsting }
-export default function ship(state = defaultShip, action) {
+export default function ship(state = SETTINGS.ship.defaultShip, action) {
   const {
     radius: shipRadius,
     airResistance,

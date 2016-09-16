@@ -23,7 +23,12 @@ export const SETTINGS = {
     turretRadius: 3,
     airResistance: 0.07,
     invincibilityTime: 3,
-    startingPosition: [250, 250],
+    defaultShip: {
+      pos: [250, 250],
+      vel: [0, 0],
+      degrees: 90,
+      isThrusting: false,
+    },
   },
 
   bullets: {

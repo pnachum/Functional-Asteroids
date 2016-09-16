@@ -21,8 +21,8 @@ export default function movingObjects(state = {}, action) {
       distance: debrisDistance,
     },
     ship: {
-      startingPosition,
       radius: shipRadius,
+      defaultShip,
     },
     bullets: {
       radius: bulletRadius,
@@ -50,7 +50,7 @@ export default function movingObjects(state = {}, action) {
 
         if (isCollided({...reducedShip, radius: shipRadius}, asteroid)) {
           collidedAsteroids.push(asteroid);
-          newShip = {...reducedShip, pos: startingPosition};
+          newShip = defaultShip;
         }
       });
 
