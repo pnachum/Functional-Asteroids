@@ -23,6 +23,9 @@ export default function movingObjects(state = {}, action) {
     ship: {
       startingPosition,
       radius: shipRadius,
+    },
+    bullets: {
+      radius: bulletRadius,
     }
   } = SETTINGS;
 
@@ -39,13 +42,13 @@ export default function movingObjects(state = {}, action) {
       let newShip = reducedShip;
       reducedAsteroids.forEach((asteroid) => {
         reducedBullets.forEach((bullet) => {
-          if (isCollided(bullet, asteroid)) {
+          if (isCollided({...bullet, radius: bulletRadius}, asteroid)) {
             collidedBullets.push(bullet);
             collidedAsteroids.push(asteroid);
           }
         });
 
-        if (isCollided(reducedShip, asteroid)) {
+        if (isCollided({...reducedShip, radius: shipRadius}, asteroid)) {
           collidedAsteroids.push(asteroid);
           newShip = {...reducedShip, pos: startingPosition};
         }

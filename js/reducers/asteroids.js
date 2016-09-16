@@ -1,4 +1,4 @@
-import movingObject from './movingObject';
+import newPosition from '../utils/newPosition';
 import randomAsteroids from '../utils/randomAsteroids';
 import { DIMENSION, SETTINGS } from '../constants';
 import { MOVE, ADD_RANDOM_ASTEROIDS } from '../actionCreators';
@@ -16,7 +16,12 @@ export default function asteroids(state = [], action) {
   switch (action.type) {
     case MOVE:
       const { bullets, ship } = action;
-      return state.map(asteroid => movingObject(asteroid, action));
+      return state.map(asteroid => {
+        return {
+          ...asteroid,
+          pos: newPosition(asteroid),
+        };
+      });
     case ADD_RANDOM_ASTEROIDS:
       return state.concat(randomAsteroids(action.numAsteroids));
     default:

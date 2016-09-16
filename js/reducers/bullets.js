@@ -1,4 +1,4 @@
-import movingObject from './movingObject';
+import newPosition from '../utils/newPosition';
 import { MOVE, SHOOT } from '../actionCreators';
 import { SETTINGS } from '../constants';
 import {
@@ -15,11 +15,15 @@ function bullet(state, action) {
   } = SETTINGS.bullets;
   switch (action.type) {
     case MOVE:
-      const moved = movingObject({
+      const newPos = newPosition({
         ...state,
         radius: bulletRadius,
-      }, action);
-      return {...moved, distance: moved.distance - speed };
+      });
+      return {
+        ...state,
+        pos: newPos,
+        distance: state.distance - speed,
+      };
     default:
       return state;
   }

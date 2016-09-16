@@ -1,5 +1,5 @@
 import { MOVE, THRUST_SHIP, ROTATE_SHIP, STOP_THRUSTING_SHIP } from '../actionCreators';
-import movingObject from './movingObject';
+import newPosition from '../utils/newPosition';
 import computeNewVel from '../utils/computeNewVel';
 import { SETTINGS } from '../constants';
 
@@ -32,13 +32,14 @@ export default function ship(state = defaultShip, action) {
   } = SETTINGS.ship;
   switch (action.type) {
     case MOVE:
-      const moved = movingObject({
+      const newPos = newPosition({
         ...state,
         radius: shipRadius,
-      }, action);
+      });
       return {
-        ...moved,
-        vel: airResistedVelocity(moved.vel, airResistance),
+        ...state,
+        pos: newPos,
+        vel: airResistedVelocity(state.vel, airResistance),
       };
     case THRUST_SHIP:
       const vel = computeNewVel(

@@ -1,5 +1,5 @@
 import { MOVE } from '../actionCreators';
-import movingObject from './movingObject';
+import newPosition from '../utils/newPosition';
 import { SETTINGS } from '../constants';
 
 // TODO: These reducers are nearly identical to the bullet reducers. Share the code
@@ -13,11 +13,15 @@ function oneDebris(state, action) {
   } = SETTINGS;
   switch (action.type) {
     case MOVE:
-      const moved = movingObject({
+      const newPos = newPosition({
         ...state,
         radius,
-      }, action);
-      return {...moved, distance: moved.distance - speed };
+      });
+      return {
+        ...state,
+        pos: newPos,
+        distance: state.distance - speed,
+      };
     default:
       return state;
   }
