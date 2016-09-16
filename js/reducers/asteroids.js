@@ -18,22 +18,7 @@ export default function asteroids(state = [], action) {
   switch (action.type) {
     case MOVE:
       const { bullets, ship } = action;
-      const moved = state.map(asteroid => movingObject(asteroid, action));
-      const bulletsWithRadius = bullets.map(bullet => ({...bullet, radius: bulletRadius }));
-
-      const [hitAsteroids, notHitAsteroids] = separateItems(moved, asteroid => {
-        return isCollidedWithAny(asteroid, bulletsWithRadius);
-      });
-      const subAsteroids = hitAsteroids
-        .reduce((prev, current) => {
-          return prev.concat(randomAsteroids(2, {
-            radius: current.radius * (1 / Math.sqrt(2)),
-            pos: current.pos,
-          }));
-        }, [])
-        .filter(asteroid => asteroid.radius > minimumRadius);
-
-      return notHitAsteroids.concat(subAsteroids);
+      return state.map(asteroid => movingObject(asteroid, action));
     case ADD_RANDOM_ASTEROIDS:
       return state.concat(randomAsteroids(action.numAsteroids));
     default:

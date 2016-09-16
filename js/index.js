@@ -35,7 +35,7 @@ function keyPressListener() {
 
 function bindKeyHandlers() {
   key('space', () => {
-    const { ship } = store.getState();
+    const { ship } = store.getState().movingObjects;
     store.dispatch(shoot(ship));
   });
 
@@ -50,8 +50,7 @@ function bindKeyHandlers() {
 }
 
 function step() {
-  const { asteroids, bullets, ship } = store.getState();
-  store.dispatch(move({ asteroids, bullets, ship }));
+  store.dispatch(move());
   keyPressListener();
 }
 

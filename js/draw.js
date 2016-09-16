@@ -92,7 +92,8 @@ function drawPause() {
   });
 }
 
-export default function draw({ asteroids, ship, bullets, isPaused }) {
+export default function draw({ movingObjects, isPaused }) {
+  const { asteroids, ship, bullets } = movingObjects;
   clear();
   const drawableInfos = [
     ...asteroids.map(asteroidDrawInfo),

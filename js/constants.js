@@ -3,7 +3,7 @@ export const FRAMES_PER_SECOND = 30;
 
 export const SETTINGS = {
   asteroids: {
-    startingNumber: 1,
+    startingNumber: 2,
     startingMinimumArea: 5000,
     startingSpawnRadius: 30,
     minimumRadius: 10,

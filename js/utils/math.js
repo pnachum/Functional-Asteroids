@@ -26,12 +26,3 @@ export function isCollided(obj1, obj2) {
     return distance(obj1, obj2) < obj1.radius + obj2.radius;
   }
 }
-
-// Return the targets which collide with the object
-export function collidedTargets(obj, targets) {
-  return targets.filter(target => isCollided(obj, target));
-}
-
-export function isCollidedWithAny(obj, targets) {
-  return collidedTargets(obj, targets).length > 0;
-}

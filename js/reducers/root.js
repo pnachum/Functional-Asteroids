@@ -1,13 +1,9 @@
 import { combineReducers } from 'redux';
-import asteroids from './asteroids';
-import ship from './ship';
-import bullets from './bullets';
+import movingObjects from './movingObjects';
 import isPaused from './isPaused';
 
 const root = combineReducers({
-  asteroids,
-  ship,
-  bullets,
+  movingObjects,
   isPaused,
 });
 
