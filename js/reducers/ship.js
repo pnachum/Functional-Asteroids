@@ -4,7 +4,7 @@ import computeNewVel from '../utils/computeNewVel';
 import { SETTINGS } from '../constants';
 
 function airResistedVelocity(oldVel, airResistance) {
-  return oldVel.map(d => {
+  return oldVel.map((d) => {
     if (d > airResistance) {
       return d - airResistance;
     } else if (d < -airResistance) {
@@ -41,12 +41,12 @@ export default function ship(state = SETTINGS.ship.defaultShip, action) {
         acceleration,
         maxSpeed
       );
-      return {...state, isThrusting: true, vel };
+      return { ...state, isThrusting: true, vel };
     case ROTATE_SHIP:
       const degrees = (state.degrees + (action.direction * turnSpeed)) % 360;
-      return {...state, degrees };
+      return { ...state, degrees };
     case STOP_THRUSTING_SHIP:
-      return {...state, isThrusting: false};
+      return { ...state, isThrusting: false};
     default:
       return state;
   }

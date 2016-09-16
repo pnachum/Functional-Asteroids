@@ -26,7 +26,7 @@ export default function movingObjects(state = {}, action) {
     },
     bullets: {
       radius: bulletRadius,
-    }
+    },
   } = SETTINGS;
 
   // TODO: This seems pretty messy
@@ -42,25 +42,27 @@ export default function movingObjects(state = {}, action) {
       let newShip = reducedShip;
       reducedAsteroids.forEach((asteroid) => {
         reducedBullets.forEach((bullet) => {
-          if (isCollided({...bullet, radius: bulletRadius}, asteroid)) {
+          if (isCollided({ ...bullet, radius: bulletRadius }, asteroid)) {
             collidedBullets.push(bullet);
             collidedAsteroids.push(asteroid);
           }
         });
 
-        if (isCollided({...reducedShip, radius: shipRadius}, asteroid)) {
+        if (isCollided({ ...reducedShip, radius: shipRadius }, asteroid)) {
           collidedAsteroids.push(asteroid);
           newShip = defaultShip;
         }
       });
 
-      const notHitAsteroids = reducedAsteroids.filter(asteroid => !collidedAsteroids.includes(asteroid));
-      const subAsteroids = collidedAsteroids.reduce((prev, current) => {
-        return prev.concat(randomAsteroids(2, {
+      const notHitAsteroids = reducedAsteroids.filter(asteroid => (
+        !collidedAsteroids.includes(asteroid)
+      ));
+      const subAsteroids = collidedAsteroids.reduce((prev, current) => (
+        prev.concat(randomAsteroids(2, {
           radius: current.radius / Math.sqrt(2),
           pos: current.pos,
-        }));
-      }, []).filter(asteroid => asteroid.radius > minimumRadius);
+        }))
+      ), []).filter(asteroid => asteroid.radius > minimumRadius);
 
       const destroyedAsteroids = collidedAsteroids.filter(asteroid => (
         asteroid.radius / Math.sqrt(2) < minimumRadius
@@ -68,18 +70,18 @@ export default function movingObjects(state = {}, action) {
 
       const angle = 360 / numDebris;
       const newDebris = destroyedAsteroids.reduce((prev, current) => {
-        const debrisForAsteroid = times(numDebris, index => {
-          return {
-            pos: current.pos,
-            vel: direction(angle * index),
-            distance: debrisDistance,
-          };
-        });
+        const debrisForAsteroid = times(numDebris, index => ({
+          pos: current.pos,
+          vel: direction(angle * index),
+          distance: debrisDistance,
+        }));
         return prev.concat(debrisForAsteroid);
       }, []);
 
       const newAsteroids = notHitAsteroids.concat(subAsteroids);
-      const additionalAsteroids = sumOfAreas(newAsteroids) < startingMinimumArea ? randomAsteroids(1) : [];
+      const additionalAsteroids = sumOfAreas(newAsteroids) < startingMinimumArea
+        ? randomAsteroids(1)
+        : [];
 
       return {
         ship: newShip,

@@ -124,5 +124,4 @@ export default function draw({ movingObjects, isPaused }) {
   if (isPaused) {
     drawPause();
   }
-
 }

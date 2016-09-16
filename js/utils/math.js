@@ -24,9 +24,8 @@ export function distance(obj1, obj2) {
 export function isCollided(obj1, obj2) {
   if (obj1 === obj2) {
     return false;
-  } else {
-    return distance(obj1, obj2) < obj1.radius + obj2.radius;
   }
+  return distance(obj1, obj2) < obj1.radius + obj2.radius;
 }
 
 function area({ radius }) {

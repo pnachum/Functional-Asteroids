@@ -30,9 +30,9 @@ function oneDebris(state, action) {
 export default function debris(state = [], action) {
   switch (action.type) {
     case MOVE:
-    return state
-      .map(debris => oneDebris(debris, action))
-      .filter(debris => debris.distance > 0)
+      return state
+        .map(deb => oneDebris(deb, action))
+        .filter(deb => deb.distance > 0);
     default:
       return state;
   }

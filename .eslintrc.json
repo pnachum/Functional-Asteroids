@@ -3,6 +3,11 @@
     "plugins": [
         "react",
         "jsx-a11y",
-        "import"
-    ]
+        "import",
+        "babel"
+    ],
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaVersion": 7
+    }
 }

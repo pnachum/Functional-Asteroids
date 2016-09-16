@@ -34,6 +34,21 @@ function keyPressListener() {
   }
 }
 
+function stop() {
+  clearInterval(intervalId);
+}
+
+function step() {
+  store.dispatch(newFrame(store.getState().frameCount));
+  store.dispatch(move());
+  keyPressListener();
+}
+
+function start() {
+  const interval = Math.floor(1000 / FRAMES_PER_SECOND);
+  intervalId = setInterval(step, interval);
+}
+
 function bindKeyHandlers() {
   key('space', () => {
     const { ship } = store.getState().movingObjects;
@@ -50,21 +65,6 @@ function bindKeyHandlers() {
   });
 }
 
-function step() {
-  store.dispatch(newFrame(store.getState().frameCount));
-  store.dispatch(move());
-  keyPressListener();
-}
-
-function stop() {
-  clearInterval(intervalId);
-}
-
-function start() {
-  const interval = Math.floor(1000 / FRAMES_PER_SECOND);
-  intervalId = setInterval(step, interval);
-}
-
 export default function beginGame(ctx) {
   initContext(ctx);
   store.dispatch(addRandomAsteroids(SETTINGS.asteroids.startingNumber));
@@ -72,6 +72,6 @@ export default function beginGame(ctx) {
   start();
 }
 
-let unsubscribe = store.subscribe(() => {
+store.subscribe(() => {
   draw(store.getState());
 });
