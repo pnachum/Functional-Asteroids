@@ -4,7 +4,7 @@ import bullets from './bullets';
 import asteroids from './asteroids';
 import debris from './debris';
 import { MOVE } from '../actionCreators';
-import { isCollided, direction } from '../utils/math';
+import { isCollided, direction, sumOfAreas } from '../utils/math';
 import randomAsteroids from '../utils/randomAsteroids';
 import { SETTINGS } from '../constants';
 
@@ -14,6 +14,7 @@ export default function movingObjects(state = {}, action) {
   const {
     asteroids: {
       minimumRadius,
+      startingMinimumArea,
     },
     debris: {
       number: numDebris,
@@ -69,11 +70,12 @@ export default function movingObjects(state = {}, action) {
       }, []);
 
       const newAsteroids = notHitAsteroids.concat(notDestroyedSubAsteroids);
+      const additionalAsteroids = sumOfAreas(newAsteroids) < startingMinimumArea ? randomAsteroids(1) : [];
 
       return {
         ship: reducedShip,
         bullets: reducedBullets.filter(bullet => !collidedBullets.includes(bullet)),
-        asteroids: newAsteroids,
+        asteroids: newAsteroids.concat(additionalAsteroids),
         debris: reducedDebris.concat(newDebris),
       };
     default:

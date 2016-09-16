@@ -1,3 +1,5 @@
+import { sumBy } from 'lodash';
+
 export function toRadians(degrees) {
   return degrees * (Math.PI / 180);
 }
@@ -25,4 +27,12 @@ export function isCollided(obj1, obj2) {
   } else {
     return distance(obj1, obj2) < obj1.radius + obj2.radius;
   }
+}
+
+function area({ radius }) {
+  return Math.PI * Math.pow(radius, 2);
+}
+
+export function sumOfAreas(objects) {
+  return sumBy(objects, area);
 }

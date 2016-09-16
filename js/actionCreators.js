@@ -6,6 +6,7 @@ export const ROTATE_SHIP = 'ROTATE_SHIP';
 export const STOP_THRUSTING_SHIP = 'STOP_THRUSTING_SHIP';
 export const SHOOT = 'SHOOT';
 export const TOGGLE_PAUSE = 'TOGGLE_PAUSE';
+export const NEW_FRAME = 'NEW_FRAME';
 
 export function move() {
   return { type: MOVE };
@@ -37,4 +38,8 @@ export function shoot(ship) {
 
 export function togglePause() {
   return { type: TOGGLE_PAUSE };
+}
+
+export function newFrame(frameCount) {
+  return { type: NEW_FRAME, frameCount };
 }

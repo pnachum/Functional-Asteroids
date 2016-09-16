@@ -9,6 +9,7 @@ import {
   stopThrustingShip,
   shoot,
   togglePause,
+  newFrame,
 } from './actionCreators';
 import { FRAMES_PER_SECOND, SETTINGS } from './constants';
 import { initContext } from './utils/canvas';
@@ -50,6 +51,7 @@ function bindKeyHandlers() {
 }
 
 function step() {
+  store.dispatch(newFrame(store.getState().frameCount));
   store.dispatch(move());
   keyPressListener();
 }
