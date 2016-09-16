@@ -31,7 +31,7 @@ export default function movingObjects(state = {}, action) {
       const subAsteroids = collidedAsteroids
         .reduce((prev, current) => {
           return prev.concat(randomAsteroids(2, {
-            radius: current.radius * (1 / Math.sqrt(2)),
+            radius: current.radius / Math.sqrt(2),
             pos: current.pos,
           }));
         }, [])
