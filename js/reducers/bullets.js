@@ -40,12 +40,9 @@ export default function bullets(state = [], action) {
 
   switch (action.type) {
     case MOVE:
-      const { asteroids } = action;
-
       return state
         .map(b => bullet(b, action))
         .filter(b => b.distance > 0)
-        // .filter(b => !isCollidedWithAny({...b, radius: bulletRadius} , asteroids));
     case SHOOT:
       const { pos, degrees } = action.ship;
       const turretPos = getRotateablePosition(shipRadius, pos, degrees);

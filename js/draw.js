@@ -83,6 +83,22 @@ function bulletDrawInfo({ pos }) {
   };
 }
 
+function debrisDrawInfo({ pos }) {
+  const {
+    asteroids: {
+      color,
+    },
+    debris: {
+      radius,
+    },
+  } = SETTINGS;
+  return {
+    color,
+    radius,
+    pos,
+  };
+}
+
 function drawPause() {
   drawText({
     text: 'Paused',
@@ -93,11 +109,12 @@ function drawPause() {
 }
 
 export default function draw({ movingObjects, isPaused }) {
-  const { asteroids, ship, bullets } = movingObjects;
+  const { asteroids, ship, bullets, debris } = movingObjects;
   clear();
   const drawableInfos = [
     ...asteroids.map(asteroidDrawInfo),
     ...bullets.map(bulletDrawInfo),
+    ...debris.map(debrisDrawInfo),
     shipDrawInfo(ship),
     turretDrawInfo(ship),
     thrusterDrawInfo(ship),

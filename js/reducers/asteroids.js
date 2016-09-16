@@ -2,8 +2,6 @@ import movingObject from './movingObject';
 import randomAsteroids from '../utils/randomAsteroids';
 import { DIMENSION, SETTINGS } from '../constants';
 import { MOVE, ADD_RANDOM_ASTEROIDS } from '../actionCreators';
-import { isCollidedWithAny } from '../utils/math';
-import separateItems from '../utils/separateItems';
 
 // state is array of objects with { pos, vel, radius }
 export default function asteroids(state = [], action) {
