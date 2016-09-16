@@ -47,18 +47,14 @@ export default function movingObjects(state = {}, action) {
           radius: current.radius / Math.sqrt(2),
           pos: current.pos,
         }));
-      }, []);
+      }, []).filter(asteroid => asteroid.radius > minimumRadius);
 
-      const destroyedSubAsteroids = subAsteroids.filter(asteroid => (
-        asteroid.radius < minimumRadius
-      ));
-
-      const notDestroyedSubAsteroids = subAsteroids.filter(asteroid => (
-        asteroid.radius > minimumRadius
+      const destroyedAsteroids = collidedAsteroids.filter(asteroid => (
+        asteroid.radius / Math.sqrt(2) < minimumRadius
       ));
 
       const angle = 360 / numDebris;
-      const newDebris = destroyedSubAsteroids.reduce((prev, current) => {
+      const newDebris = destroyedAsteroids.reduce((prev, current) => {
         const debrisForAsteroid = times(numDebris, index => {
           return {
             pos: current.pos,
@@ -69,7 +65,7 @@ export default function movingObjects(state = {}, action) {
         return prev.concat(debrisForAsteroid);
       }, []);
 
-      const newAsteroids = notHitAsteroids.concat(notDestroyedSubAsteroids);
+      const newAsteroids = notHitAsteroids.concat(subAsteroids);
       const additionalAsteroids = sumOfAreas(newAsteroids) < startingMinimumArea ? randomAsteroids(1) : [];
 
       return {
