@@ -20,6 +20,10 @@ export default function movingObjects(state = {}, action) {
       number: numDebris,
       distance: debrisDistance,
     },
+    ship: {
+      startingPosition,
+      radius: shipRadius,
+    }
   } = SETTINGS;
 
   // TODO: This seems pretty messy
@@ -32,6 +36,7 @@ export default function movingObjects(state = {}, action) {
     case MOVE:
       const collidedBullets = [];
       const collidedAsteroids = [];
+      let newShip = reducedShip;
       reducedAsteroids.forEach((asteroid) => {
         reducedBullets.forEach((bullet) => {
           if (isCollided(bullet, asteroid)) {
@@ -39,6 +44,11 @@ export default function movingObjects(state = {}, action) {
             collidedAsteroids.push(asteroid);
           }
         });
+
+        if (isCollided(reducedShip, asteroid)) {
+          collidedAsteroids.push(asteroid);
+          newShip = {...reducedShip, pos: startingPosition};
+        }
       });
 
       const notHitAsteroids = reducedAsteroids.filter(asteroid => !collidedAsteroids.includes(asteroid));
@@ -69,7 +79,7 @@ export default function movingObjects(state = {}, action) {
       const additionalAsteroids = sumOfAreas(newAsteroids) < startingMinimumArea ? randomAsteroids(1) : [];
 
       return {
-        ship: reducedShip,
+        ship: newShip,
         bullets: reducedBullets.filter(bullet => !collidedBullets.includes(bullet)),
         asteroids: newAsteroids.concat(additionalAsteroids),
         debris: reducedDebris.concat(newDebris),

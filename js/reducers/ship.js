@@ -4,7 +4,7 @@ import computeNewVel from '../utils/computeNewVel';
 import { SETTINGS } from '../constants';
 
 const defaultShip = {
-  pos: [250, 250],
+  pos: SETTINGS.ship.startingPosition,
   vel: [0, 0],
   degrees: 90,
   isThrusting: false,
