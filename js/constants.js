@@ -40,7 +40,6 @@ export const SETTINGS = {
   },
 
   debris: {
-    radius: 1,
     distance: 400,
     number: 10,
     speed: 20,

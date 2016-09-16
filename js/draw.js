@@ -87,11 +87,13 @@ function debrisDrawInfo({ pos }) {
   const {
     asteroids: {
       color,
+      minimumRadius,
     },
     debris: {
-      radius,
+      number,
     },
   } = SETTINGS;
+  const radius = minimumRadius / number;
   return {
     color,
     radius,
