@@ -44,7 +44,6 @@ export default function movingObjects(state: State = defaultState, action: Objec
   const {
     asteroids: {
       minimumRadius,
-      startingMinimumArea,
     },
     debris: {
       number: numDebris,
@@ -71,6 +70,11 @@ export default function movingObjects(state: State = defaultState, action: Objec
   let lives = state.lives;
   switch (action.type) {
     case MOVE:
+      const {
+        asteroidSpawnRadius,
+        minimumAsteroidArea,
+        asteroidSpeed,
+      } = action.difficulty;
       const collidedBullets: Bullet[] = [];
       const asteroidCollisions: AsteroidCollision[] = [];
       let newShip = reducedShip;
@@ -103,6 +107,8 @@ export default function movingObjects(state: State = defaultState, action: Objec
         prev.concat(randomAsteroids(2, {
           radius: current.radius / Math.sqrt(2),
           pos: current.pos,
+          // Split asteroids maintain the same speed as their parent
+          spawnSpeed: current.spawnSpeed,
         }))
       ), []).filter(asteroid => asteroid.radius > minimumRadius);
 
@@ -121,7 +127,9 @@ export default function movingObjects(state: State = defaultState, action: Objec
       // Flow can't cast Asteroid[] to WithRadius[], so map over the array to do it explicitly
       const withRadii: WithRadius[] = newAsteroids.map(ast => (ast: WithRadius));
       const area = sumOfAreas(withRadii);
-      const additionalAsteroids = area < startingMinimumArea ? randomAsteroids(1) : [];
+      const additionalAsteroids = area < minimumAsteroidArea
+        ? randomAsteroids(1, { radius: asteroidSpawnRadius, spawnSpeed: asteroidSpeed })
+        : [];
 
       return {
         ship: newShip,

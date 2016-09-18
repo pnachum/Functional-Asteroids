@@ -49,8 +49,9 @@ function gameOver() {
 }
 
 function step() {
-  store.dispatch(newFrame(store.getState().frameCount));
-  store.dispatch(move());
+  const { frameCount, difficulty } = store.getState();
+  store.dispatch(newFrame(frameCount));
+  store.dispatch(move(difficulty));
   keyPressListener();
   if (store.getState().movingObjects.lives < 0) {
     gameOver();

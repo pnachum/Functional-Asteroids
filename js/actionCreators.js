@@ -1,6 +1,6 @@
 // @flow
 
-import type { Asteroid, Ship } from './types/index';
+import type { Asteroid, Ship, DifficultyState } from './types/index';
 
 export const MOVE = 'MOVE';
 export const ADD_ASTEROID = 'ADD_ASTEROID';
@@ -14,8 +14,8 @@ export const RESET = 'RESET';
 
 type SimpleAction = { type: string };
 
-export function move(): SimpleAction {
-  return { type: MOVE };
+export function move(difficulty: DifficultyState): { type: string, difficulty: DifficultyState } {
+  return { type: MOVE, difficulty };
 }
 
 export function addAsteroid(asteroid: Asteroid): { type: string, asteroid: Asteroid} {

@@ -4,7 +4,11 @@ import { random, sample, times } from 'lodash';
 import { SETTINGS, DIMENSION } from '../constants';
 import type { Asteroid } from '../types/index';
 
-type Options = { pos?: [number, number], radius?: number }
+type Options = {
+  pos?: [number, number],
+  radius?: number,
+  spawnSpeed?: number,
+}
 
 // Pick a random position along the edge of the game for the asteroid to
 // spawn at
@@ -31,12 +35,14 @@ function randomAsteroid(options: Options): Asteroid {
   // const radius = options.dodgeball ? sample([15, 21.2, 30]) : Asteroid.spawnRadius;
 
   const pos = options.pos || randomPos(DIMENSION);
-  const vel = randomVel(DIMENSION, SETTINGS.asteroids.startingSpeed);
+  const spawnSpeed = options.spawnSpeed || SETTINGS.asteroids.startingSpeed;
+  const vel = randomVel(DIMENSION, spawnSpeed);
   const radius = options.radius || SETTINGS.asteroids.startingSpawnRadius;
   return {
     pos,
     vel,
     radius,
+    spawnSpeed,
   };
 }
 

@@ -48,7 +48,7 @@ export const SETTINGS = {
   },
 
   difficulty: {
-    timeInterval: 10,
+    timeInterval: 10, // seconds
     asteroidSpeedIncrease: 0.15,
     asteroidSpawnRadiusMultiplier: 1.0,
     minimumAsteroidAreaMultiplier: 1.25,

@@ -4,6 +4,7 @@ export type Asteroid = {
   pos: [number, number],
   radius: number,
   vel: [number, number],
+  spawnSpeed: number,
 };
 
 export type Ship = {
@@ -45,3 +46,9 @@ export type Drawable = {
   pos: [number, number],
   color: string,
 }
+
+export type DifficultyState = {
+  asteroidSpawnRadius: number,
+  minimumAsteroidArea: number,
+  asteroidSpeed: number,
+};
