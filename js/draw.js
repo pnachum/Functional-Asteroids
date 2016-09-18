@@ -122,6 +122,15 @@ function drawScore(score: number) {
   });
 }
 
+function drawLives(lives: number) {
+  drawText({
+    text: `Lives: ${lives}`,
+    size: 10,
+    pos: [10, 25],
+    color: 'white',
+  });
+}
+
 export default function draw({
   movingObjects,
   isPaused,
@@ -135,7 +144,7 @@ export default function draw({
   },
   isPaused: boolean,
 }) {
-  const { asteroids, ship, bullets, debris, score } = movingObjects;
+  const { asteroids, ship, bullets, debris, score, lives } = movingObjects;
   clear();
   const drawableInfos: Drawable[] = compact([
     ...asteroids.map(asteroidDrawInfo),
@@ -151,4 +160,5 @@ export default function draw({
     drawPause();
   }
   drawScore(score);
+  drawLives(lives);
 }

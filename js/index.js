@@ -44,6 +44,10 @@ function step() {
   store.dispatch(newFrame(store.getState().frameCount));
   store.dispatch(move());
   keyPressListener();
+  if (store.getState().movingObjects.lives < 0) {
+    stop();
+    alert('Game over!');
+  }
 }
 
 function start() {
