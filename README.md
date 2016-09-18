@@ -8,7 +8,7 @@ with code that is functional instead of object oriented.
 
 Still a work in progress.
 
-Asteroids is built using HTML canvas, JavaScript, Redux, Babel, and Webpack.
+Asteroids is built using HTML canvas, JavaScript, Redux, Babel, Flow, and Webpack.
 
 ## Running locally
 

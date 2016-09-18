@@ -1,7 +1,14 @@
+// @flow
+
 import { direction } from './math';
 
 // Computes the new velocity of the ship when it accelerates
-export default function computeNewVel(oldVel, degree, accel, maxSpeed) {
+export default function computeNewVel(
+  oldVel: [number, number],
+  degree: number,
+  accel: number,
+  maxSpeed: number
+): [number, number] {
   const impulse = direction(degree).map(d => d * accel);
   const newVel = oldVel.map((d, i) => d + impulse[i]);
   // Enforce that the ship's speed does not exceed MAXSPEED

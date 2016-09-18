@@ -1,8 +1,14 @@
+// @flow
+
 import { DIMENSION } from '../constants';
 
 // Given the position and radius of an object, and the dimension of the screen, map the object
 // to the screeen so that it wraps around the edge of screen.
-function mapToScreen(pos, radius, dimension = DIMENSION) {
+function mapToScreen(
+  pos: [number, number],
+  radius: number,
+  dimension: number = DIMENSION
+): [number, number] {
   return pos.map((d) => {
     if (d >= dimension + radius) {
       return d - (dimension + (2 * radius));
@@ -13,8 +19,15 @@ function mapToScreen(pos, radius, dimension = DIMENSION) {
   });
 }
 
-// state must have a vel, a radius, and a pos
-export default function newPosition({ vel, radius, pos }) {
+export default function newPosition({
+  vel,
+  radius,
+  pos,
+}: {
+  vel: [number, number],
+  radius: number,
+  pos: [number, number],
+}): [number, number] {
   const newPos = pos.map((d, i) => d + vel[i]);
   return mapToScreen(newPos, radius);
 }
