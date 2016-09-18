@@ -63,4 +63,6 @@ export const SETTINGS = {
   },
 
   startingLives: 2,
+  pointsForBreak: 2,
+  pointsForDestroy: 10,
 };

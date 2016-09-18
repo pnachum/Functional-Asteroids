@@ -27,6 +27,8 @@ export default function movingObjects(state = {}, action) {
     bullets: {
       radius: bulletRadius,
     },
+    pointsForBreak,
+    pointsForDestroy,
   } = SETTINGS;
 
   // TODO: This seems pretty messy
@@ -34,7 +36,7 @@ export default function movingObjects(state = {}, action) {
   const reducedBullets = bullets(state.bullets, action);
   const reducedShip = ship(state.ship, action);
   const reducedDebris = debris(state.debris, action);
-
+  let newScore = state.score || 0;
   switch (action.type) {
     case MOVE:
       const collidedBullets = [];
@@ -68,6 +70,8 @@ export default function movingObjects(state = {}, action) {
       const destroyedAsteroids = collidedAsteroids.filter(asteroid => (
         asteroid.radius / Math.sqrt(2) < minimumRadius
       ));
+      newScore += (destroyedAsteroids.length * pointsForDestroy);
+      newScore += ((subAsteroids.length / 2) * pointsForBreak);
 
       const angle = 360 / numDebris;
       const newDebris = destroyedAsteroids.reduce((prev, current) => {
@@ -89,6 +93,7 @@ export default function movingObjects(state = {}, action) {
         bullets: reducedBullets.filter(bullet => !collidedBullets.includes(bullet)),
         asteroids: newAsteroids.concat(additionalAsteroids),
         debris: reducedDebris.concat(newDebris),
+        score: newScore,
       };
     default:
       return {
@@ -96,6 +101,7 @@ export default function movingObjects(state = {}, action) {
         bullets: reducedBullets,
         ship: reducedShip,
         debris: reducedDebris,
+        score: newScore,
       };
   }
 }

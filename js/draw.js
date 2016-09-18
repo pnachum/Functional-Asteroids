@@ -110,8 +110,17 @@ function drawPause() {
   });
 }
 
+function drawScore(score) {
+  drawText({
+    text: `Score: ${score}`,
+    size: 10,
+    pos: [10, 10],
+    color: 'white',
+  });
+}
+
 export default function draw({ movingObjects, isPaused }) {
-  const { asteroids, ship, bullets, debris } = movingObjects;
+  const { asteroids, ship, bullets, debris, score } = movingObjects;
   clear();
   const drawableInfos = [
     ...asteroids.map(asteroidDrawInfo),
@@ -126,4 +135,5 @@ export default function draw({ movingObjects, isPaused }) {
   if (isPaused) {
     drawPause();
   }
+  drawScore(score);
 }
