@@ -1,9 +1,7 @@
 // @flow
 
 import { sumBy } from 'lodash';
-
-type Distanceable = { radius: number, pos: [number, number] };
-type WithRadius = { radius: number };
+import type { WithRadius, Distanceable } from '../types/index';
 
 export function toRadians(degrees: number): number {
   return degrees * (Math.PI / 180);
@@ -41,6 +39,6 @@ function area({ radius }: WithRadius): number {
   return Math.PI * Math.pow(radius, 2);
 }
 
-export function sumOfAreas(objects: Array<WithRadius>) {
+export function sumOfAreas(objects: WithRadius[]) {
   return sumBy(objects, area);
 }

@@ -3,10 +3,9 @@
 import newPosition from '../utils/newPosition';
 import randomAsteroids from '../utils/randomAsteroids';
 import { MOVE, ADD_RANDOM_ASTEROIDS } from '../actionCreators';
+import type { Asteroid } from '../types/index';
 
-type Asteroid = { pos: [number, number], radius: number, vel: [number, number] };
-// state is array of objects with { pos, vel, radius }
-export default function asteroids(state: Asteroid[] = [], action: { type: string }): Asteroid[] {
+export default function asteroids(state: Asteroid[] = [], action: Object): Asteroid[] {
   switch (action.type) {
     case MOVE:
       return state.map(asteroid => ({

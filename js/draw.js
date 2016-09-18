@@ -1,10 +1,13 @@
+// @flow
+
 import { compact } from 'lodash';
 import { SETTINGS } from './constants';
 import { getRotateablePosition } from './utils/math';
 import { drawObject, drawText, clear } from './utils/canvas';
+import type { Asteroid, Ship, Bullet, Debris, Drawable } from './types/index';
 
 // Convert an asteroid's state into the data needed to draw it.
-function asteroidDrawInfo({ pos, radius }) {
+function asteroidDrawInfo({ pos, radius }: Asteroid): Drawable {
   const {
     asteroids: {
       color,
@@ -19,7 +22,7 @@ function asteroidDrawInfo({ pos, radius }) {
 }
 
 // Convert a ship's state into the data needed to draw it.
-function shipDrawInfo({ pos }) {
+function shipDrawInfo({ pos }: Ship): Drawable {
   const {
     ship: {
       color,
@@ -34,7 +37,7 @@ function shipDrawInfo({ pos }) {
 }
 
 // Convert a ship's state into the data needed to draw its turret.
-function turretDrawInfo({ pos, degrees }) {
+function turretDrawInfo({ pos, degrees }: Ship): Drawable {
   const {
     ship: {
       radius: shipRadius,
@@ -50,7 +53,7 @@ function turretDrawInfo({ pos, degrees }) {
 }
 
 // Convert a ship's state into the data needed to draw its thruster
-function thrusterDrawInfo({ isThrusting, pos, degrees }) {
+function thrusterDrawInfo({ isThrusting, pos, degrees }: Ship): ?Drawable {
   const {
     ship: {
       radius: shipRadius,
@@ -69,7 +72,7 @@ function thrusterDrawInfo({ isThrusting, pos, degrees }) {
   return null;
 }
 
-function bulletDrawInfo({ pos }) {
+function bulletDrawInfo({ pos }: Bullet): Drawable {
   const {
     bullets: {
       radius,
@@ -83,7 +86,7 @@ function bulletDrawInfo({ pos }) {
   };
 }
 
-function debrisDrawInfo({ pos }) {
+function debrisDrawInfo({ pos }: Debris): Drawable {
   const {
     asteroids: {
       color,
@@ -110,7 +113,7 @@ function drawPause() {
   });
 }
 
-function drawScore(score) {
+function drawScore(score: number) {
   drawText({
     text: `Score: ${score}`,
     size: 10,
@@ -119,18 +122,30 @@ function drawScore(score) {
   });
 }
 
-export default function draw({ movingObjects, isPaused }) {
+export default function draw({
+  movingObjects,
+  isPaused,
+}: {
+  movingObjects: {
+    asteroids: Asteroid[],
+    ship: Ship,
+    bullets: Bullet[],
+    debris: Debris[],
+    score: number,
+  },
+  isPaused: boolean,
+}) {
   const { asteroids, ship, bullets, debris, score } = movingObjects;
   clear();
-  const drawableInfos = [
+  const drawableInfos: Drawable[] = compact([
     ...asteroids.map(asteroidDrawInfo),
     ...bullets.map(bulletDrawInfo),
     ...debris.map(debrisDrawInfo),
     shipDrawInfo(ship),
     turretDrawInfo(ship),
     thrusterDrawInfo(ship),
-  ];
-  compact(drawableInfos).forEach(drawObject);
+  ]);
+  drawableInfos.forEach(drawObject);
 
   if (isPaused) {
     drawPause();

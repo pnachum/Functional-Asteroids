@@ -1,3 +1,5 @@
+// @flow
+
 import { times } from 'lodash';
 import ship from './ship';
 import bullets from './bullets';
@@ -7,10 +9,27 @@ import { MOVE } from '../actionCreators';
 import { isCollided, direction, sumOfAreas } from '../utils/math';
 import randomAsteroids from '../utils/randomAsteroids';
 import { SETTINGS } from '../constants';
+import type { Ship, Asteroid, Bullet, Debris, WithRadius } from '../types/index';
+
+type State = {
+  asteroids: Asteroid[],
+  bullets: Bullet[],
+  ship: Ship,
+  debris: Debris[],
+  score: number,
+};
+
+const defaultState = {
+  asteroids: [],
+  bullets: [],
+  ship: SETTINGS.ship.defaultShip,
+  debris: [],
+  score: 0,
+};
 
 // This reducer allows for state changes which rely on interactions between various moving objects,
 // specifically to handle collisions.
-export default function movingObjects(state = {}, action) {
+export default function movingObjects(state: State = defaultState, action: Object): State {
   const {
     asteroids: {
       minimumRadius,
@@ -84,9 +103,10 @@ export default function movingObjects(state = {}, action) {
       }, []);
 
       const newAsteroids = notHitAsteroids.concat(subAsteroids);
-      const additionalAsteroids = sumOfAreas(newAsteroids) < startingMinimumArea
-        ? randomAsteroids(1)
-        : [];
+      // Flow can't cast Asteroid[] to WithRadius[], so map over the array to do it explicitly
+      const withRadii: WithRadius[] = newAsteroids.map(ast => (ast: WithRadius));
+      const area = sumOfAreas(withRadii);
+      const additionalAsteroids = area < startingMinimumArea ? randomAsteroids(1) : [];
 
       return {
         ship: newShip,
@@ -105,3 +125,14 @@ export default function movingObjects(state = {}, action) {
       };
   }
 }
+
+function getRadius(obj: WithRadius): number {
+  return obj.radius;
+}
+
+function getAsteroidRadius(asteroid: Asteroid): number {
+  return getRadius(asteroid);
+}
+
+const ast = { radius: 10, pos: [10, 10], vel: [0, 0] };
+console.log(getAsteroidRadius(ast));

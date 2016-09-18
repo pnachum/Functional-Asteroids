@@ -2,9 +2,9 @@
 
 import { random, sample, times } from 'lodash';
 import { SETTINGS, DIMENSION } from '../constants';
+import type { Asteroid } from '../types/index';
 
 type Options = { pos?: [number, number], radius?: number }
-type Asteroid = { pos: [number, number], radius: number, vel: [number, number] };
 
 // Pick a random position along the edge of the game for the asteroid to
 // spawn at

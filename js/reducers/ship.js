@@ -1,9 +1,12 @@
+// @flow
+
 import { MOVE, THRUST_SHIP, ROTATE_SHIP, STOP_THRUSTING_SHIP } from '../actionCreators';
 import newPosition from '../utils/newPosition';
 import computeNewVel from '../utils/computeNewVel';
 import { SETTINGS } from '../constants';
+import type { Ship } from '../types/index';
 
-function airResistedVelocity(oldVel, airResistance) {
+function airResistedVelocity(oldVel: [number, number], airResistance: number): [number, number] {
   return oldVel.map((d) => {
     if (d > airResistance) {
       return d - airResistance;
@@ -14,8 +17,7 @@ function airResistedVelocity(oldVel, airResistance) {
   });
 }
 
-// state is object with { pos, vel, degrees, isTruthsting }
-export default function ship(state = SETTINGS.ship.defaultShip, action) {
+export default function ship(state: Ship = SETTINGS.ship.defaultShip, action: Object): Ship {
   const {
     radius: shipRadius,
     airResistance,

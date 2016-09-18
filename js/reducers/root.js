@@ -1,3 +1,5 @@
+// @flow
+
 import { combineReducers } from 'redux';
 import movingObjects from './movingObjects';
 import isPaused from './isPaused';

@@ -1,6 +1,7 @@
 // @flow
 
 import { DIMENSION } from '../constants';
+import type { Moveable } from '../types/index';
 
 // Given the position and radius of an object, and the dimension of the screen, map the object
 // to the screeen so that it wraps around the edge of screen.
@@ -19,15 +20,7 @@ function mapToScreen(
   });
 }
 
-export default function newPosition({
-  vel,
-  radius,
-  pos,
-}: {
-  vel: [number, number],
-  radius: number,
-  pos: [number, number],
-}): [number, number] {
+export default function newPosition({ vel, radius, pos }: Moveable): [number, number] {
   const newPos = pos.map((d, i) => d + vel[i]);
   return mapToScreen(newPos, radius);
 }

@@ -1,3 +1,5 @@
+// @flow
+
 import { createStore } from 'redux';
 import key from 'keymaster';
 import rootReducer from './reducers/root';
@@ -65,7 +67,7 @@ function bindKeyHandlers() {
   });
 }
 
-export default function beginGame(ctx) {
+export default function beginGame(ctx: Object) {
   initContext(ctx);
   store.dispatch(addRandomAsteroids(SETTINGS.asteroids.startingNumber));
   bindKeyHandlers();

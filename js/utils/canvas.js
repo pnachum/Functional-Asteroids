@@ -1,10 +1,11 @@
 // @flow
 
 import { DIMENSION } from '../constants';
+import type { Drawable } from '../types/index';
 
-let ctx: any;
+let ctx: Object;
 
-export function initContext(context: any) {
+export function initContext(context: Object) {
   ctx = context;
 }
 
@@ -12,9 +13,7 @@ export function clear() {
   ctx.clearRect(0, 0, DIMENSION, DIMENSION);
 }
 
-export function drawObject(
-  { color, pos, radius }: { color: string, pos: [number, number], radius: string }
-) {
+export function drawObject({ color, pos, radius }: Drawable) {
   ctx.fillStyle = color;
   ctx.beginPath();
   ctx.arc(

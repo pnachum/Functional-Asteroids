@@ -1,3 +1,5 @@
+// @flow
+
 import newPosition from '../utils/newPosition';
 import { MOVE, SHOOT } from '../actionCreators';
 import { SETTINGS } from '../constants';
@@ -5,9 +7,9 @@ import {
   getRotateablePosition,
   direction,
 } from '../utils/math';
+import type { Bullet } from '../types/index';
 
-// state is object with { pos, vel, distance }
-function bullet(state, action) {
+function bullet(state: Bullet, action: Object): Bullet {
   const {
     radius: bulletRadius,
     speed,
@@ -28,8 +30,7 @@ function bullet(state, action) {
   }
 }
 
-// state is array of objects with { pos, vel, distance }
-export default function bullets(state = [], action) {
+export default function bullets(state: Bullet[] = [], action: Object): Bullet[] {
   const {
     bullets: {
       speed,

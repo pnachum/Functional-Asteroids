@@ -1,5 +1,7 @@
 // @flow
 
+import type { Asteroid, Ship } from './types/index';
+
 export const MOVE = 'MOVE';
 export const ADD_ASTEROID = 'ADD_ASTEROID';
 export const ADD_RANDOM_ASTEROIDS = 'ADD_RANDOM_ASTEROIDS';
@@ -11,13 +13,6 @@ export const TOGGLE_PAUSE = 'TOGGLE_PAUSE';
 export const NEW_FRAME = 'NEW_FRAME';
 
 type SimpleAction = { type: string };
-type Asteroid = { pos: [number, number], radius: number, vel: [number, number] };
-type Ship = {
-  pos: [number, number],
-  vel: [number, number],
-  degrees: number,
-  isTruthsting: boolean
-};
 
 export function move(): SimpleAction {
   return { type: MOVE };

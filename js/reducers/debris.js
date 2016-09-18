@@ -1,21 +1,27 @@
+// @flow
+
 import { MOVE } from '../actionCreators';
 import newPosition from '../utils/newPosition';
 import { SETTINGS } from '../constants';
+import type { Debris } from '../types/index';
 
 // TODO: These reducers are nearly identical to the bullet reducers. Share the code
 
-function oneDebris(state, action) {
+function oneDebris(state: Debris, action: Object): Debris {
   const {
     debris: {
-      radius,
+      number,
       speed,
+    },
+    asteroids: {
+      minimumRadius,
     },
   } = SETTINGS;
   switch (action.type) {
     case MOVE:
       const newPos = newPosition({
         ...state,
-        radius,
+        radius: minimumRadius / number,
       });
       return {
         ...state,
@@ -27,7 +33,7 @@ function oneDebris(state, action) {
   }
 }
 
-export default function debris(state = [], action) {
+export default function debris(state: Debris[] = [], action: Object): Debris[] {
   switch (action.type) {
     case MOVE:
       return state

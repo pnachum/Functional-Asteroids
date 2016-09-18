@@ -1,3 +1,5 @@
+// @flow
+
 export const DIMENSION = 500;
 export const FRAMES_PER_SECOND = 30;
 
