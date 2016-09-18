@@ -1,6 +1,6 @@
 // @flow
 
-import { times } from 'lodash';
+import { times, sumBy } from 'lodash';
 import ship from './ship';
 import bullets from './bullets';
 import asteroids from './asteroids';
@@ -11,12 +11,21 @@ import randomAsteroids from '../utils/randomAsteroids';
 import { SETTINGS } from '../constants';
 import type { Ship, Asteroid, Bullet, Debris, WithRadius } from '../types/index';
 
+function smallerRadius(distance: number): (obj: WithRadius) => boolean {
+  return ({ radius }) => radius < distance;
+}
+
 type State = {
   asteroids: Asteroid[],
   bullets: Bullet[],
   ship: Ship,
   debris: Debris[],
   score: number,
+};
+
+type AsteroidCollision = {
+  asteroid: Asteroid,
+  points: number,
 };
 
 const defaultState = {
@@ -49,32 +58,39 @@ export default function movingObjects(state: State = defaultState, action: Objec
     pointsForBreak,
     pointsForDestroy,
   } = SETTINGS;
+  const shouldBeDestroyed = smallerRadius(minimumRadius * Math.sqrt(2));
 
   // TODO: This seems pretty messy
   const reducedAsteroids = asteroids(state.asteroids, action);
   const reducedBullets = bullets(state.bullets, action);
   const reducedShip = ship(state.ship, action);
   const reducedDebris = debris(state.debris, action);
-  let newScore = state.score || 0;
+  const score = state.score || 0;
   switch (action.type) {
     case MOVE:
-      const collidedBullets = [];
-      const collidedAsteroids = [];
+      const collidedBullets: Bullet[] = [];
+      const asteroidCollisions: AsteroidCollision[] = [];
       let newShip = reducedShip;
       reducedAsteroids.forEach((asteroid) => {
         reducedBullets.forEach((bullet) => {
           if (isCollided({ ...bullet, radius: bulletRadius }, asteroid)) {
             collidedBullets.push(bullet);
-            collidedAsteroids.push(asteroid);
+            asteroidCollisions.push({
+              points: shouldBeDestroyed(asteroid) ? pointsForDestroy : pointsForBreak,
+              asteroid,
+            });
           }
         });
 
         if (isCollided({ ...reducedShip, radius: shipRadius }, asteroid)) {
-          collidedAsteroids.push(asteroid);
+          asteroidCollisions.push({ points: 0, asteroid });
           // Maintain the ship's current direction
           newShip = { ...defaultShip, degrees: reducedShip.degrees };
         }
       });
+      const collidedAsteroids = asteroidCollisions.map(info => info.asteroid);
+
+      const pointsAwarded = sumBy(asteroidCollisions, ac => ac.points);
 
       const notHitAsteroids = reducedAsteroids.filter(asteroid => (
         !collidedAsteroids.includes(asteroid)
@@ -86,12 +102,7 @@ export default function movingObjects(state: State = defaultState, action: Objec
         }))
       ), []).filter(asteroid => asteroid.radius > minimumRadius);
 
-      const destroyedAsteroids = collidedAsteroids.filter(asteroid => (
-        asteroid.radius / Math.sqrt(2) < minimumRadius
-      ));
-      newScore += (destroyedAsteroids.length * pointsForDestroy);
-      newScore += ((subAsteroids.length / 2) * pointsForBreak);
-
+      const destroyedAsteroids = collidedAsteroids.filter(shouldBeDestroyed);
       const angle = 360 / numDebris;
       const newDebris = destroyedAsteroids.reduce((prev, current) => {
         const debrisForAsteroid = times(numDebris, index => ({
@@ -113,7 +124,7 @@ export default function movingObjects(state: State = defaultState, action: Objec
         bullets: reducedBullets.filter(bullet => !collidedBullets.includes(bullet)),
         asteroids: newAsteroids.concat(additionalAsteroids),
         debris: reducedDebris.concat(newDebris),
-        score: newScore,
+        score: score + pointsAwarded,
       };
     default:
       return {
@@ -121,7 +132,7 @@ export default function movingObjects(state: State = defaultState, action: Objec
         bullets: reducedBullets,
         ship: reducedShip,
         debris: reducedDebris,
-        score: newScore,
+        score,
       };
   }
 }
