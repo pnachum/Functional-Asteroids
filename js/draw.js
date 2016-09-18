@@ -3,7 +3,7 @@
 import { compact } from 'lodash';
 import { SETTINGS } from './constants';
 import { getRotateablePosition } from './utils/math';
-import { drawObject, drawText, clear } from './utils/canvas';
+import { drawCircle, drawText, clear } from './utils/canvas';
 import type { Asteroid, Ship, Bullet, Debris, Drawable } from './types/index';
 
 // Convert an asteroid's state into the data needed to draw it.
@@ -155,7 +155,7 @@ export default function draw({
     turretDrawInfo(ship),
     thrusterDrawInfo(ship),
   ]);
-  drawableInfos.forEach(drawObject);
+  drawableInfos.forEach(drawCircle);
 
   if (isPaused) {
     drawPause();

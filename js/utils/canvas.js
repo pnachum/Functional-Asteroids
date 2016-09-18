@@ -13,7 +13,7 @@ export function clear() {
   ctx.clearRect(0, 0, DIMENSION, DIMENSION);
 }
 
-export function drawObject({ color, pos, radius }: Drawable) {
+export function drawCircle({ color, pos, radius }: Drawable) {
   ctx.fillStyle = color;
   ctx.beginPath();
   ctx.arc(
