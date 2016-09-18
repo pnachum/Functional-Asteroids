@@ -50,7 +50,8 @@ export default function movingObjects(state = {}, action) {
 
         if (isCollided({ ...reducedShip, radius: shipRadius }, asteroid)) {
           collidedAsteroids.push(asteroid);
-          newShip = defaultShip;
+          // Maintain the ship's current direction
+          newShip = { ...defaultShip, degrees: reducedShip.degrees };
         }
       });
 
