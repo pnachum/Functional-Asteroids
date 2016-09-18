@@ -19,7 +19,6 @@ Asteroids is built using HTML canvas, JavaScript, Redux, Babel, Flow, and Webpac
 
 ## Remaining parity features
 
-* Keeping score
 * Tracking time
 * Different modes
 * Increase difficulty over time
