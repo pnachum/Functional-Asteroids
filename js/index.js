@@ -5,15 +5,15 @@ import key from 'keymaster';
 import rootReducer from './reducers/root';
 import {
   move,
-  addRandomAsteroids,
   thrustShip,
   rotateShip,
   stopThrustingShip,
   shoot,
   togglePause,
   newFrame,
+  reset,
 } from './actionCreators';
-import { FRAMES_PER_SECOND, SETTINGS } from './constants';
+import { FRAMES_PER_SECOND } from './constants';
 import { initContext } from './utils/canvas';
 import draw from './draw';
 
@@ -40,13 +40,20 @@ function stop() {
   clearInterval(intervalId);
 }
 
+function gameOver() {
+  stop();
+  if (confirm('Game over! Would you like to play again?')) {
+    store.dispatch(reset());
+    start();
+  }
+}
+
 function step() {
   store.dispatch(newFrame(store.getState().frameCount));
   store.dispatch(move());
   keyPressListener();
   if (store.getState().movingObjects.lives < 0) {
-    stop();
-    alert('Game over!');
+    gameOver();
   }
 }
 
@@ -73,7 +80,6 @@ function bindKeyHandlers() {
 
 export default function beginGame(ctx: Object) {
   initContext(ctx);
-  store.dispatch(addRandomAsteroids(SETTINGS.asteroids.startingNumber));
   bindKeyHandlers();
   start();
 }

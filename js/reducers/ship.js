@@ -1,6 +1,6 @@
 // @flow
 
-import { MOVE, THRUST_SHIP, ROTATE_SHIP, STOP_THRUSTING_SHIP } from '../actionCreators';
+import { MOVE, THRUST_SHIP, ROTATE_SHIP, STOP_THRUSTING_SHIP, RESET } from '../actionCreators';
 import newPosition from '../utils/newPosition';
 import computeNewVel from '../utils/computeNewVel';
 import { SETTINGS } from '../constants';
@@ -17,7 +17,9 @@ function airResistedVelocity(oldVel: [number, number], airResistance: number): [
   });
 }
 
-export default function ship(state: Ship = SETTINGS.ship.defaultShip, action: Object): Ship {
+const defaultState = SETTINGS.ship.defaultShip;
+
+export default function ship(state: Ship = defaultState, action: Object): Ship {
   const {
     radius: shipRadius,
     airResistance,
@@ -49,6 +51,8 @@ export default function ship(state: Ship = SETTINGS.ship.defaultShip, action: Ob
       return { ...state, degrees };
     case STOP_THRUSTING_SHIP:
       return { ...state, isThrusting: false};
+    case RESET:
+      return defaultState;
     default:
       return state;
   }

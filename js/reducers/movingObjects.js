@@ -5,7 +5,7 @@ import ship from './ship';
 import bullets from './bullets';
 import asteroids from './asteroids';
 import debris from './debris';
-import { MOVE } from '../actionCreators';
+import { MOVE, RESET } from '../actionCreators';
 import { isCollided, direction, sumOfAreas } from '../utils/math';
 import randomAsteroids from '../utils/randomAsteroids';
 import { SETTINGS } from '../constants';
@@ -131,6 +131,8 @@ export default function movingObjects(state: State = defaultState, action: Objec
         score: score + pointsAwarded,
         lives,
       };
+    case RESET:
+      return defaultState;
     default:
       return {
         asteroids: reducedAsteroids,

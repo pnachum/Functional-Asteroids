@@ -141,6 +141,7 @@ export default function draw({
     bullets: Bullet[],
     debris: Debris[],
     score: number,
+    lives: number,
   },
   isPaused: boolean,
 }) {

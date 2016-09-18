@@ -4,13 +4,13 @@ import type { Asteroid, Ship } from './types/index';
 
 export const MOVE = 'MOVE';
 export const ADD_ASTEROID = 'ADD_ASTEROID';
-export const ADD_RANDOM_ASTEROIDS = 'ADD_RANDOM_ASTEROIDS';
 export const THRUST_SHIP = 'THRUST_SHIP';
 export const ROTATE_SHIP = 'ROTATE_SHIP';
 export const STOP_THRUSTING_SHIP = 'STOP_THRUSTING_SHIP';
 export const SHOOT = 'SHOOT';
 export const TOGGLE_PAUSE = 'TOGGLE_PAUSE';
 export const NEW_FRAME = 'NEW_FRAME';
+export const RESET = 'RESET';
 
 type SimpleAction = { type: string };
 
@@ -20,10 +20,6 @@ export function move(): SimpleAction {
 
 export function addAsteroid(asteroid: Asteroid): { type: string, asteroid: Asteroid} {
   return { type: ADD_ASTEROID, asteroid };
-}
-
-export function addRandomAsteroids(numAsteroids: number): { type: string, numAsteroids: number } {
-  return { type: ADD_RANDOM_ASTEROIDS, numAsteroids };
 }
 
 export function thrustShip(): SimpleAction {
@@ -48,4 +44,8 @@ export function togglePause(): SimpleAction {
 
 export function newFrame(frameCount: number): { type: string, frameCount: number } {
   return { type: NEW_FRAME, frameCount };
+}
+
+export function reset(): SimpleAction {
+  return { type: RESET };
 }

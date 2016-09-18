@@ -1,13 +1,15 @@
 // @flow
 
 import newPosition from '../utils/newPosition';
-import { MOVE, SHOOT } from '../actionCreators';
+import { MOVE, SHOOT, RESET } from '../actionCreators';
 import { SETTINGS } from '../constants';
 import {
   getRotateablePosition,
   direction,
 } from '../utils/math';
 import type { Bullet } from '../types/index';
+
+const defaultState = [];
 
 function bullet(state: Bullet, action: Object): Bullet {
   const {
@@ -30,7 +32,7 @@ function bullet(state: Bullet, action: Object): Bullet {
   }
 }
 
-export default function bullets(state: Bullet[] = [], action: Object): Bullet[] {
+export default function bullets(state: Bullet[] = defaultState, action: Object): Bullet[] {
   const {
     bullets: {
       speed,
@@ -55,6 +57,8 @@ export default function bullets(state: Bullet[] = [], action: Object): Bullet[] 
         distance,
       };
       return [...state, newBullet];
+    case RESET:
+      return defaultState;
     default:
       return state;
   }
