@@ -134,12 +134,19 @@ function drawPause() {
   });
 }
 
-function drawScore(score: number) {
+function drawUIText({ text, pos }: { text: string, pos: [number, number] }) {
   drawTextInUI({
-    text: `Score: ${score}`,
-    size: 20,
-    pos: [5, 30],
     color: 'black',
+    size: 20,
+    text,
+    pos,
+  });
+}
+
+function drawScore(score: number) {
+  drawUIText({
+    text: `Score: ${score}`,
+    pos: [5, 30],
   });
 }
 
@@ -157,29 +164,23 @@ function drawLives(lives: number) {
 
 function drawTime(frameCount: number) {
   const seconds = Math.floor(frameCount / FRAMES_PER_SECOND);
-  drawTextInUI({
+  drawUIText({
     text: `Time: ${seconds}`,
-    size: 20,
     pos: [5, 160],
-    color: 'black',
   });
 }
 
 function drawMultiplier(multiplier: number) {
-  drawTextInUI({
+  drawUIText({
     text: `x${multiplier}`,
-    size: 20,
     pos: [5, 60],
-    color: 'black',
   });
 }
 
 function drawMode(mode: Mode) {
-  drawTextInUI({
+  drawUIText({
     text: `Mode: ${NAME_FOR_MODE[mode]}`,
-    size: 20,
     pos: [5, 130],
-    color: 'black',
   });
 }
 
