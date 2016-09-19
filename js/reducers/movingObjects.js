@@ -127,9 +127,8 @@ export default function movingObjects(state: State = defaultState, action: Objec
 
       const newAsteroids = notHitAsteroids.concat(subAsteroids);
       // Flow can't cast Asteroid[] to WithRadius[], so map over the array to do it explicitly
-      const withRadii: WithRadius[] = newAsteroids.map(ast => (ast: WithRadius));
-      const area = sumOfAreas(withRadii);
-      const additionalAsteroids = area < minimumAsteroidArea
+      const withRadii: WithRadius[] = newAsteroids.map(asteroid => (asteroid: WithRadius));
+      const additionalAsteroids = sumOfAreas(withRadii) < minimumAsteroidArea
         ? randomAsteroids(1, { radius: asteroidSpawnRadius, spawnSpeed: asteroidSpeed })
         : [];
 
