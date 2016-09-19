@@ -1,12 +1,9 @@
 import $ from 'jquery';
-// import Game from './js/game';
-// import SETTINGS from './js/settings';
 import beginGame from './js/index';
 
-$(function() {
+$(() => {
   $('.mode-button').on('click', (event) => {
     const mode = $(event.currentTarget).find('.mode-title').text();
-    // SETTINGS.updateMode(mode);
     $('#mode-buttons').toggleClass('hidden');
     $('canvas').toggleClass('hidden');
     const game = document.getElementById('game');
