@@ -1,7 +1,7 @@
 // @flow
 
 import { SETTINGS, FRAMES_PER_SECOND } from '../constants';
-import { NEW_FRAME, RESET } from '../actionCreators';
+import { NEW_FRAME } from '../actionCreators';
 import type { DifficultyState } from '../types/index';
 
 function increasedDifficulty(prevDifficulty: DifficultyState): DifficultyState {
@@ -36,8 +36,6 @@ export default function difficulty(
         return increasedDifficulty(state);
       }
       return state;
-    case RESET:
-      return defaultState;
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 // @flow
 
-import { MOVE, THRUST_SHIP, ROTATE_SHIP, STOP_THRUSTING_SHIP, RESET } from '../actionCreators';
+import { MOVE, THRUST_SHIP, ROTATE_SHIP, STOP_THRUSTING_SHIP } from '../actionCreators';
 import newPosition from '../utils/newPosition';
 import computeNewVel from '../utils/computeNewVel';
 import { SETTINGS } from '../constants';
@@ -50,9 +50,7 @@ export default function ship(state: Ship = defaultState, action: Object): Ship {
       const degrees = (state.degrees + (action.direction * turnSpeed)) % 360;
       return { ...state, degrees };
     case STOP_THRUSTING_SHIP:
-      return { ...state, isThrusting: false};
-    case RESET:
-      return defaultState;
+      return { ...state, isThrusting: false };
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 // @flow
 
-import { MOVE, RESET } from '../actionCreators';
+import { MOVE } from '../actionCreators';
 import newPosition from '../utils/newPosition';
 import { SETTINGS } from '../constants';
 import type { Debris } from '../types/index';
@@ -41,8 +41,6 @@ export default function debris(state: Debris[] = defaultState, action: Object): 
       return state
         .map(deb => oneDebris(deb, action))
         .filter(deb => deb.distance > 0);
-    case RESET:
-      return defaultState;
     default:
       return state;
   }

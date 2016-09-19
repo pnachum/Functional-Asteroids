@@ -1,7 +1,7 @@
 // @flow
 
 import newPosition from '../utils/newPosition';
-import { MOVE, SHOOT, RESET } from '../actionCreators';
+import { MOVE, SHOOT } from '../actionCreators';
 import { SETTINGS } from '../constants';
 import {
   getRotateablePosition,
@@ -57,8 +57,6 @@ export default function bullets(state: Bullet[] = defaultState, action: Object):
         distance,
       };
       return [...state, newBullet];
-    case RESET:
-      return defaultState;
     default:
       return state;
   }
