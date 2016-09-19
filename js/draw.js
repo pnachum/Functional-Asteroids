@@ -1,7 +1,7 @@
 // @flow
 
 import { compact, flatten, times } from 'lodash';
-import { SETTINGS, FRAMES_PER_SECOND } from './constants';
+import { SETTINGS, FRAMES_PER_SECOND, NAME_FOR_MODE } from './constants';
 import { getRotateablePosition } from './utils/math';
 import {
   drawCircleInGame,
@@ -16,6 +16,7 @@ import type {
   Bullet,
   Debris,
   DrawableCircle,
+  Mode,
 } from './types/index';
 
 // Convert an asteroid's state into the data needed to draw it.
@@ -173,10 +174,20 @@ function drawMultiplier(multiplier: number) {
   });
 }
 
+function drawMode(mode: Mode) {
+  drawTextInUI({
+    text: `Mode: ${NAME_FOR_MODE[mode]}`,
+    size: 20,
+    pos: [5, 130],
+    color: 'black',
+  });
+}
+
 export default function draw({
   movingObjects,
   isPaused,
   frameCount,
+  mode,
 }: {
   movingObjects: {
     asteroids: Asteroid[],
@@ -189,6 +200,7 @@ export default function draw({
   },
   isPaused: boolean,
   frameCount: number,
+  mode: Mode,
 }) {
   const { asteroids, ship, bullets, debris, score, lives, multiplier } = movingObjects;
   clear();
@@ -207,4 +219,5 @@ export default function draw({
   drawLives(lives);
   drawTime(frameCount);
   drawMultiplier(multiplier);
+  drawMode(mode);
 }

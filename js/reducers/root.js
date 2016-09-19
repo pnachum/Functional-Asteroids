@@ -5,6 +5,7 @@ import movingObjects from './movingObjects';
 import isPaused from './isPaused';
 import frameCount from './frameCount';
 import difficulty from './difficulty';
+import mode from './mode';
 import { RESET } from '../actionCreators';
 
 const appReducer = combineReducers({
@@ -12,6 +13,7 @@ const appReducer = combineReducers({
   isPaused,
   frameCount,
   difficulty,
+  mode,
 });
 
 export default function rootReducer(state: Object, action: Object): Object {

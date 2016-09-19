@@ -3,6 +3,20 @@
 export const DIMENSION = 500;
 export const FRAMES_PER_SECOND = 30;
 
+// Flow's literal types can't use constants, so make sure the Mode type is updated if these
+// constants change
+export const CLASSIC = 0;
+export const DODGEBALL = 1;
+export const BOSS = 2;
+export const SUPER_BOSS = 3;
+
+export const NAME_FOR_MODE = {
+  [CLASSIC]: 'Classic',
+  [DODGEBALL]: 'Dodgeball',
+  [BOSS]: 'Bossteroid',
+  [SUPER_BOSS]: 'Super Bossteroid',
+};
+
 export const SETTINGS = {
   asteroids: {
     startingMinimumArea: 5000,

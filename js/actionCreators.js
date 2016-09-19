@@ -1,6 +1,6 @@
 // @flow
 
-import type { Asteroid, Ship, DifficultyState } from './types/index';
+import type { Asteroid, Ship, DifficultyState, Mode } from './types/index';
 
 export const MOVE = 'MOVE';
 export const ADD_ASTEROID = 'ADD_ASTEROID';
@@ -11,6 +11,7 @@ export const SHOOT = 'SHOOT';
 export const TOGGLE_PAUSE = 'TOGGLE_PAUSE';
 export const NEW_FRAME = 'NEW_FRAME';
 export const RESET = 'RESET';
+export const SET_MODE = 'SET_MODE';
 
 type SimpleAction = { type: string };
 
@@ -48,4 +49,8 @@ export function newFrame(frameCount: number): { type: string, frameCount: number
 
 export function reset(): SimpleAction {
   return { type: RESET };
+}
+
+export function setMode(newMode: Mode): { type: string, newMode: Mode } {
+  return { type: SET_MODE, newMode };
 }
