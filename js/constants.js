@@ -5,12 +5,10 @@ export const FRAMES_PER_SECOND = 30;
 
 export const SETTINGS = {
   asteroids: {
-    startingNumber: 2,
     startingMinimumArea: 5000,
     startingSpawnRadius: 30,
     minimumRadius: 10,
     color: 'sienna',
-    spawnBufferRange: 200,
     startingSpeed: 0.5,
   },
 
