@@ -1,19 +1,22 @@
 // @flow
 
 import { DIMENSION } from '../constants';
-import type { Drawable } from '../types/index';
+import type { DrawableCircle, DrawableText } from '../types/index';
 
-let ctx: Object;
+let gameCtx: Object;
+let uiCtx: Object;
 
-export function initContext(context: Object) {
-  ctx = context;
+export function initContext(gameContext: Object, uiContext: Object) {
+  gameCtx = gameContext;
+  uiCtx = uiContext;
 }
 
 export function clear() {
-  ctx.clearRect(0, 0, DIMENSION, DIMENSION);
+  gameCtx.clearRect(0, 0, DIMENSION, DIMENSION);
+  uiCtx.clearRect(0, 0, DIMENSION / 2, DIMENSION);
 }
 
-export function drawCircle({ color, pos, radius }: Drawable) {
+function drawCircle(ctx: Object, { color, pos, radius }: DrawableCircle) {
   ctx.fillStyle = color;
   ctx.beginPath();
   ctx.arc(
@@ -27,10 +30,27 @@ export function drawCircle({ color, pos, radius }: Drawable) {
   ctx.fill();
 }
 
-export function drawText(
-  { text, size, pos, color }: { text: string, size: number, pos: [number, number], color: string }
+export function drawCircleInGame(obj: DrawableCircle) {
+  drawCircle(gameCtx, obj);
+}
+
+export function drawCircleInUI(obj: DrawableCircle) {
+  drawCircle(uiCtx, obj);
+}
+
+function drawText(
+  ctx: Object,
+  { text, size, pos, color }: DrawableText,
 ) {
   ctx.fillStyle = color;
   ctx.font = `${size}pt Arial `;
   ctx.fillText(text, ...pos);
+}
+
+export function drawTextInGame(obj: DrawableText) {
+  drawText(gameCtx, obj);
+}
+
+export function drawTextInUI(obj: DrawableText) {
+  drawText(uiCtx, obj);
 }

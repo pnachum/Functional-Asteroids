@@ -11,12 +11,9 @@ $(function() {
     $('canvas').toggleClass('hidden');
     const game = document.getElementById('game');
     const gameContext = game.getContext('2d');
-    beginGame(gameContext);
-
-    // const ui = document.getElementById('ui');
-    // const uiContext = ui.getContext('2d');
-    // const asteroidsGame = new Game(gameContext, uiContext);
-    // asteroidsGame.start();
+    const ui = document.getElementById('ui');
+    const uiContext = ui.getContext('2d');
+    beginGame(gameContext, uiContext);
   });
 
   $('.mode-button').hover((event) => {

@@ -21,7 +21,6 @@ Asteroids is built using HTML canvas, JavaScript, Redux, Babel, Flow, and Webpac
 
 * Tracking time
 * Different modes
-* Display information in right side panel
 * Sound effects
 * Powerups
 * Ship invincibility

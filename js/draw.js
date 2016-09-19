@@ -1,13 +1,25 @@
 // @flow
 
-import { compact } from 'lodash';
-import { SETTINGS } from './constants';
+import { compact, flatten, times } from 'lodash';
+import { SETTINGS, FRAMES_PER_SECOND } from './constants';
 import { getRotateablePosition } from './utils/math';
-import { drawCircle, drawText, clear } from './utils/canvas';
-import type { Asteroid, Ship, Bullet, Debris, Drawable } from './types/index';
+import {
+  drawCircleInGame,
+  drawCircleInUI,
+  drawTextInGame,
+  drawTextInUI,
+  clear,
+} from './utils/canvas';
+import type {
+  Asteroid,
+  Ship,
+  Bullet,
+  Debris,
+  DrawableCircle,
+} from './types/index';
 
 // Convert an asteroid's state into the data needed to draw it.
-function asteroidDrawInfo({ pos, radius }: Asteroid): Drawable {
+function asteroidDrawInfo({ pos, radius }: Asteroid): DrawableCircle {
   const {
     asteroids: {
       color,
@@ -21,8 +33,8 @@ function asteroidDrawInfo({ pos, radius }: Asteroid): Drawable {
   };
 }
 
-// Convert a ship's state into the data needed to draw it.
-function shipDrawInfo({ pos }: Ship): Drawable {
+// Convert a ship's state into the data needed to draw its body.
+function shipBodyDrawInfo({ pos }: Ship): DrawableCircle {
   const {
     ship: {
       color,
@@ -37,7 +49,7 @@ function shipDrawInfo({ pos }: Ship): Drawable {
 }
 
 // Convert a ship's state into the data needed to draw its turret.
-function turretDrawInfo({ pos, degrees }: Ship): Drawable {
+function turretDrawInfo({ pos, degrees }: Ship): DrawableCircle {
   const {
     ship: {
       radius: shipRadius,
@@ -53,7 +65,7 @@ function turretDrawInfo({ pos, degrees }: Ship): Drawable {
 }
 
 // Convert a ship's state into the data needed to draw its thruster
-function thrusterDrawInfo({ isThrusting, pos, degrees }: Ship): ?Drawable {
+function thrusterDrawInfo({ isThrusting, pos, degrees }: Ship): ?DrawableCircle {
   const {
     ship: {
       radius: shipRadius,
@@ -72,7 +84,15 @@ function thrusterDrawInfo({ isThrusting, pos, degrees }: Ship): ?Drawable {
   return null;
 }
 
-function bulletDrawInfo({ pos }: Bullet): Drawable {
+function shipDrawInfo(ship: Ship): DrawableCircle[] {
+  return compact([
+    shipBodyDrawInfo(ship),
+    turretDrawInfo(ship),
+    thrusterDrawInfo(ship),
+  ]);
+}
+
+function bulletDrawInfo({ pos }: Bullet): DrawableCircle {
   const {
     bullets: {
       radius,
@@ -86,7 +106,7 @@ function bulletDrawInfo({ pos }: Bullet): Drawable {
   };
 }
 
-function debrisDrawInfo({ pos }: Debris): Drawable {
+function debrisDrawInfo({ pos }: Debris): DrawableCircle {
   const {
     asteroids: {
       color,
@@ -105,7 +125,7 @@ function debrisDrawInfo({ pos }: Debris): Drawable {
 }
 
 function drawPause() {
-  drawText({
+  drawTextInGame({
     text: 'Paused',
     size: 20,
     pos: [205, 270],
@@ -114,26 +134,40 @@ function drawPause() {
 }
 
 function drawScore(score: number) {
-  drawText({
+  drawTextInUI({
     text: `Score: ${score}`,
-    size: 10,
-    pos: [10, 10],
-    color: 'white',
+    size: 20,
+    pos: [5, 30],
+    color: 'black',
   });
 }
 
 function drawLives(lives: number) {
-  drawText({
-    text: `Lives: ${lives}`,
-    size: 10,
-    pos: [10, 25],
-    color: 'white',
+  const shipDrawInfos = times(lives, i => (
+    shipDrawInfo({
+      pos: [20 + (25 * i), 90],
+      vel: [0, 0],
+      degrees: 90,
+      isThrusting: false,
+    })
+  ));
+  flatten(shipDrawInfos).forEach(drawCircleInUI);
+}
+
+function drawTime(frameCount: number) {
+  const seconds = Math.floor(frameCount / FRAMES_PER_SECOND);
+  drawTextInUI({
+    text: `Time: ${seconds}`,
+    size: 20,
+    pos: [5, 160],
+    color: 'black',
   });
 }
 
 export default function draw({
   movingObjects,
   isPaused,
+  frameCount,
 }: {
   movingObjects: {
     asteroids: Asteroid[],
@@ -144,22 +178,22 @@ export default function draw({
     lives: number,
   },
   isPaused: boolean,
+  frameCount: number,
 }) {
   const { asteroids, ship, bullets, debris, score, lives } = movingObjects;
   clear();
-  const drawableInfos: Drawable[] = compact([
+  const drawableInfos: DrawableCircle[] = [
     ...asteroids.map(asteroidDrawInfo),
     ...bullets.map(bulletDrawInfo),
     ...debris.map(debrisDrawInfo),
-    shipDrawInfo(ship),
-    turretDrawInfo(ship),
-    thrusterDrawInfo(ship),
-  ]);
-  drawableInfos.forEach(drawCircle);
+    ...shipDrawInfo(ship),
+  ];
+  drawableInfos.forEach(drawCircleInGame);
 
   if (isPaused) {
     drawPause();
   }
   drawScore(score);
   drawLives(lives);
+  drawTime(frameCount);
 }

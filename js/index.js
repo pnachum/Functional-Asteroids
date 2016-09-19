@@ -79,8 +79,8 @@ function bindKeyHandlers() {
   });
 }
 
-export default function beginGame(ctx: Object) {
-  initContext(ctx);
+export default function beginGame(gameContext: Object, uiContext: Object) {
+  initContext(gameContext, uiContext);
   bindKeyHandlers();
   start();
 }

@@ -41,11 +41,18 @@ export type Moveable = {
   vel: [number, number],
 }
 
-export type Drawable = {
+export type DrawableCircle = {
   radius: number,
   pos: [number, number],
   color: string,
 }
+
+export type DrawableText = {
+  text: string,
+  size: number,
+  pos: [number, number],
+  color: string
+};
 
 export type DifficultyState = {
   asteroidSpawnRadius: number,
