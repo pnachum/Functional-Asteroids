@@ -164,6 +164,15 @@ function drawTime(frameCount: number) {
   });
 }
 
+function drawMultiplier(multiplier: number) {
+  drawTextInUI({
+    text: `x${multiplier}`,
+    size: 20,
+    pos: [5, 60],
+    color: 'black',
+  });
+}
+
 export default function draw({
   movingObjects,
   isPaused,
@@ -176,11 +185,12 @@ export default function draw({
     debris: Debris[],
     score: number,
     lives: number,
+    multiplier: number,
   },
   isPaused: boolean,
   frameCount: number,
 }) {
-  const { asteroids, ship, bullets, debris, score, lives } = movingObjects;
+  const { asteroids, ship, bullets, debris, score, lives, multiplier } = movingObjects;
   clear();
   const drawableInfos: DrawableCircle[] = [
     ...asteroids.map(asteroidDrawInfo),
@@ -196,4 +206,5 @@ export default function draw({
   drawScore(score);
   drawLives(lives);
   drawTime(frameCount);
+  drawMultiplier(multiplier);
 }

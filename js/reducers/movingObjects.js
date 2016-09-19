@@ -22,6 +22,7 @@ type State = {
   debris: Debris[],
   score: number,
   lives: number,
+  multiplier: number,
 };
 
 type AsteroidCollision = {
@@ -36,6 +37,7 @@ const defaultState = {
   debris: [],
   score: 0,
   lives: SETTINGS.startingLives,
+  multiplier: 1,
 };
 
 // This reducer allows for state changes which rely on interactions between various moving objects,
@@ -90,7 +92,7 @@ export default function movingObjects(state: State = defaultState, action: Objec
         });
 
         if (isCollided({ ...reducedShip, radius: shipRadius }, asteroid)) {
-          lives--;
+          lives -= 1;
           asteroidCollisions.push({ points: 0, asteroid });
           // Maintain the ship's current direction
           newShip = { ...defaultShip, degrees: reducedShip.degrees };
@@ -98,7 +100,7 @@ export default function movingObjects(state: State = defaultState, action: Objec
       });
       const collidedAsteroids = asteroidCollisions.map(info => info.asteroid);
 
-      const pointsAwarded = sumBy(asteroidCollisions, ac => ac.points);
+      const pointsAwarded = sumBy(asteroidCollisions, ac => ac.points * state.multiplier);
 
       const notHitAsteroids = reducedAsteroids.filter(asteroid => (
         !collidedAsteroids.includes(asteroid)
@@ -137,6 +139,7 @@ export default function movingObjects(state: State = defaultState, action: Objec
         asteroids: newAsteroids.concat(additionalAsteroids),
         debris: reducedDebris.concat(newDebris),
         score: score + pointsAwarded,
+        multiplier: state.multiplier,
         lives,
       };
     default:
@@ -145,6 +148,7 @@ export default function movingObjects(state: State = defaultState, action: Objec
         bullets: reducedBullets,
         ship: reducedShip,
         debris: reducedDebris,
+        multiplier: state.multiplier,
         score,
         lives,
       };
