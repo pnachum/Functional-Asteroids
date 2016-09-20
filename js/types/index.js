@@ -64,3 +64,5 @@ export type DifficultyState = {
 export type Mode = 0 | 1 | 2 | 3;
 
 export type Action = { type: string, payload?: any };
+
+export type TurnDirection = 1 | -1;

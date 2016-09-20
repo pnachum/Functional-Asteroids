@@ -1,6 +1,6 @@
 // @flow
 
-import type { Asteroid, Ship, DifficultyState, Mode, Action } from './types/index';
+import type { Asteroid, Ship, DifficultyState, Mode, Action, TurnDirection } from './types/index';
 
 export const MOVE = 'MOVE';
 export const ADD_ASTEROID = 'ADD_ASTEROID';
@@ -25,7 +25,7 @@ export function thrustShip(): Action {
   return { type: THRUST_SHIP };
 }
 
-export function rotateShip(direction: number): Action {
+export function rotateShip(direction: TurnDirection): Action {
   return { type: ROTATE_SHIP, payload: direction };
 }
 
