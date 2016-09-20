@@ -7,6 +7,7 @@ import frameCount from './frameCount';
 import difficulty from './difficulty';
 import mode from './mode';
 import { RESET } from '../actionCreators';
+import type { Action } from '../types/index';
 
 const appReducer = combineReducers({
   movingObjects,
@@ -16,7 +17,7 @@ const appReducer = combineReducers({
   mode,
 });
 
-export default function rootReducer(state: Object, action: Object): Object {
+export default function rootReducer(state: Object, action: Action): Object {
   if (action.type === RESET) {
     return appReducer(undefined, action);
   }

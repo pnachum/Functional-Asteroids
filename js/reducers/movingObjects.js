@@ -9,7 +9,7 @@ import { MOVE } from '../actionCreators';
 import { isCollided, direction, sumOfAreas } from '../utils/math';
 import randomAsteroids from '../utils/randomAsteroids';
 import { SETTINGS } from '../constants';
-import type { Ship, Asteroid, Bullet, Debris, WithRadius } from '../types/index';
+import type { Ship, Asteroid, Bullet, Debris, WithRadius, Action } from '../types/index';
 
 function smallerRadius(distance: number): (obj: WithRadius) => boolean {
   return ({ radius }) => radius < distance;
@@ -42,7 +42,7 @@ const defaultState = {
 
 // This reducer allows for state changes which rely on interactions between various moving objects,
 // specifically to handle collisions.
-export default function movingObjects(state: State = defaultState, action: Object): State {
+export default function movingObjects(state: State = defaultState, action: Action): State {
   const {
     asteroids: {
       minimumRadius,
@@ -72,11 +72,14 @@ export default function movingObjects(state: State = defaultState, action: Objec
   let lives = state.lives;
   switch (action.type) {
     case MOVE:
+      if (action.payload == null) {
+        return state;
+      }
       const {
         asteroidSpawnRadius,
         minimumAsteroidArea,
         asteroidSpeed,
-      } = action.difficulty;
+      } = action.payload;
       const collidedBullets: Bullet[] = [];
       const asteroidCollisions: AsteroidCollision[] = [];
       let newShip = reducedShip;

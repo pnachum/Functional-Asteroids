@@ -2,7 +2,7 @@
 
 import { SETTINGS, FRAMES_PER_SECOND } from '../constants';
 import { NEW_FRAME } from '../actionCreators';
-import type { DifficultyState } from '../types/index';
+import type { DifficultyState, Action } from '../types/index';
 
 function increasedDifficulty(prevDifficulty: DifficultyState): DifficultyState {
   const {
@@ -26,13 +26,16 @@ const defaultState = {
 
 export default function difficulty(
   state: DifficultyState = defaultState,
-  action: Object
+  action: Action
 ): DifficultyState {
   switch (action.type) {
     case NEW_FRAME:
-      const elapsedSeconds = action.frameCount / FRAMES_PER_SECOND;
+      if (action.payload == null) {
+        return state;
+      }
+      const elapsedSeconds = action.payload / FRAMES_PER_SECOND;
       // Don't do a difficulty increase when the game starts
-      if (action.frameCount !== 0 && elapsedSeconds % SETTINGS.difficulty.timeInterval === 0) {
+      if (action.payload !== 0 && elapsedSeconds % SETTINGS.difficulty.timeInterval === 0) {
         return increasedDifficulty(state);
       }
       return state;

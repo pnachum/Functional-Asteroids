@@ -7,11 +7,11 @@ import {
   getRotateablePosition,
   direction,
 } from '../utils/math';
-import type { Bullet } from '../types/index';
+import type { Bullet, Action } from '../types/index';
 
 const defaultState = [];
 
-function bullet(state: Bullet, action: Object): Bullet {
+function bullet(state: Bullet, action: Action): Bullet {
   const {
     radius: bulletRadius,
     speed,
@@ -32,7 +32,7 @@ function bullet(state: Bullet, action: Object): Bullet {
   }
 }
 
-export default function bullets(state: Bullet[] = defaultState, action: Object): Bullet[] {
+export default function bullets(state: Bullet[] = defaultState, action: Action): Bullet[] {
   const {
     bullets: {
       speed,
@@ -49,7 +49,10 @@ export default function bullets(state: Bullet[] = defaultState, action: Object):
         .map(b => bullet(b, action))
         .filter(b => b.distance > 0);
     case SHOOT:
-      const { pos, degrees } = action.ship;
+      if (action.payload == null) {
+        return state;
+      }
+      const { pos, degrees } = action.payload;
       const turretPos = getRotateablePosition(shipRadius, pos, degrees);
       const newBullet = {
         pos: turretPos,

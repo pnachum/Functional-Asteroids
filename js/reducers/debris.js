@@ -3,13 +3,13 @@
 import { MOVE } from '../actionCreators';
 import newPosition from '../utils/newPosition';
 import { SETTINGS } from '../constants';
-import type { Debris } from '../types/index';
+import type { Debris, Action } from '../types/index';
 
 // TODO: These reducers are nearly identical to the bullet reducers. Share the code
 
 const defaultState = [];
 
-function oneDebris(state: Debris, action: Object): Debris {
+function oneDebris(state: Debris, action: Action): Debris {
   const {
     debris: {
       number,
@@ -35,7 +35,7 @@ function oneDebris(state: Debris, action: Object): Debris {
   }
 }
 
-export default function debris(state: Debris[] = defaultState, action: Object): Debris[] {
+export default function debris(state: Debris[] = defaultState, action: Action): Debris[] {
   switch (action.type) {
     case MOVE:
       return state

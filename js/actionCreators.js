@@ -1,6 +1,6 @@
 // @flow
 
-import type { Asteroid, Ship, DifficultyState, Mode } from './types/index';
+import type { Asteroid, Ship, DifficultyState, Mode, Action } from './types/index';
 
 export const MOVE = 'MOVE';
 export const ADD_ASTEROID = 'ADD_ASTEROID';
@@ -13,44 +13,42 @@ export const NEW_FRAME = 'NEW_FRAME';
 export const RESET = 'RESET';
 export const SET_MODE = 'SET_MODE';
 
-type SimpleAction = { type: string };
-
-export function move(difficulty: DifficultyState): { type: string, difficulty: DifficultyState } {
-  return { type: MOVE, difficulty };
+export function move(difficulty: DifficultyState): Action {
+  return { type: MOVE, payload: difficulty };
 }
 
-export function addAsteroid(asteroid: Asteroid): { type: string, asteroid: Asteroid} {
-  return { type: ADD_ASTEROID, asteroid };
+export function addAsteroid(asteroid: Asteroid): Action {
+  return { type: ADD_ASTEROID, payload: asteroid };
 }
 
-export function thrustShip(): SimpleAction {
+export function thrustShip(): Action {
   return { type: THRUST_SHIP };
 }
 
-export function rotateShip(direction: number): { type: string, direction: number } {
-  return { type: ROTATE_SHIP, direction };
+export function rotateShip(direction: number): Action {
+  return { type: ROTATE_SHIP, payload: direction };
 }
 
-export function stopThrustingShip(): SimpleAction {
+export function stopThrustingShip(): Action {
   return { type: STOP_THRUSTING_SHIP };
 }
 
-export function shoot(ship: Ship): { type: string, ship: Ship } {
-  return { type: SHOOT, ship };
+export function shoot(ship: Ship): Action {
+  return { type: SHOOT, payload: ship };
 }
 
-export function togglePause(): SimpleAction {
+export function togglePause(): Action {
   return { type: TOGGLE_PAUSE };
 }
 
-export function newFrame(frameCount: number): { type: string, frameCount: number } {
-  return { type: NEW_FRAME, frameCount };
+export function newFrame(frameCount: number): Action {
+  return { type: NEW_FRAME, payload: frameCount };
 }
 
-export function reset(): SimpleAction {
+export function reset(): Action {
   return { type: RESET };
 }
 
-export function setMode(newMode: Mode): { type: string, newMode: Mode } {
-  return { type: SET_MODE, newMode };
+export function setMode(newMode: Mode): Action {
+  return { type: SET_MODE, payload: newMode };
 }

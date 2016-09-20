@@ -4,7 +4,7 @@ import { MOVE, THRUST_SHIP, ROTATE_SHIP, STOP_THRUSTING_SHIP } from '../actionCr
 import newPosition from '../utils/newPosition';
 import computeNewVel from '../utils/computeNewVel';
 import { SETTINGS } from '../constants';
-import type { Ship } from '../types/index';
+import type { Ship, Action } from '../types/index';
 
 function airResistedVelocity(oldVel: [number, number], airResistance: number): [number, number] {
   return oldVel.map((d) => {
@@ -19,7 +19,7 @@ function airResistedVelocity(oldVel: [number, number], airResistance: number): [
 
 const defaultState = SETTINGS.ship.defaultShip;
 
-export default function ship(state: Ship = defaultState, action: Object): Ship {
+export default function ship(state: Ship = defaultState, action: Action): Ship {
   const {
     radius: shipRadius,
     airResistance,
@@ -47,7 +47,10 @@ export default function ship(state: Ship = defaultState, action: Object): Ship {
       );
       return { ...state, isThrusting: true, vel };
     case ROTATE_SHIP:
-      const degrees = (state.degrees + (action.direction * turnSpeed)) % 360;
+      if (action.payload == null) {
+        return state;
+      }
+      const degrees = (state.degrees + (action.payload * turnSpeed)) % 360;
       return { ...state, degrees };
     case STOP_THRUSTING_SHIP:
       return { ...state, isThrusting: false };
