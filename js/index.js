@@ -14,6 +14,7 @@ import {
 import { FRAMES_PER_SECOND } from './constants';
 import { initContext } from './utils/canvas';
 import store from './store';
+import draw from './draw';
 
 let intervalId;
 
@@ -75,6 +76,10 @@ function bindKeyHandlers() {
     }
   });
 }
+
+store.subscribe(() => {
+  draw(store.getState());
+});
 
 export default function beginGame(
   gameContext: CanvasRenderingContext2D,
