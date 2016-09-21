@@ -58,8 +58,8 @@ export function newFrame(frameCount: number, mode: Mode): Action {
   };
 }
 
-export function reset(): Action {
-  return { type: RESET };
+export function reset(mode: Mode): Action {
+  return { type: RESET, payload: mode };
 }
 
 export function setMode(newMode: Mode): Action {

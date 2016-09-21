@@ -42,7 +42,7 @@ function stop() {
 function gameOver() {
   stop();
   if (confirm('Game over! Would you like to play again?')) {
-    store.dispatch(reset());
+    store.dispatch(reset(store.getState().mode));
     start();
   }
 }
