@@ -76,7 +76,10 @@ function bindKeyHandlers() {
   });
 }
 
-export default function beginGame(gameContext: Object, uiContext: Object) {
+export default function beginGame(
+  gameContext: CanvasRenderingContext2D,
+  uiContext: CanvasRenderingContext2D
+) {
   initContext(gameContext, uiContext);
   bindKeyHandlers();
   start();

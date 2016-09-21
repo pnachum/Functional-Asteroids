@@ -3,10 +3,13 @@
 import { DIMENSION } from '../constants';
 import type { DrawableCircle, DrawableText } from '../types/index';
 
-let gameCtx: Object;
-let uiCtx: Object;
+let gameCtx: CanvasRenderingContext2D;
+let uiCtx: CanvasRenderingContext2D;
 
-export function initContext(gameContext: Object, uiContext: Object) {
+export function initContext(
+  gameContext: CanvasRenderingContext2D,
+  uiContext: CanvasRenderingContext2D
+) {
   gameCtx = gameContext;
   uiCtx = uiContext;
 }
@@ -19,7 +22,7 @@ export function clear() {
   uiCtx.clearRect(0, 0, DIMENSION / 2, DIMENSION);
 }
 
-function drawCircle(ctx: Object, { color, pos, radius }: DrawableCircle) {
+function drawCircle(ctx: CanvasRenderingContext2D, { color, pos, radius }: DrawableCircle) {
   ctx.fillStyle = color;
   ctx.beginPath();
   ctx.arc(
@@ -48,7 +51,7 @@ export function drawCircleInUI(obj: DrawableCircle) {
 }
 
 function drawText(
-  ctx: Object,
+  ctx: CanvasRenderingContext2D,
   { text, size, pos, color }: DrawableText,
 ) {
   ctx.fillStyle = color;

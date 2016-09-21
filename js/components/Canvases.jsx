@@ -4,8 +4,8 @@ import React from 'react';
 import beginGame from '../index';
 
 export default class Canvases extends React.Component {
-  gameCanvas: any;
-  uiCanvas: any;
+  gameCanvas: Object;
+  uiCanvas: Object;
 
   componentDidMount() {
     const contexts = [this.gameCanvas, this.uiCanvas].map(canvas => canvas.getContext('2d'));
