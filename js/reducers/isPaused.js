@@ -3,7 +3,7 @@
 import { TOGGLE_PAUSE } from '../actions';
 import type { Action } from '../types/index';
 
-const defaultState = false;
+const defaultState: boolean = false;
 
 export default function isPaused(state: boolean = defaultState, action: Action): boolean {
   switch (action.type) {

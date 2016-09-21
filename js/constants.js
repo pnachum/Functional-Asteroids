@@ -1,16 +1,18 @@
 // @flow
 
+import type { Mode } from './types/index';
+
 export const DIMENSION = 500;
 export const FRAMES_PER_SECOND = 30;
 
 // Flow's literal types can't use constants, so make sure the Mode type is updated if these
 // constants change
-export const CLASSIC = 0;
-export const DODGEBALL = 1;
-export const BOSS = 2;
-export const SUPER_BOSS = 3;
+export const CLASSIC: Mode = 0;
+export const DODGEBALL: Mode = 1;
+export const BOSS: Mode = 2;
+export const SUPER_BOSS: Mode = 3;
 
-export const MODES = [CLASSIC, DODGEBALL, BOSS, SUPER_BOSS];
+export const MODES: Mode[] = [CLASSIC, DODGEBALL, BOSS, SUPER_BOSS];
 
 export const DEFAULT_MODE = CLASSIC;
 

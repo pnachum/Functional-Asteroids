@@ -3,7 +3,7 @@
 import { NEW_FRAME } from '../actions';
 import type { Action } from '../types/index';
 
-const defaultState = 0;
+const defaultState: number = 0;
 
 export default function frameCount(state: number = defaultState, action: Action): number {
   switch (action.type) {

@@ -6,7 +6,7 @@ import type { Asteroid, Action } from '../types/index';
 import { SETTINGS } from '../constants';
 import randomAsteroids from '../utils/randomAsteroids';
 
-const defaultState = [];
+const defaultState: Asteroid[] = [];
 
 export default function asteroids(state: Asteroid[] = defaultState, action: Action): Asteroid[] {
   switch (action.type) {
@@ -19,8 +19,8 @@ export default function asteroids(state: Asteroid[] = defaultState, action: Acti
       if (action.payload == null) {
         return state;
       }
-      const num = SETTINGS.asteroids.startingNumber[action.payload];
-      const radius = SETTINGS.asteroids.startingSpawnRadius[action.payload];
+      const num: number = SETTINGS.asteroids.startingNumber[action.payload];
+      const radius: number = SETTINGS.asteroids.startingSpawnRadius[action.payload];
       return state.concat(randomAsteroids(num, { radius }));
     }
     default:

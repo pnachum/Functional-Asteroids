@@ -151,19 +151,19 @@ function drawScore(score: number) {
 }
 
 function drawLives(lives: number) {
-  const shipDrawInfos = times(lives, i => (
+  const shipDrawInfos: DrawableCircle[] = flatten(times(lives, i => (
     shipDrawInfo({
       pos: [20 + (25 * i), 90],
       vel: [0, 0],
       degrees: 90,
       isThrusting: false,
     })
-  ));
-  flatten(shipDrawInfos).forEach(drawCircleInUI);
+  )));
+  shipDrawInfos.forEach(drawCircleInUI);
 }
 
 function drawTime(frameCount: number) {
-  const seconds = Math.floor(frameCount / FRAMES_PER_SECOND);
+  const seconds: number = Math.floor(frameCount / FRAMES_PER_SECOND);
   drawUIText({
     text: `Time: ${seconds}`,
     pos: [5, 160],

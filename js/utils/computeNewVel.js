@@ -9,9 +9,9 @@ export default function computeNewVel(
   accel: number,
   maxSpeed: number
 ): [number, number] {
-  const impulse = direction(degree).map(d => d * accel);
-  const newVel = oldVel.map((d, i) => d + impulse[i]);
+  const impulse: [number, number] = direction(degree).map(d => d * accel);
+  const newVel: [number, number] = oldVel.map((d, i) => d + impulse[i]);
   // Enforce that the ship's speed does not exceed MAXSPEED
-  const minVel = newVel.map(d => Math.min(maxSpeed, Math.abs(d)));
+  const minVel: [number, number] = newVel.map(d => Math.min(maxSpeed, Math.abs(d)));
   return newVel.map((d, i) => (d >= 0 ? minVel[i] : -minVel[i]));
 }

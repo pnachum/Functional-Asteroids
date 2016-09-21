@@ -8,7 +8,7 @@ export function toRadians(degrees: number): number {
 }
 
 export function direction(degrees: number): [number, number] {
-  const radians = toRadians(degrees);
+  const radians: number = toRadians(degrees);
   return [Math.cos(radians), -Math.sin(radians)];
 }
 
@@ -19,12 +19,12 @@ export function getRotateablePosition(
   pos: [number, number],
   degrees: number
 ): [number, number] {
-  const distances = direction(degrees).map(d => d * radius);
+  const distances: [number, number] = direction(degrees).map(d => d * radius);
   return pos.map((d, i) => d + distances[i]);
 }
 
 export function distance(obj1: Distanceable, obj2: Distanceable): number {
-  const [xDiff, yDiff] = obj1.pos.map((d, i) => d - obj2.pos[i]);
+  const [xDiff, yDiff]: [number, number] = obj1.pos.map((d, i) => d - obj2.pos[i]);
   return Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
 }
 

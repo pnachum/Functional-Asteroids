@@ -7,7 +7,7 @@ import type { Debris, Action } from '../types/index';
 
 // TODO: These reducers are nearly identical to the bullet reducers. Share the code
 
-const defaultState = [];
+const defaultState: Debris[] = [];
 
 function oneDebris(state: Debris, action: Action): Debris {
   const {
@@ -21,7 +21,7 @@ function oneDebris(state: Debris, action: Action): Debris {
   } = SETTINGS;
   switch (action.type) {
     case MOVE: {
-      const newPos = newPosition({
+      const newPos: [number, number] = newPosition({
         ...state,
         radius: minimumRadius / number,
       });

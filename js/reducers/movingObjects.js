@@ -9,7 +9,15 @@ import { MOVE, SET_MODE } from '../actions';
 import { isCollided, direction, sumOfAreas } from '../utils/math';
 import randomAsteroids from '../utils/randomAsteroids';
 import { SETTINGS, DEFAULT_MODE } from '../constants';
-import type { Ship, Asteroid, Bullet, Debris, WithRadius, Action } from '../types/index';
+import type {
+  Ship,
+  Asteroid,
+  Bullet,
+  Debris,
+  WithRadius,
+  Action,
+  DifficultyState,
+} from '../types/index';
 
 function smallerRadius(distance: number): (obj: WithRadius) => boolean {
   return ({ radius }) => radius < distance;
@@ -30,7 +38,7 @@ type AsteroidCollision = {
   points: number,
 };
 
-const defaultState = {
+const defaultState: State = {
   asteroids: [],
   bullets: [],
   ship: SETTINGS.ship.defaultShip,
@@ -64,13 +72,13 @@ export default function movingObjects(state: State = defaultState, action: Actio
   const shouldBeDestroyed = smallerRadius(minimumRadius * Math.sqrt(2));
 
   // TODO: This seems pretty messy
-  const reducedAsteroids = asteroids(state.asteroids, action);
-  const reducedBullets = bullets(state.bullets, action);
-  const reducedShip = ship(state.ship, action);
-  const reducedDebris = debris(state.debris, action);
-  const score = state.score;
-  let lives = state.lives;
-  const defaultNewState = {
+  const reducedAsteroids: Asteroid[] = asteroids(state.asteroids, action);
+  const reducedBullets: Bullet[] = bullets(state.bullets, action);
+  const reducedShip: Ship = ship(state.ship, action);
+  const reducedDebris: Debris[] = debris(state.debris, action);
+  const score: number = state.score;
+  let lives: number = state.lives;
+  const defaultNewState: State = {
     asteroids: reducedAsteroids,
     bullets: reducedBullets,
     ship: reducedShip,
@@ -88,10 +96,10 @@ export default function movingObjects(state: State = defaultState, action: Actio
         asteroidSpawnRadius,
         minimumAsteroidArea,
         asteroidSpeed,
-      } = action.payload;
+      }: DifficultyState = action.payload;
       const collidedBullets: Bullet[] = [];
       const asteroidCollisions: AsteroidCollision[] = [];
-      let newShip = reducedShip;
+      let newShip: Ship = reducedShip;
       reducedAsteroids.forEach((asteroid) => {
         reducedBullets.forEach((bullet) => {
           if (isCollided({ ...bullet, radius: bulletRadius }, asteroid)) {
@@ -110,14 +118,14 @@ export default function movingObjects(state: State = defaultState, action: Actio
           newShip = { ...defaultShip, degrees: reducedShip.degrees };
         }
       });
-      const collidedAsteroids = asteroidCollisions.map(info => info.asteroid);
+      const collidedAsteroids: Asteroid[] = asteroidCollisions.map(info => info.asteroid);
 
-      const pointsAwarded = sumBy(asteroidCollisions, ac => ac.points * state.multiplier);
+      const pointsAwarded: number = sumBy(asteroidCollisions, ac => ac.points * state.multiplier);
 
-      const notHitAsteroids = reducedAsteroids.filter(asteroid => (
+      const notHitAsteroids: Asteroid[] = reducedAsteroids.filter(asteroid => (
         !collidedAsteroids.includes(asteroid)
       ));
-      const subAsteroids = collidedAsteroids.reduce((prev, current) => (
+      const subAsteroids: Asteroid[] = collidedAsteroids.reduce((prev, current) => (
         prev.concat(randomAsteroids(2, {
           radius: current.radius / Math.sqrt(2),
           pos: current.pos,
@@ -126,10 +134,10 @@ export default function movingObjects(state: State = defaultState, action: Actio
         }))
       ), []).filter(asteroid => asteroid.radius > minimumRadius);
 
-      const destroyedAsteroids = collidedAsteroids.filter(shouldBeDestroyed);
-      const angle = 360 / numDebris;
-      const newDebris = destroyedAsteroids.reduce((prev, current) => {
-        const debrisForAsteroid = times(numDebris, index => ({
+      const destroyedAsteroids: Asteroid[] = collidedAsteroids.filter(shouldBeDestroyed);
+      const angle: number = 360 / numDebris;
+      const newDebris: Debris[] = destroyedAsteroids.reduce((prev, current) => {
+        const debrisForAsteroid: Debris[] = times(numDebris, index => ({
           pos: current.pos,
           vel: direction(angle * index),
           distance: debrisDistance,
@@ -137,10 +145,10 @@ export default function movingObjects(state: State = defaultState, action: Actio
         return prev.concat(debrisForAsteroid);
       }, []);
 
-      const newAsteroids = notHitAsteroids.concat(subAsteroids);
+      const newAsteroids: Asteroid[] = notHitAsteroids.concat(subAsteroids);
       // Flow can't cast Asteroid[] to WithRadius[], so map over the array to do it explicitly
       const withRadii: WithRadius[] = newAsteroids.map(asteroid => (asteroid: WithRadius));
-      const additionalAsteroids = sumOfAreas(withRadii) < minimumAsteroidArea
+      const additionalAsteroids: Asteroid[] = sumOfAreas(withRadii) < minimumAsteroidArea
         ? randomAsteroids(1, { radius: asteroidSpawnRadius, spawnSpeed: asteroidSpeed })
         : [];
 

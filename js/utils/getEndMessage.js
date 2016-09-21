@@ -15,10 +15,10 @@ type Argument = {
   mode: Mode,
 };
 
-const ending = 'Would you like to play again?';
+const ending: string = 'Would you like to play again?';
 
 function getEndMessageHelper({ score, frameCount, mode }: Argument): string {
-  const seconds = Math.floor(frameCount / FRAMES_PER_SECOND);
+  const seconds: number = Math.floor(frameCount / FRAMES_PER_SECOND);
   switch (mode) {
     case CLASSIC:
       return `Game Over! Your score is ${score}. You survived for ${seconds} seconds.`;

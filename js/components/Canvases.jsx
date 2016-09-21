@@ -8,7 +8,9 @@ export default class Canvases extends React.Component {
   uiCanvas: Object;
 
   componentDidMount() {
-    const contexts = [this.gameCanvas, this.uiCanvas].map(canvas => canvas.getContext('2d'));
+    const contexts: CanvasRenderingContext2D[] = [this.gameCanvas, this.uiCanvas].map(canvas => (
+      canvas.getContext('2d')
+    ));
     beginGame(...contexts);
   }
 

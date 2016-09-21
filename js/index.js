@@ -43,7 +43,7 @@ function stop() {
 function gameOver() {
   const state = store.getState();
   stop();
-  const endMessage = getEndMessage({
+  const endMessage: string = getEndMessage({
     score: state.movingObjects.score,
     frameCount: state.frameCount,
     mode: state.mode,
@@ -65,7 +65,7 @@ function step() {
 }
 
 function start() {
-  const interval = Math.floor(1000 / FRAMES_PER_SECOND);
+  const interval: number = Math.floor(1000 / FRAMES_PER_SECOND);
   intervalId = setInterval(step, interval);
 }
 
@@ -100,6 +100,6 @@ export default function beginGame(
 ) {
   initContext(gameContext, uiContext);
   bindKeyHandlers();
-  store.dispatch(addInitialAsteroids(store.getState().mode))
+  store.dispatch(addInitialAsteroids(store.getState().mode));
   start();
 }

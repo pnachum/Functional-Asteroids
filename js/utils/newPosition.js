@@ -21,6 +21,6 @@ function mapToScreen(
 }
 
 export default function newPosition({ vel, radius, pos }: Moveable): [number, number] {
-  const newPos = pos.map((d, i) => d + vel[i]);
+  const newPos: [number, number] = pos.map((d, i) => d + vel[i]);
   return mapToScreen(newPos, radius);
 }

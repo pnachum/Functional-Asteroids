@@ -9,7 +9,7 @@ import {
 } from '../utils/math';
 import type { Bullet, Action } from '../types/index';
 
-const defaultState = [];
+const defaultState: Bullet[] = [];
 
 function bullet(state: Bullet, action: Action): Bullet {
   const {
@@ -18,7 +18,7 @@ function bullet(state: Bullet, action: Action): Bullet {
   } = SETTINGS.bullets;
   switch (action.type) {
     case MOVE: {
-      const newPos = newPosition({
+      const newPos: [number, number] = newPosition({
         ...state,
         radius: bulletRadius,
       });
@@ -64,8 +64,8 @@ export default function bullets(state: Bullet[] = defaultState, action: Action):
       if (mode === DODGEBALL) {
         return state;
       }
-      const turretPos = getRotateablePosition(shipRadius, pos, degrees);
-      const newBullet = {
+      const turretPos: [number, number] = getRotateablePosition(shipRadius, pos, degrees);
+      const newBullet: Bullet = {
         pos: turretPos,
         vel: direction(degrees).map(d => d * speed),
         distance,
