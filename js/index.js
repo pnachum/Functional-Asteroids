@@ -64,8 +64,13 @@ function start() {
 
 function bindKeyHandlers() {
   key('space', () => {
-    const { ship } = store.getState().movingObjects;
-    store.dispatch(shoot(ship));
+    const {
+      movingObjects: {
+        ship,
+      },
+      mode,
+    } = store.getState();
+    store.dispatch(shoot(ship, mode));
   });
 
   key('P', () => {

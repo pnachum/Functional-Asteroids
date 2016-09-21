@@ -34,8 +34,14 @@ export function stopThrustingShip(): Action {
   return { type: STOP_THRUSTING_SHIP };
 }
 
-export function shoot(ship: Ship): Action {
-  return { type: SHOOT, payload: ship };
+export function shoot(ship: Ship, mode: Mode): Action {
+  return {
+    type: SHOOT,
+    payload: {
+      ship,
+      mode,
+    },
+  };
 }
 
 export function togglePause(): Action {
