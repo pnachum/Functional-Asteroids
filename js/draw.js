@@ -18,6 +18,9 @@ import type {
   DrawableCircle,
   Mode,
 } from './types/index';
+import isShipInvincible from './utils/isShipInvincible';
+
+let shipDrawFrame = 0;
 
 // Convert an asteroid's state into the data needed to draw it.
 function asteroidDrawInfo({ pos, radius }: Asteroid): DrawableCircle {
@@ -85,12 +88,23 @@ function thrusterDrawInfo({ isThrusting, pos, degrees }: Ship): ?DrawableCircle 
   return null;
 }
 
-function shipDrawInfo(ship: Ship): DrawableCircle[] {
-  return compact([
+function shipDrawInfo(ship: Ship, frameCount: ?number = null): DrawableCircle[] {
+  const isInvincible: boolean = frameCount != null && isShipInvincible(ship, frameCount);
+  const drawInfos = compact([
     shipBodyDrawInfo(ship),
     turretDrawInfo(ship),
     thrusterDrawInfo(ship),
   ]);
+
+  // Make the ship flash while it's invincible;
+  if (isInvincible) {
+    shipDrawFrame = (shipDrawFrame + 1) % 20;
+    if (shipDrawFrame < 10) {
+      return drawInfos;
+    }
+    return [];
+  }
+  return drawInfos;
 }
 
 function bulletDrawInfo({ pos }: Bullet): DrawableCircle {
@@ -207,7 +221,7 @@ export default function draw({
     ...asteroids.map(asteroidDrawInfo),
     ...bullets.map(bulletDrawInfo),
     ...debris.map(debrisDrawInfo),
-    ...shipDrawInfo(ship),
+    ...shipDrawInfo(ship, frameCount),
   ];
   drawableInfos.forEach(drawCircleInGame);
 
