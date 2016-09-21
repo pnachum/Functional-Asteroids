@@ -8,9 +8,9 @@ const defaultState: Mode = DEFAULT_MODE;
 
 export default function mode(state: Mode = defaultState, action: Action): Mode {
   switch (action.type) {
-    case SET_MODE:
     // Maintain the previous mode when the game resets
     case RESET:
+    case SET_MODE:
       if (action.payload == null) {
         return state;
       }

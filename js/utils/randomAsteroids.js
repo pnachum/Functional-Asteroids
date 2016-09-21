@@ -2,7 +2,7 @@
 
 import { random, sample, times } from 'lodash';
 import { SETTINGS, DIMENSION } from '../constants';
-import type { Asteroid, Mode } from '../types/index';
+import type { Asteroid } from '../types/index';
 
 type Options = {
   pos?: [number, number],
