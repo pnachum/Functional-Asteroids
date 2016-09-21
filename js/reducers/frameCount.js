@@ -1,6 +1,6 @@
 // @flow
 
-import { NEW_FRAME } from '../actionCreators';
+import { NEW_FRAME } from '../actions';
 import type { Action } from '../types/index';
 
 const defaultState = 0;

@@ -1,6 +1,6 @@
 // @flow
 
-import { SET_MODE, RESET } from '../actionCreators';
+import { SET_MODE, RESET } from '../actions';
 import {
   CLASSIC,
 } from '../constants';

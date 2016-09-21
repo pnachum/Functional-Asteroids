@@ -5,7 +5,7 @@ import ship from './ship';
 import bullets from './bullets';
 import asteroids from './asteroids';
 import debris from './debris';
-import { MOVE } from '../actionCreators';
+import { MOVE } from '../actions';
 import { isCollided, direction, sumOfAreas } from '../utils/math';
 import randomAsteroids from '../utils/randomAsteroids';
 import { SETTINGS } from '../constants';

@@ -6,7 +6,7 @@ import isPaused from './isPaused';
 import frameCount from './frameCount';
 import difficulty from './difficulty';
 import mode from './mode';
-import { RESET } from '../actionCreators';
+import { RESET } from '../actions';
 import type { Action } from '../types/index';
 
 const appReducer = combineReducers({

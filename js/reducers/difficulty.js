@@ -1,7 +1,7 @@
 // @flow
 
 import { SETTINGS, FRAMES_PER_SECOND } from '../constants';
-import { NEW_FRAME } from '../actionCreators';
+import { NEW_FRAME } from '../actions';
 import type { DifficultyState, Action } from '../types/index';
 
 function increasedDifficulty(prevDifficulty: DifficultyState): DifficultyState {

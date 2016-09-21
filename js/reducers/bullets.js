@@ -1,7 +1,7 @@
 // @flow
 
 import newPosition from '../utils/newPosition';
-import { MOVE, SHOOT } from '../actionCreators';
+import { MOVE, SHOOT } from '../actions';
 import { SETTINGS } from '../constants';
 import {
   getRotateablePosition,

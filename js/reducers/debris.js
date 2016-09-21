@@ -1,6 +1,6 @@
 // @flow
 
-import { MOVE } from '../actionCreators';
+import { MOVE } from '../actions';
 import newPosition from '../utils/newPosition';
 import { SETTINGS } from '../constants';
 import type { Debris, Action } from '../types/index';

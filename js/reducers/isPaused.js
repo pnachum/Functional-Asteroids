@@ -1,6 +1,6 @@
 // @flow
 
-import { TOGGLE_PAUSE } from '../actionCreators';
+import { TOGGLE_PAUSE } from '../actions';
 import type { Action } from '../types/index';
 
 const defaultState = false;

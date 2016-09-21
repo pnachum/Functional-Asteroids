@@ -1,6 +1,6 @@
 // @flow
 
-import { MOVE, THRUST_SHIP, ROTATE_SHIP, STOP_THRUSTING_SHIP } from '../actionCreators';
+import { MOVE, THRUST_SHIP, ROTATE_SHIP, STOP_THRUSTING_SHIP } from '../actions';
 import newPosition from '../utils/newPosition';
 import computeNewVel from '../utils/computeNewVel';
 import { SETTINGS } from '../constants';

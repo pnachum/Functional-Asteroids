@@ -12,7 +12,7 @@ import {
   togglePause,
   newFrame,
   reset,
-} from './actionCreators';
+} from './actions';
 import { FRAMES_PER_SECOND } from './constants';
 import { initContext } from './utils/canvas';
 import draw from './draw';

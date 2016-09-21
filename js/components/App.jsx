@@ -7,7 +7,7 @@ import ModeOption from './ModeOption';
 import Instructions from './Instructions';
 import Canvases from './Canvases';
 import type { Mode } from '../types/index';
-import { setMode } from '../actionCreators';
+import { setMode } from '../actions';
 
 type State = {
   isSelectingMode: boolean,

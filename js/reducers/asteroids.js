@@ -1,7 +1,7 @@
 // @flow
 
 import newPosition from '../utils/newPosition';
-import { MOVE } from '../actionCreators';
+import { MOVE } from '../actions';
 import type { Asteroid, Action } from '../types/index';
 
 const defaultState = [];
