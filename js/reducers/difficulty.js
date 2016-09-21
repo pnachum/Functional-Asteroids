@@ -1,6 +1,6 @@
 // @flow
 
-import { SETTINGS, FRAMES_PER_SECOND, CLASSIC } from '../constants';
+import { SETTINGS, FRAMES_PER_SECOND, CLASSIC, BOSS, SUPER_BOSS } from '../constants';
 import { NEW_FRAME, SET_MODE } from '../actions';
 import type { DifficultyState, Action } from '../types/index';
 
@@ -34,6 +34,10 @@ export default function difficulty(
         return state;
       }
       const { frameCount, mode } = action.payload;
+      // There are no difficulty increases for these modes
+      if ([BOSS, SUPER_BOSS].includes(mode)) {
+        return state;
+      }
       const elapsedSeconds = frameCount / FRAMES_PER_SECOND;
       // Don't do a difficulty increase when the game starts
       if (frameCount !== 0 && elapsedSeconds % SETTINGS.difficulty.timeInterval[mode] === 0) {
