@@ -16,6 +16,7 @@ import { FRAMES_PER_SECOND } from './constants';
 import { initContext } from './utils/canvas';
 import store from './store';
 import draw from './draw';
+import getEndMessage from './utils/getEndMessage';
 
 let intervalId;
 
@@ -40,9 +41,15 @@ function stop() {
 }
 
 function gameOver() {
+  const state = store.getState();
   stop();
-  if (confirm('Game over! Would you like to play again?')) {
-    store.dispatch(reset(store.getState().mode));
+  const endMessage = getEndMessage({
+    score: state.movingObjects.score,
+    frameCount: state.frameCount,
+    mode: state.mode,
+  });
+  if (confirm(endMessage)) {
+    store.dispatch(reset(state.mode));
     start();
   }
 }
