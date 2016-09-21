@@ -17,7 +17,7 @@ import { FRAMES_PER_SECOND } from './constants';
 import { initContext } from './utils/canvas';
 import draw from './draw';
 
-const store = createStore(rootReducer);
+export const store = createStore(rootReducer);
 let intervalId;
 
 function keyPressListener() {

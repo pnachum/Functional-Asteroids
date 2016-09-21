@@ -10,11 +10,20 @@ export const DODGEBALL = 1;
 export const BOSS = 2;
 export const SUPER_BOSS = 3;
 
+export const MODES = [CLASSIC, DODGEBALL, BOSS, SUPER_BOSS];
+
 export const NAME_FOR_MODE = {
   [CLASSIC]: 'Classic',
   [DODGEBALL]: 'Dodgeball',
   [BOSS]: 'Bossteroid',
   [SUPER_BOSS]: 'Super Bossteroid',
+};
+
+export const DESCRIPTION_FOR_MODE = {
+  [CLASSIC]: 'Score as many points as you can before running out of lives',
+  [DODGEBALL]: 'If you can dodge an asteroid, you can dodge a ball',
+  [BOSS]: 'Kill the Bossteroid as quickly as possible. Like a boss',
+  [SUPER_BOSS]: 'Like the Bossteroid, but three times bigger',
 };
 
 export const SETTINGS = {

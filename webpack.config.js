@@ -1,23 +1,23 @@
 module.exports = {
   context: __dirname,
-  entry: "./app.js",
+  entry: "./main.jsx",
   output: {
     path: "./",
     filename: "bundle.js"
   },
   module: {
     loaders: [{
-      test: /\.js$/,
+      test: /\.jsx?$/,
       exclude: /node_modules/,
       loader: "babel-loader",
       query: {
-        presets: ['es2015', 'stage-0'],
+        presets: ['react', 'es2015', 'stage-0'],
         plugins: ['transform-flow-strip-types']
       }
     }]
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ["", ".js"]
+    extensions: ["", ".js", ".jsx"]
   }
 };

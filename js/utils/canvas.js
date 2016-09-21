@@ -12,6 +12,9 @@ export function initContext(gameContext: Object, uiContext: Object) {
 }
 
 export function clear() {
+  if (!gameCtx || !uiCtx) {
+    return;
+  }
   gameCtx.clearRect(0, 0, DIMENSION, DIMENSION);
   uiCtx.clearRect(0, 0, DIMENSION / 2, DIMENSION);
 }
@@ -31,10 +34,16 @@ function drawCircle(ctx: Object, { color, pos, radius }: DrawableCircle) {
 }
 
 export function drawCircleInGame(obj: DrawableCircle) {
+  if (!gameCtx) {
+    return;
+  }
   drawCircle(gameCtx, obj);
 }
 
 export function drawCircleInUI(obj: DrawableCircle) {
+  if (!uiCtx) {
+    return;
+  }
   drawCircle(uiCtx, obj);
 }
 
@@ -48,9 +57,15 @@ function drawText(
 }
 
 export function drawTextInGame(obj: DrawableText) {
+  if (!gameCtx) {
+    return;
+  }
   drawText(gameCtx, obj);
 }
 
 export function drawTextInUI(obj: DrawableText) {
+  if (!uiCtx) {
+    return;
+  }
   drawText(uiCtx, obj);
 }
