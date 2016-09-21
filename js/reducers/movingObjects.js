@@ -8,7 +8,7 @@ import debris from './debris';
 import { MOVE, SET_MODE } from '../actions';
 import { isCollided, direction, sumOfAreas } from '../utils/math';
 import randomAsteroids from '../utils/randomAsteroids';
-import { SETTINGS, CLASSIC } from '../constants';
+import { SETTINGS, DEFAULT_MODE } from '../constants';
 import type { Ship, Asteroid, Bullet, Debris, WithRadius, Action } from '../types/index';
 
 function smallerRadius(distance: number): (obj: WithRadius) => boolean {
@@ -36,9 +36,7 @@ const defaultState = {
   ship: SETTINGS.ship.defaultShip,
   debris: [],
   score: 0,
-  // TODO: Avoid hardcoding CLASSIC here as the default state, since it's already represented as
-  // the default in the mode reducer.
-  lives: SETTINGS.startingLives[CLASSIC],
+  lives: SETTINGS.startingLives[DEFAULT_MODE],
   multiplier: 1,
 };
 

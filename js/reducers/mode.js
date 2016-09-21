@@ -1,12 +1,10 @@
 // @flow
 
 import { SET_MODE, RESET } from '../actions';
-import {
-  CLASSIC,
-} from '../constants';
+import { DEFAULT_MODE } from '../constants';
 import type { Mode, Action } from '../types/index';
 
-const defaultState = CLASSIC;
+const defaultState = DEFAULT_MODE;
 
 export default function mode(state: Mode = defaultState, action: Action): Mode {
   switch (action.type) {

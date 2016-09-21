@@ -12,6 +12,8 @@ export const SUPER_BOSS = 3;
 
 export const MODES = [CLASSIC, DODGEBALL, BOSS, SUPER_BOSS];
 
+export const DEFAULT_MODE = CLASSIC;
+
 export const NAME_FOR_MODE = {
   [CLASSIC]: 'Classic',
   [DODGEBALL]: 'Dodgeball',
