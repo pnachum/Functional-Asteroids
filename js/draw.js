@@ -157,6 +157,7 @@ function drawLives(lives: number) {
       vel: [0, 0],
       degrees: 90,
       isThrusting: false,
+      spawnFrame: 0,
     })
   )));
   shipDrawInfos.forEach(drawCircleInUI);

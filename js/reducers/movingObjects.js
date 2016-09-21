@@ -9,6 +9,7 @@ import { MOVE, SET_MODE } from '../actions';
 import { isCollided, direction, sumOfAreas } from '../utils/math';
 import randomAsteroids from '../utils/randomAsteroids';
 import { SETTINGS, DEFAULT_MODE } from '../constants';
+import isShipInvincible from '../utils/isShipInvincible';
 import type {
   Ship,
   Asteroid,
@@ -93,10 +94,16 @@ export default function movingObjects(state: State = defaultState, action: Actio
         return state;
       }
       const {
-        asteroidSpawnRadius,
-        minimumAsteroidArea,
-        asteroidSpeed,
-      }: DifficultyState = action.payload;
+        difficulty: {
+          asteroidSpawnRadius,
+          minimumAsteroidArea,
+          asteroidSpeed,
+        },
+        frameCount,
+      }: {
+        difficulty: DifficultyState,
+        frameCount: number,
+      } = action.payload;
       const collidedBullets: Bullet[] = [];
       const asteroidCollisions: AsteroidCollision[] = [];
       let newShip: Ship = reducedShip;
@@ -110,12 +117,19 @@ export default function movingObjects(state: State = defaultState, action: Actio
             });
           }
         });
-
-        if (isCollided({ ...reducedShip, radius: shipRadius }, asteroid)) {
+        const didShipCollide: boolean = isCollided(
+          { ...reducedShip, radius: shipRadius },
+          asteroid
+        );
+        if (!isShipInvincible(reducedShip, frameCount) && didShipCollide) {
           lives -= 1;
           asteroidCollisions.push({ points: 0, asteroid });
-          // Maintain the ship's current direction
-          newShip = { ...defaultShip, degrees: reducedShip.degrees };
+          // Maintain the ship's current direction and reset its spawnFrame
+          newShip = {
+            ...defaultShip,
+            degrees: reducedShip.degrees,
+            spawnFrame: frameCount,
+          };
         }
       });
       const collidedAsteroids: Asteroid[] = asteroidCollisions.map(info => info.asteroid);

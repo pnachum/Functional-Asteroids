@@ -12,6 +12,8 @@ export type Ship = {
   vel: [number, number],
   degrees: number,
   isThrusting: boolean,
+  // The frame at which the ship most recently spawned
+  spawnFrame: number,
 };
 
 export type Bullet = {

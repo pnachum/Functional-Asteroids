@@ -14,8 +14,14 @@ export const RESET = 'RESET';
 export const SET_MODE = 'SET_MODE';
 export const ADD_INITIAL_ASTEROIDS = 'ADD_INITIAL_ASTEROIDS';
 
-export function move(difficulty: DifficultyState): Action {
-  return { type: MOVE, payload: difficulty };
+export function move(difficulty: DifficultyState, frameCount: number): Action {
+  return {
+    type: MOVE,
+    payload: {
+      difficulty,
+      frameCount,
+    },
+  };
 }
 
 export function addAsteroid(asteroid: Asteroid): Action {

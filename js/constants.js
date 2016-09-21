@@ -65,12 +65,13 @@ export const SETTINGS = {
     thrusterColor: 'orange',
     turretRadius: 3,
     airResistance: 0.07,
-    invincibilityTime: 3,
+    invincibilityTime: 3, // seconds
     defaultShip: {
       pos: [250, 250],
       vel: [0, 0],
       degrees: 90,
       isThrusting: false,
+      spawnFrame: 0,
     },
   },
 
