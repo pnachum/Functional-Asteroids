@@ -10,6 +10,7 @@ canvas {
   margin: 10px;
   cursor: pointer;
   vertical-align: top;
+  background-color: transparent;
 }
 
 .mode-button:hover {
@@ -24,6 +25,10 @@ canvas {
   margin-bottom: 10px;
 }
 
+.mode-text {
+  font-size: 16px;
+  text-align: left;
+}
 
 #controls {
   display: inline-block;

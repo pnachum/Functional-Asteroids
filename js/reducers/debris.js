@@ -20,7 +20,7 @@ function oneDebris(state: Debris, action: Action): Debris {
     },
   } = SETTINGS;
   switch (action.type) {
-    case MOVE:
+    case MOVE: {
       const newPos = newPosition({
         ...state,
         radius: minimumRadius / number,
@@ -30,6 +30,7 @@ function oneDebris(state: Debris, action: Action): Debris {
         pos: newPos,
         distance: state.distance - speed,
       };
+    }
     default:
       return state;
   }

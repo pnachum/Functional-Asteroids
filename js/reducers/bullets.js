@@ -17,7 +17,7 @@ function bullet(state: Bullet, action: Action): Bullet {
     speed,
   } = SETTINGS.bullets;
   switch (action.type) {
-    case MOVE:
+    case MOVE: {
       const newPos = newPosition({
         ...state,
         radius: bulletRadius,
@@ -27,6 +27,7 @@ function bullet(state: Bullet, action: Action): Bullet {
         pos: newPos,
         distance: state.distance - speed,
       };
+    }
     default:
       return state;
   }
@@ -48,7 +49,7 @@ export default function bullets(state: Bullet[] = defaultState, action: Action):
       return state
         .map(b => bullet(b, action))
         .filter(b => b.distance > 0);
-    case SHOOT:
+    case SHOOT: {
       if (action.payload == null) {
         return state;
       }
@@ -60,6 +61,7 @@ export default function bullets(state: Bullet[] = defaultState, action: Action):
         distance,
       };
       return [...state, newBullet];
+    }
     default:
       return state;
   }

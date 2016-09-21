@@ -71,7 +71,7 @@ export default function movingObjects(state: State = defaultState, action: Actio
   const score = state.score;
   let lives = state.lives;
   switch (action.type) {
-    case MOVE:
+    case MOVE: {
       if (action.payload == null) {
         return state;
       }
@@ -144,6 +144,7 @@ export default function movingObjects(state: State = defaultState, action: Actio
         multiplier: state.multiplier,
         lives,
       };
+    }
     default:
       return {
         asteroids: reducedAsteroids,

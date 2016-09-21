@@ -29,7 +29,7 @@ export default function difficulty(
   action: Action
 ): DifficultyState {
   switch (action.type) {
-    case NEW_FRAME:
+    case NEW_FRAME: {
       if (action.payload == null) {
         return state;
       }
@@ -39,6 +39,7 @@ export default function difficulty(
         return increasedDifficulty(state);
       }
       return state;
+    }
     default:
       return state;
   }

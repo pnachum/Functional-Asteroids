@@ -28,7 +28,7 @@ export default function ship(state: Ship = defaultState, action: Action): Ship {
     turnSpeed,
   } = SETTINGS.ship;
   switch (action.type) {
-    case MOVE:
+    case MOVE: {
       const newPos = newPosition({
         ...state,
         radius: shipRadius,
@@ -38,7 +38,8 @@ export default function ship(state: Ship = defaultState, action: Action): Ship {
         pos: newPos,
         vel: airResistedVelocity(state.vel, airResistance),
       };
-    case THRUST_SHIP:
+    }
+    case THRUST_SHIP: {
       const vel = computeNewVel(
         state.vel,
         state.degrees,
@@ -46,12 +47,14 @@ export default function ship(state: Ship = defaultState, action: Action): Ship {
         maxSpeed
       );
       return { ...state, isThrusting: true, vel };
-    case ROTATE_SHIP:
+    }
+    case ROTATE_SHIP: {
       if (action.payload == null) {
         return state;
       }
       const degrees = (state.degrees + (action.payload * turnSpeed)) % 360;
       return { ...state, degrees };
+    }
     case STOP_THRUSTING_SHIP:
       return { ...state, isThrusting: false };
     default:
