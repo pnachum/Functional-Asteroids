@@ -20,7 +20,7 @@ function increasedDifficulty(prevDifficulty: DifficultyState): DifficultyState {
 
 const defaultState = {
   asteroidSpawnRadius: SETTINGS.asteroids.startingSpawnRadius[CLASSIC],
-  minimumAsteroidArea: SETTINGS.asteroids.startingMinimumArea,
+  minimumAsteroidArea: SETTINGS.asteroids.startingMinimumArea[CLASSIC],
   asteroidSpeed: SETTINGS.asteroids.startingSpeed,
 };
 
@@ -48,6 +48,7 @@ export default function difficulty(
       return {
         ...state,
         asteroidSpawnRadius: SETTINGS.asteroids.startingSpawnRadius[action.payload],
+        minimumAsteroidArea: SETTINGS.asteroids.startingMinimumArea[action.payload],
       };
     default:
       return state;

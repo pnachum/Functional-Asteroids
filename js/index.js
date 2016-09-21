@@ -10,6 +10,7 @@ import {
   togglePause,
   newFrame,
   reset,
+  addInitialAsteroids,
 } from './actions';
 import { FRAMES_PER_SECOND } from './constants';
 import { initContext } from './utils/canvas';
@@ -87,5 +88,6 @@ export default function beginGame(
 ) {
   initContext(gameContext, uiContext);
   bindKeyHandlers();
+  store.dispatch(addInitialAsteroids(store.getState().mode))
   start();
 }

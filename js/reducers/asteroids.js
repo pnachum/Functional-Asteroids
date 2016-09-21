@@ -1,8 +1,10 @@
 // @flow
 
 import newPosition from '../utils/newPosition';
-import { MOVE } from '../actions';
+import { MOVE, ADD_INITIAL_ASTEROIDS } from '../actions';
 import type { Asteroid, Action } from '../types/index';
+import { SETTINGS } from '../constants';
+import randomAsteroids from '../utils/randomAsteroids';
 
 const defaultState = [];
 
@@ -13,6 +15,14 @@ export default function asteroids(state: Asteroid[] = defaultState, action: Acti
         ...asteroid,
         pos: newPosition(asteroid),
       }));
+    case ADD_INITIAL_ASTEROIDS: {
+      if (action.payload == null) {
+        return state;
+      }
+      const num = SETTINGS.asteroids.startingNumber[action.payload];
+      const radius = SETTINGS.asteroids.startingSpawnRadius[action.payload];
+      return state.concat(randomAsteroids(num, { radius }));
+    }
     default:
       return state;
   }

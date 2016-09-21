@@ -28,12 +28,23 @@ export const DESCRIPTION_FOR_MODE = {
 
 export const SETTINGS = {
   asteroids: {
-    startingMinimumArea: 5000,
+    startingMinimumArea: {
+      [CLASSIC]: 5000,
+      [DODGEBALL]: 5000,
+      [BOSS]: 0,
+      [SUPER_BOSS]: 0,
+    },
     startingSpawnRadius: {
       [CLASSIC]: 30,
       [DODGEBALL]: 30,
       [BOSS]: 100,
       [SUPER_BOSS]: 173,
+    },
+    startingNumber: {
+      [CLASSIC]: 2,
+      [DODGEBALL]: 2,
+      [BOSS]: 1,
+      [SUPER_BOSS]: 1,
     },
     minimumRadius: 10,
     color: 'sienna',

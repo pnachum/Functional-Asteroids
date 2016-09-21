@@ -12,6 +12,7 @@ export const TOGGLE_PAUSE = 'TOGGLE_PAUSE';
 export const NEW_FRAME = 'NEW_FRAME';
 export const RESET = 'RESET';
 export const SET_MODE = 'SET_MODE';
+export const ADD_INITIAL_ASTEROIDS = 'ADD_INITIAL_ASTEROIDS';
 
 export function move(difficulty: DifficultyState): Action {
   return { type: MOVE, payload: difficulty };
@@ -47,7 +48,7 @@ export function newFrame(frameCount: number, mode: Mode): Action {
     payload: {
       frameCount,
       mode,
-    }
+    },
   };
 }
 
@@ -57,4 +58,8 @@ export function reset(): Action {
 
 export function setMode(newMode: Mode): Action {
   return { type: SET_MODE, payload: newMode };
+}
+
+export function addInitialAsteroids(mode: Mode): Action {
+  return { type: ADD_INITIAL_ASTEROIDS, payload: mode };
 }
