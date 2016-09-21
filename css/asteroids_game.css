@@ -9,6 +9,7 @@ canvas {
   border: 3px solid lightgreen;
   margin: 10px;
   cursor: pointer;
+  vertical-align: top;
 }
 
 .mode-button:hover {
