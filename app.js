@@ -12,8 +12,4 @@ $(() => {
     const uiContext = ui.getContext('2d');
     beginGame(gameContext, uiContext);
   });
-
-  $('.mode-button').hover((event) => {
-    $(event.currentTarget).toggleClass('hovered');
-  });
 });

@@ -16,6 +16,10 @@ canvas {
   cursor: pointer;
 }
 
+.mode-button:hover {
+  background-color: lightgreen;
+}
+
 #instructions {
   display: inline-block;
 }
@@ -58,10 +62,6 @@ canvas {
 
 .mode-title, .mode-text, h2, #instructions * {
   font-family: "Arial";
-}
-
-.hovered {
-  background-color: lightgreen;
 }
 
 #game {
