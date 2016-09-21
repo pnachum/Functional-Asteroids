@@ -1,6 +1,7 @@
 // @flow
 
-import { times, sumBy } from 'lodash';
+import { times, sumBy, pick } from 'lodash';
+import { combineReducers } from 'redux';
 import ship from './ship';
 import bullets from './bullets';
 import asteroids from './asteroids';
@@ -49,6 +50,13 @@ const defaultState: State = {
   multiplier: 1,
 };
 
+const subReducer = combineReducers({
+  asteroids,
+  bullets,
+  debris,
+  ship,
+});
+
 // This reducer allows for state changes which rely on interactions between various moving objects,
 // specifically to handle collisions.
 export default function movingObjects(state: State = defaultState, action: Action): State {
@@ -73,20 +81,15 @@ export default function movingObjects(state: State = defaultState, action: Actio
   const shouldBeDestroyed = smallerRadius(minimumRadius * Math.sqrt(2));
 
   // TODO: This seems pretty messy
-  const reducedAsteroids: Asteroid[] = asteroids(state.asteroids, action);
-  const reducedBullets: Bullet[] = bullets(state.bullets, action);
-  const reducedShip: Ship = ship(state.ship, action);
-  const reducedDebris: Debris[] = debris(state.debris, action);
-  const score: number = state.score;
-  let lives: number = state.lives;
+  const subState = subReducer(pick(state, [
+    'asteroids',
+    'ship',
+    'bullets',
+    'debris',
+  ]), action);
   const defaultNewState: State = {
-    asteroids: reducedAsteroids,
-    bullets: reducedBullets,
-    ship: reducedShip,
-    debris: reducedDebris,
-    score: state.score,
-    lives: state.lives,
-    multiplier: state.multiplier,
+    ...state,
+    ...subState,
   };
   switch (action.type) {
     case MOVE: {
@@ -104,11 +107,12 @@ export default function movingObjects(state: State = defaultState, action: Actio
         difficulty: DifficultyState,
         frameCount: number,
       } = action.payload;
+      let livesDiff = 0;
       const collidedBullets: Bullet[] = [];
       const asteroidCollisions: AsteroidCollision[] = [];
-      let newShip: Ship = reducedShip;
-      reducedAsteroids.forEach((asteroid) => {
-        reducedBullets.forEach((bullet) => {
+      let newShip: Ship = subState.ship;
+      subState.asteroids.forEach((asteroid) => {
+        subState.bullets.forEach((bullet) => {
           if (isCollided({ ...bullet, radius: bulletRadius }, asteroid)) {
             collidedBullets.push(bullet);
             asteroidCollisions.push({
@@ -118,16 +122,16 @@ export default function movingObjects(state: State = defaultState, action: Actio
           }
         });
         const didShipCollide: boolean = isCollided(
-          { ...reducedShip, radius: shipRadius },
+          { ...subState.ship, radius: shipRadius },
           asteroid
         );
-        if (!isShipInvincible(reducedShip, frameCount) && didShipCollide) {
-          lives -= 1;
+        if (!isShipInvincible(subState.ship, frameCount) && didShipCollide) {
+          livesDiff -= 1;
           asteroidCollisions.push({ points: 0, asteroid });
           // Maintain the ship's current direction and reset its spawnFrame
           newShip = {
             ...defaultShip,
-            degrees: reducedShip.degrees,
+            degrees: subState.ship.degrees,
             spawnFrame: frameCount,
           };
         }
@@ -136,7 +140,7 @@ export default function movingObjects(state: State = defaultState, action: Actio
 
       const pointsAwarded: number = sumBy(asteroidCollisions, ac => ac.points * state.multiplier);
 
-      const notHitAsteroids: Asteroid[] = reducedAsteroids.filter(asteroid => (
+      const notHitAsteroids: Asteroid[] = subState.asteroids.filter(asteroid => (
         !collidedAsteroids.includes(asteroid)
       ));
       const subAsteroids: Asteroid[] = collidedAsteroids.reduce((prev, current) => (
@@ -168,12 +172,12 @@ export default function movingObjects(state: State = defaultState, action: Actio
 
       return {
         ship: newShip,
-        bullets: reducedBullets.filter(bullet => !collidedBullets.includes(bullet)),
+        bullets: subState.bullets.filter(bullet => !collidedBullets.includes(bullet)),
         asteroids: newAsteroids.concat(additionalAsteroids),
-        debris: reducedDebris.concat(newDebris),
-        score: score + pointsAwarded,
+        debris: subState.debris.concat(newDebris),
+        score: state.score + pointsAwarded,
         multiplier: state.multiplier,
-        lives,
+        lives: state.lives + livesDiff,
       };
     }
     case SET_MODE:
