@@ -2,7 +2,7 @@ import { render } from 'react-dom';
 import React from 'react';
 import { Provider } from 'react-redux';
 import App from './js/components/App';
-import { store } from './js/index';
+import store from './js/store';
 
 document.addEventListener('DOMContentLoaded', () => {
   render(

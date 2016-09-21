@@ -1,8 +1,6 @@
 // @flow
 
-import { createStore } from 'redux';
 import key from 'keymaster';
-import rootReducer from './reducers/root';
 import {
   move,
   thrustShip,
@@ -15,9 +13,8 @@ import {
 } from './actions';
 import { FRAMES_PER_SECOND } from './constants';
 import { initContext } from './utils/canvas';
-import draw from './draw';
+import store from './store';
 
-export const store = createStore(rootReducer);
 let intervalId;
 
 function keyPressListener() {
@@ -84,7 +81,3 @@ export default function beginGame(gameContext: Object, uiContext: Object) {
   bindKeyHandlers();
   start();
 }
-
-store.subscribe(() => {
-  draw(store.getState());
-});
