@@ -153,11 +153,8 @@ function drawScore(score: number) {
 function drawLives(lives: number) {
   const shipDrawInfos: DrawableCircle[] = flatten(times(lives, i => (
     shipDrawInfo({
+      ...SETTINGS.ship.defaultShip,
       pos: [20 + (25 * i), 90],
-      vel: [0, 0],
-      degrees: 90,
-      isThrusting: false,
-      spawnFrame: 0,
     })
   )));
   shipDrawInfos.forEach(drawCircleInUI);
