@@ -1,29 +1,28 @@
 // @flow
 
-import { times, sumBy, pick } from 'lodash';
+import { pick } from 'lodash';
 import { combineReducers } from 'redux';
 import ship from './ship';
 import bullets from './bullets';
 import asteroids from './asteroids';
 import debris from './debris';
 import { MOVE, SET_MODE } from '../actions';
-import { isCollided, direction, sumOfAreas } from '../utils/math';
-import randomAsteroids from '../utils/randomAsteroids';
 import { SETTINGS, DEFAULT_MODE } from '../constants';
-import isShipInvincible from '../utils/isShipInvincible';
+import {
+  debrisForDestroyedAsteroids,
+  subASteroidsForCollidedAsteroids,
+  additionalAsteroidsForCurrentAsteroids,
+  handleCollisions,
+} from '../utils/asteroidCollisions';
 import type {
   Ship,
   Asteroid,
   Bullet,
   Debris,
-  WithRadius,
   Action,
   DifficultyState,
+  WithRadius,
 } from '../types/index';
-
-function smallerRadius(distance: number): (obj: WithRadius) => boolean {
-  return ({ radius }) => radius < distance;
-}
 
 type State = {
   asteroids: Asteroid[],
@@ -33,11 +32,6 @@ type State = {
   score: number,
   lives: number,
   multiplier: number,
-};
-
-type AsteroidCollision = {
-  asteroid: Asteroid,
-  points: number,
 };
 
 const defaultState: State = {
@@ -50,6 +44,19 @@ const defaultState: State = {
   multiplier: 1,
 };
 
+function smallerRadius(distance: number): (obj: WithRadius) => boolean {
+  return ({ radius }) => radius < distance;
+}
+
+const shouldBeDestroyed = smallerRadius(SETTINGS.asteroids.minimumRadius * Math.sqrt(2));
+
+function pointsForCollision(multiplier: number): (asteroid: Asteroid) => number {
+  const { pointsForBreak, pointsForDestroy } = SETTINGS;
+  return (asteroid: Asteroid): number => (
+    multiplier * (shouldBeDestroyed(asteroid) ? pointsForDestroy : pointsForBreak)
+  );
+}
+
 const subReducer = combineReducers({
   asteroids,
   bullets,
@@ -60,26 +67,6 @@ const subReducer = combineReducers({
 // This reducer allows for state changes which rely on interactions between various moving objects,
 // specifically to handle collisions.
 export default function movingObjects(state: State = defaultState, action: Action): State {
-  const {
-    asteroids: {
-      minimumRadius,
-    },
-    debris: {
-      number: numDebris,
-      distance: debrisDistance,
-    },
-    ship: {
-      radius: shipRadius,
-      defaultShip,
-    },
-    bullets: {
-      radius: bulletRadius,
-    },
-    pointsForBreak,
-    pointsForDestroy,
-  } = SETTINGS;
-  const shouldBeDestroyed = smallerRadius(minimumRadius * Math.sqrt(2));
-
   // TODO: This seems pretty messy
   const subState = subReducer(pick(state, [
     'asteroids',
@@ -97,82 +84,39 @@ export default function movingObjects(state: State = defaultState, action: Actio
         return state;
       }
       const {
-        difficulty: {
-          asteroidSpawnRadius,
-          minimumAsteroidArea,
-          asteroidSpeed,
-        },
+        difficulty,
         frameCount,
       }: {
         difficulty: DifficultyState,
         frameCount: number,
       } = action.payload;
-      let livesDiff = 0;
-      const collidedBullets: Bullet[] = [];
-      const asteroidCollisions: AsteroidCollision[] = [];
-      let newShip: Ship = subState.ship;
-      subState.asteroids.forEach((asteroid) => {
-        subState.bullets.forEach((bullet) => {
-          if (isCollided({ ...bullet, radius: bulletRadius }, asteroid)) {
-            collidedBullets.push(bullet);
-            asteroidCollisions.push({
-              points: shouldBeDestroyed(asteroid) ? pointsForDestroy : pointsForBreak,
-              asteroid,
-            });
-          }
-        });
-        const didShipCollide: boolean = isCollided(
-          { ...subState.ship, radius: shipRadius },
-          asteroid
-        );
-        if (!isShipInvincible(subState.ship, frameCount) && didShipCollide) {
-          livesDiff -= 1;
-          asteroidCollisions.push({ points: 0, asteroid });
-          // Maintain the ship's current direction and reset its spawnFrame
-          newShip = {
-            ...defaultShip,
-            degrees: subState.ship.degrees,
-            spawnFrame: frameCount,
-          };
-        }
+      const {
+        livesDiff,
+        notCollidedBullets,
+        collidedAsteroids,
+        notCollidedAsteroids,
+        pointsAwarded,
+        newShip,
+      } = handleCollisions({
+        ship: defaultNewState.ship,
+        asteroids: defaultNewState.asteroids,
+        bullets: defaultNewState.bullets,
+        pointsForCollision: pointsForCollision(state.multiplier),
+        frameCount,
       });
-      const collidedAsteroids: Asteroid[] = asteroidCollisions.map(ac => ac.asteroid);
 
-      const pointsAwarded: number = sumBy(asteroidCollisions, ac => ac.points * state.multiplier);
-
-      const notHitAsteroids: Asteroid[] = subState.asteroids.filter(asteroid => (
-        !collidedAsteroids.includes(asteroid)
-      ));
-      const subAsteroids: Asteroid[] = collidedAsteroids.reduce((prev, current) => (
-        prev.concat(randomAsteroids(2, {
-          radius: current.radius / Math.sqrt(2),
-          pos: current.pos,
-          // Split asteroids maintain the same speed as their parent
-          spawnSpeed: current.spawnSpeed,
-        }))
-      ), []).filter(asteroid => asteroid.radius > minimumRadius);
-
+      const subAsteroids: Asteroid[] = subASteroidsForCollidedAsteroids(collidedAsteroids);
       const destroyedAsteroids: Asteroid[] = collidedAsteroids.filter(shouldBeDestroyed);
-      const angle: number = 360 / numDebris;
-      const newDebris: Debris[] = destroyedAsteroids.reduce((prev, current) => {
-        const debrisForAsteroid: Debris[] = times(numDebris, index => ({
-          pos: current.pos,
-          vel: direction(angle * index),
-          distance: debrisDistance,
-        }));
-        return prev.concat(debrisForAsteroid);
-      }, []);
-
-      const newAsteroids: Asteroid[] = notHitAsteroids.concat(subAsteroids);
-      // Flow can't cast Asteroid[] to WithRadius[], so map over the array to do it explicitly
-      const withRadii: WithRadius[] = newAsteroids.map(asteroid => (asteroid: WithRadius));
-      const additionalAsteroids: Asteroid[] = sumOfAreas(withRadii) < minimumAsteroidArea
-        ? randomAsteroids(1, { radius: asteroidSpawnRadius, spawnSpeed: asteroidSpeed })
-        : [];
+      const newDebris: Debris[] = debrisForDestroyedAsteroids(destroyedAsteroids);
+      const newAsteroids: Asteroid[] = notCollidedAsteroids.concat(subAsteroids);
+      const additionalAsteroids: Asteroid[] = additionalAsteroidsForCurrentAsteroids(
+        newAsteroids,
+        difficulty
+      );
 
       return {
         ship: newShip,
-        bullets: subState.bullets.filter(bullet => !collidedBullets.includes(bullet)),
+        bullets: notCollidedBullets,
         asteroids: newAsteroids.concat(additionalAsteroids),
         debris: subState.debris.concat(newDebris),
         score: state.score + pointsAwarded,
