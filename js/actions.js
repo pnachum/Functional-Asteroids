@@ -41,8 +41,14 @@ export function togglePause(): Action {
   return { type: TOGGLE_PAUSE };
 }
 
-export function newFrame(frameCount: number): Action {
-  return { type: NEW_FRAME, payload: frameCount };
+export function newFrame(frameCount: number, mode: Mode): Action {
+  return {
+    type: NEW_FRAME,
+    payload: {
+      frameCount,
+      mode,
+    }
+  };
 }
 
 export function reset(): Action {

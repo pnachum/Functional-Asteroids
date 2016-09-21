@@ -33,9 +33,10 @@ export default function difficulty(
       if (action.payload == null) {
         return state;
       }
-      const elapsedSeconds = action.payload / FRAMES_PER_SECOND;
+      const { frameCount, mode } = action.payload;
+      const elapsedSeconds = frameCount / FRAMES_PER_SECOND;
       // Don't do a difficulty increase when the game starts
-      if (action.payload !== 0 && elapsedSeconds % SETTINGS.difficulty.timeInterval === 0) {
+      if (frameCount !== 0 && elapsedSeconds % SETTINGS.difficulty.timeInterval[mode] === 0) {
         return increasedDifficulty(state);
       }
       return state;

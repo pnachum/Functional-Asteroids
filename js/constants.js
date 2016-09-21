@@ -74,7 +74,13 @@ export const SETTINGS = {
   },
 
   difficulty: {
-    timeInterval: 10, // seconds
+    timeInterval: {
+      // seconds
+      [CLASSIC]: 10,
+      [DODGEBALL]: 5,
+      [BOSS]: 10,
+      [SUPER_BOSS]: 10,
+    },
     asteroidSpeedIncrease: 0.15,
     asteroidSpawnRadiusMultiplier: 1.0,
     minimumAsteroidAreaMultiplier: 1.25,
