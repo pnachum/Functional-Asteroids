@@ -132,7 +132,7 @@ export default function movingObjects(state: State = defaultState, action: Actio
           };
         }
       });
-      const collidedAsteroids: Asteroid[] = asteroidCollisions.map(info => info.asteroid);
+      const collidedAsteroids: Asteroid[] = asteroidCollisions.map(ac => ac.asteroid);
 
       const pointsAwarded: number = sumBy(asteroidCollisions, ac => ac.points * state.multiplier);
 

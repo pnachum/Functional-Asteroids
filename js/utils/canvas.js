@@ -6,6 +6,14 @@ import type { DrawableCircle, DrawableText } from '../types/index';
 let gameCtx: CanvasRenderingContext2D;
 let uiCtx: CanvasRenderingContext2D;
 
+function guardForInitialized(callback: Function): Function {
+  return (...args) => {
+    if (gameCtx && uiCtx) {
+      callback(...args);
+    }
+  };
+}
+
 export function initContext(
   gameContext: CanvasRenderingContext2D,
   uiContext: CanvasRenderingContext2D
@@ -14,13 +22,12 @@ export function initContext(
   uiCtx = uiContext;
 }
 
-export function clear() {
-  if (!gameCtx || !uiCtx) {
-    return;
-  }
+function unguardedClear() {
   gameCtx.clearRect(0, 0, DIMENSION, DIMENSION);
   uiCtx.clearRect(0, 0, DIMENSION / 2, DIMENSION);
 }
+
+export const clear = guardForInitialized(unguardedClear);
 
 function drawCircle(ctx: CanvasRenderingContext2D, { color, pos, radius }: DrawableCircle) {
   ctx.fillStyle = color;
@@ -36,19 +43,15 @@ function drawCircle(ctx: CanvasRenderingContext2D, { color, pos, radius }: Drawa
   ctx.fill();
 }
 
-export function drawCircleInGame(obj: DrawableCircle) {
-  if (!gameCtx) {
-    return;
-  }
+function unguardedDrawCircleInGame(obj: DrawableCircle) {
   drawCircle(gameCtx, obj);
 }
+export const drawCircleInGame = guardForInitialized(unguardedDrawCircleInGame);
 
-export function drawCircleInUI(obj: DrawableCircle) {
-  if (!uiCtx) {
-    return;
-  }
+function unguardedDrawCircleInUI(obj: DrawableCircle) {
   drawCircle(uiCtx, obj);
 }
+export const drawCircleInUI = guardForInitialized(unguardedDrawCircleInUI);
 
 function drawText(
   ctx: CanvasRenderingContext2D,
@@ -59,16 +62,12 @@ function drawText(
   ctx.fillText(text, ...pos);
 }
 
-export function drawTextInGame(obj: DrawableText) {
-  if (!gameCtx) {
-    return;
-  }
+function ungardedDrawTextInGame(obj: DrawableText) {
   drawText(gameCtx, obj);
 }
+export const drawTextInGame = guardForInitialized(ungardedDrawTextInGame);
 
-export function drawTextInUI(obj: DrawableText) {
-  if (!uiCtx) {
-    return;
-  }
+function ungardedDrawTextInUI(obj: DrawableText) {
   drawText(uiCtx, obj);
 }
+export const drawTextInUI = guardForInitialized(ungardedDrawTextInUI);
