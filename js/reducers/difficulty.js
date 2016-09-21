@@ -1,7 +1,7 @@
 // @flow
 
-import { SETTINGS, FRAMES_PER_SECOND } from '../constants';
-import { NEW_FRAME } from '../actions';
+import { SETTINGS, FRAMES_PER_SECOND, CLASSIC } from '../constants';
+import { NEW_FRAME, SET_MODE } from '../actions';
 import type { DifficultyState, Action } from '../types/index';
 
 function increasedDifficulty(prevDifficulty: DifficultyState): DifficultyState {
@@ -19,7 +19,7 @@ function increasedDifficulty(prevDifficulty: DifficultyState): DifficultyState {
 }
 
 const defaultState = {
-  asteroidSpawnRadius: SETTINGS.asteroids.startingSpawnRadius,
+  asteroidSpawnRadius: SETTINGS.asteroids.startingSpawnRadius[CLASSIC],
   minimumAsteroidArea: SETTINGS.asteroids.startingMinimumArea,
   asteroidSpeed: SETTINGS.asteroids.startingSpeed,
 };
@@ -40,6 +40,14 @@ export default function difficulty(
       }
       return state;
     }
+    case SET_MODE:
+      if (action.payload == null) {
+        return state;
+      }
+      return {
+        ...state,
+        asteroidSpawnRadius: SETTINGS.asteroids.startingSpawnRadius[action.payload],
+      };
     default:
       return state;
   }

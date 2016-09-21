@@ -29,7 +29,12 @@ export const DESCRIPTION_FOR_MODE = {
 export const SETTINGS = {
   asteroids: {
     startingMinimumArea: 5000,
-    startingSpawnRadius: 30,
+    startingSpawnRadius: {
+      [CLASSIC]: 30,
+      [DODGEBALL]: 30,
+      [BOSS]: 100,
+      [SUPER_BOSS]: 173,
+    },
     minimumRadius: 10,
     color: 'sienna',
     startingSpeed: 0.5,
@@ -85,7 +90,12 @@ export const SETTINGS = {
     },
   },
 
-  startingLives: 2,
+  startingLives: {
+    [CLASSIC]: 2,
+    [DODGEBALL]: 0,
+    [BOSS]: 2,
+    [SUPER_BOSS]: 6,
+  },
   pointsForBreak: 2,
   pointsForDestroy: 10,
 };

@@ -5,10 +5,10 @@ import ship from './ship';
 import bullets from './bullets';
 import asteroids from './asteroids';
 import debris from './debris';
-import { MOVE } from '../actions';
+import { MOVE, SET_MODE } from '../actions';
 import { isCollided, direction, sumOfAreas } from '../utils/math';
 import randomAsteroids from '../utils/randomAsteroids';
-import { SETTINGS } from '../constants';
+import { SETTINGS, CLASSIC } from '../constants';
 import type { Ship, Asteroid, Bullet, Debris, WithRadius, Action } from '../types/index';
 
 function smallerRadius(distance: number): (obj: WithRadius) => boolean {
@@ -36,7 +36,9 @@ const defaultState = {
   ship: SETTINGS.ship.defaultShip,
   debris: [],
   score: 0,
-  lives: SETTINGS.startingLives,
+  // TODO: Avoid hardcoding CLASSIC here as the default state, since it's already represented as
+  // the default in the mode reducer.
+  lives: SETTINGS.startingLives[CLASSIC],
   multiplier: 1,
 };
 
@@ -70,6 +72,15 @@ export default function movingObjects(state: State = defaultState, action: Actio
   const reducedDebris = debris(state.debris, action);
   const score = state.score;
   let lives = state.lives;
+  const defaultNewState = {
+    asteroids: reducedAsteroids,
+    bullets: reducedBullets,
+    ship: reducedShip,
+    debris: reducedDebris,
+    score: state.score,
+    lives: state.lives,
+    multiplier: state.multiplier,
+  };
   switch (action.type) {
     case MOVE: {
       if (action.payload == null) {
@@ -145,15 +156,12 @@ export default function movingObjects(state: State = defaultState, action: Actio
         lives,
       };
     }
+    case SET_MODE:
+      if (action.payload == null) {
+        return state;
+      }
+      return { ...defaultNewState, lives: SETTINGS.startingLives[action.payload] };
     default:
-      return {
-        asteroids: reducedAsteroids,
-        bullets: reducedBullets,
-        ship: reducedShip,
-        debris: reducedDebris,
-        multiplier: state.multiplier,
-        score,
-        lives,
-      };
+      return defaultNewState;
   }
 }
