@@ -54,6 +54,10 @@ canvas {
   color: red;
 }
 
+#orange {
+  color: orange;
+}
+
 .mode-text {
   padding: 5px;
 }

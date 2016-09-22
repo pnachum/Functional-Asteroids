@@ -7,7 +7,8 @@ import bullets from './bullets';
 import asteroids from './asteroids';
 import debris from './debris';
 import powerups from './powerups';
-import { MOVE, SET_MODE, RESET } from '../actions';
+import bombs from './bombs';
+import { MOVE, SET_MODE, RESET, TRIGGER_BOMB } from '../actions';
 import { SETTINGS, DEFAULT_MODE } from '../constants';
 import {
   debrisForDestroyedAsteroids,
@@ -36,6 +37,7 @@ type State = {
   lives: number,
   multiplier: number,
   bulletPowerupStartFrame: ?number,
+  bombs: number,
 };
 
 const defaultState: State = {
@@ -48,6 +50,7 @@ const defaultState: State = {
   lives: SETTINGS.startingLives[DEFAULT_MODE],
   multiplier: 1,
   bulletPowerupStartFrame: null,
+  bombs: 0,
 };
 
 function smallerRadius(distance: number): (obj: WithRadius) => boolean {
@@ -69,6 +72,7 @@ const subReducer = combineReducers({
   debris,
   ship,
   powerups,
+  bombs,
 });
 
 // This reducer allows for state changes which rely on interactions between various moving objects,
@@ -81,6 +85,7 @@ export default function movingObjects(state: State = defaultState, action: Actio
     'bullets',
     'debris',
     'powerups',
+    'bombs',
   ]), action);
   const defaultNewState: State = {
     ...state,
@@ -108,7 +113,7 @@ export default function movingObjects(state: State = defaultState, action: Actio
         newShip,
         multiplierDiff,
         beginBulletPowerup,
-        blowUpBomb,
+        addBomb,
       } = handleCollisions({
         ship: defaultNewState.ship,
         asteroids: defaultNewState.asteroids,
@@ -122,9 +127,7 @@ export default function movingObjects(state: State = defaultState, action: Actio
         ? frameCount
         : defaultNewState.bulletPowerupStartFrame;
       const subAsteroids: Asteroid[] = subASteroidsForCollidedAsteroids(collidedAsteroids);
-      const destroyedAsteroids: Asteroid[] = blowUpBomb
-        ? defaultNewState.asteroids
-        : collidedAsteroids.filter(shouldBeDestroyed);
+      const destroyedAsteroids: Asteroid[] = collidedAsteroids.filter(shouldBeDestroyed);
       const newDebris: Debris[] = debrisForDestroyedAsteroids(destroyedAsteroids);
       const newAsteroids: Asteroid[] = notCollidedAsteroids.concat(subAsteroids);
       const additionalAsteroids: Asteroid[] = additionalAsteroidsForCurrentAsteroids(
@@ -134,15 +137,27 @@ export default function movingObjects(state: State = defaultState, action: Actio
       return {
         ship: newShip,
         bullets: notCollidedBullets,
-        asteroids: blowUpBomb ? additionalAsteroids : newAsteroids.concat(additionalAsteroids),
+        asteroids: newAsteroids.concat(additionalAsteroids),
         debris: subState.debris.concat(newDebris),
         powerups: notCollidedPowerups,
         score: defaultNewState.score + pointsAwarded,
         multiplier: defaultNewState.multiplier + multiplierDiff,
         lives: defaultNewState.lives + livesDiff,
         bulletPowerupStartFrame,
+        bombs: addBomb ? defaultNewState.bombs + 1 : defaultNewState.bombs,
       };
     }
+    case TRIGGER_BOMB:
+      if (state.bombs > 0) {
+        return {
+          ...defaultNewState,
+          asteroids: [],
+          debris: defaultNewState.debris.concat(
+            debrisForDestroyedAsteroids(defaultNewState.asteroids)
+          ),
+        };
+      }
+      return defaultNewState;
     case RESET:
     case SET_MODE:
       if (action.payload == null) {

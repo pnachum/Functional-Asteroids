@@ -21,6 +21,8 @@ export default function Instructions() {
           </li>
 
           <li><strong>Pause: </strong>P</li>
+
+          <li><strong>Bomb: </strong>B</li>
         </ul>
       </div>
 
@@ -37,6 +39,10 @@ export default function Instructions() {
 
           <li id="red" className="powerup-description">
             Gun upgrade
+          </li>
+
+          <li id="orange" className="powerup-description">
+            Extra bomb
           </li>
         </ul>
       </div>

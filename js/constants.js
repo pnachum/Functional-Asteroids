@@ -127,6 +127,12 @@ export const SETTINGS = {
     [BOSS]: 2,
     [SUPER_BOSS]: 6,
   },
+  startingBombs: {
+    [CLASSIC]: 3,
+    [DODGEBALL]: 0,
+    [BOSS]: 0,
+    [SUPER_BOSS]: 0,
+  },
   pointsForBreak: 2,
   pointsForDestroy: 10,
 };

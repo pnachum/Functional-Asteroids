@@ -10,6 +10,7 @@ import {
   togglePause,
   reset,
   addInitialAsteroids,
+  triggerBomb,
 } from './actions';
 import { FRAMES_PER_SECOND, BOSS, SUPER_BOSS } from './constants';
 import { initContext } from './utils/canvas';
@@ -92,6 +93,10 @@ function bindKeyHandlers() {
     } else {
       start();
     }
+  });
+
+  key('b', () => {
+    store.dispatch(triggerBomb())
   });
 }
 

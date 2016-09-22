@@ -87,7 +87,7 @@ export function handleCollisions({
   pointsAwarded: number,
   newShip: Ship,
   beginBulletPowerup: boolean,
-  blowUpBomb: boolean,
+  addBomb: boolean,
 } {
   const {
     ship: {
@@ -147,7 +147,7 @@ export function handleCollisions({
   multiplierDiff += collidedPowerups.filter(powerup => powerup.type === SCORE).length;
   livesDiff += collidedPowerups.filter(powerup => powerup.type === LIFE).length;
   const beginBulletPowerup = !!collidedPowerups.find(powerup => powerup.type === BULLET);
-  const blowUpBomb = !!collidedPowerups.find(powerup => powerup.type === BOMB);
+  const addBomb = !!collidedPowerups.find(powerup => powerup.type === BOMB);
 
   return {
     newShip: newShip || ship,
@@ -159,6 +159,6 @@ export function handleCollisions({
     notCollidedPowerups,
     pointsAwarded,
     beginBulletPowerup,
-    blowUpBomb,
+    addBomb,
   };
 }

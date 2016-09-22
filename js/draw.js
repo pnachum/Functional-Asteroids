@@ -1,7 +1,7 @@
 // @flow
 
 import { compact, flatten, times } from 'lodash';
-import { SETTINGS, FRAMES_PER_SECOND, NAME_FOR_MODE, COLOR_FOR_POWERUP } from './constants';
+import { SETTINGS, FRAMES_PER_SECOND, NAME_FOR_MODE, COLOR_FOR_POWERUP, BOMB } from './constants';
 import { getRotateablePosition } from './utils/math';
 import {
   drawCircleInGame,
@@ -183,20 +183,32 @@ function drawScore(score: number) {
 }
 
 function drawLives(lives: number) {
-  const shipDrawInfos: DrawableCircle[] = flatten(times(lives, i => (
+  drawRepeated(lives, i => (
     shipDrawInfo({
       ...SETTINGS.ship.defaultShip,
       pos: [20 + (25 * i), 90],
     })
-  )));
-  shipDrawInfos.forEach(drawCircleInUI);
+  ));
+}
+
+function drawBombs(bombs: number) {
+  drawRepeated(bombs, i => (
+    powerupDrawInfo({
+      type: BOMB,
+      pos: [20 + (25 * i), 120],
+    })
+  ));
+}
+
+function drawRepeated(num: number, drawOne: (i: number) => DrawableCircle | DrawableCircle[]) {
+  flatten(times(num, drawOne)).forEach(drawCircleInUI);
 }
 
 function drawTime(frameCount: number) {
   const seconds: number = Math.floor(frameCount / FRAMES_PER_SECOND);
   drawUIText({
     text: `Time: ${seconds}`,
-    pos: [5, 160],
+    pos: [5, 190],
   });
 }
 
@@ -215,7 +227,7 @@ function drawMode(mode: Mode) {
   }
   drawUIText({
     text: `Mode: ${text}`,
-    pos: [5, 130],
+    pos: [5, 160],
   });
 }
 
@@ -239,7 +251,17 @@ export default function draw({
   frameCount: number,
   mode: Mode,
 }) {
-  const { asteroids, ship, bullets, debris, score, lives, multiplier, powerups } = movingObjects;
+  const {
+    asteroids,
+    ship,
+    bullets,
+    debris,
+    score,
+    lives,
+    multiplier,
+    powerups,
+    bombs,
+  } = movingObjects;
   clear();
   const drawableInfos: DrawableCircle[] = [
     ...asteroids.map(asteroidDrawInfo),
@@ -255,6 +277,7 @@ export default function draw({
   }
   drawScore(score);
   drawLives(lives);
+  drawBombs(bombs);
   drawTime(frameCount);
   drawMultiplier(multiplier);
   drawMode(mode);
