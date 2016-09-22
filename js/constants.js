@@ -88,7 +88,6 @@ export const SETTINGS = {
     radius: 2,
     color: 'red',
     speed: 20,
-    maximumNumber: 5,
     distance: 400,
   },
 
