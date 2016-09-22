@@ -8,7 +8,6 @@ import {
   stopThrustingShip,
   shoot,
   togglePause,
-  newFrame,
   reset,
   addInitialAsteroids,
 } from './actions';
@@ -57,8 +56,7 @@ function gameOver(hasWon: boolean) {
 
 function step() {
   const { frameCount, difficulty, movingObjects, mode } = store.getState();
-  store.dispatch(newFrame(frameCount, mode, movingObjects.lives));
-  store.dispatch(move(difficulty, frameCount));
+  store.dispatch(move({ difficulty, frameCount, mode, lives: movingObjects.lives }));
   keyPressListener();
   if (movingObjects.lives < 0) {
     gameOver(false);

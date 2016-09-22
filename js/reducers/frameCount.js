@@ -1,13 +1,13 @@
 // @flow
 
-import { NEW_FRAME } from '../actions';
+import { MOVE } from '../actions';
 import type { Action } from '../types/index';
 
 const defaultState: number = 0;
 
 export default function frameCount(state: number = defaultState, action: Action): number {
   switch (action.type) {
-    case NEW_FRAME:
+    case MOVE:
       return state + 1;
     default:
       return state;

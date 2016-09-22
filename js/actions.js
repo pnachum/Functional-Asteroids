@@ -9,18 +9,19 @@ export const ROTATE_SHIP = 'ROTATE_SHIP';
 export const STOP_THRUSTING_SHIP = 'STOP_THRUSTING_SHIP';
 export const SHOOT = 'SHOOT';
 export const TOGGLE_PAUSE = 'TOGGLE_PAUSE';
-export const NEW_FRAME = 'NEW_FRAME';
 export const RESET = 'RESET';
 export const SET_MODE = 'SET_MODE';
 export const ADD_INITIAL_ASTEROIDS = 'ADD_INITIAL_ASTEROIDS';
 
-export function move(difficulty: DifficultyState, frameCount: number): Action {
+export function move(payload: {
+  difficulty: DifficultyState,
+  frameCount: number,
+  mode: Mode,
+  lives: number,
+}): Action {
   return {
     type: MOVE,
-    payload: {
-      difficulty,
-      frameCount,
-    },
+    payload,
   };
 }
 
@@ -59,17 +60,6 @@ export function shoot(
 
 export function togglePause(): Action {
   return { type: TOGGLE_PAUSE };
-}
-
-export function newFrame(frameCount: number, mode: Mode, lives: number): Action {
-  return {
-    type: NEW_FRAME,
-    payload: {
-      frameCount,
-      mode,
-      lives,
-    },
-  };
 }
 
 export function reset(mode: Mode): Action {

@@ -9,7 +9,7 @@ import {
   DODGEBALL,
   LIFE,
 } from '../constants';
-import { NEW_FRAME } from '../actions';
+import { MOVE } from '../actions';
 import type { Powerup, Action, Mode } from '../types/index';
 
 function newPowerup(mode: Mode, lives: number): Powerup {
@@ -31,7 +31,7 @@ export default function powerups(state: Powerup[] = defaultState, action: Action
     },
   } = SETTINGS;
   switch (action.type) {
-    case NEW_FRAME: {
+    case MOVE: {
       if (action.payload == null) {
         return state;
       }
