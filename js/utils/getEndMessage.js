@@ -1,10 +1,7 @@
 // @flow
 
 import {
-  CLASSIC,
   DODGEBALL,
-  BOSS,
-  SUPER_BOSS,
   FRAMES_PER_SECOND,
 } from '../constants';
 import type { Mode } from '../types/index';
