@@ -6,6 +6,7 @@ import ship from './ship';
 import bullets from './bullets';
 import asteroids from './asteroids';
 import debris from './debris';
+import powerups from './powerups';
 import { MOVE, SET_MODE } from '../actions';
 import { SETTINGS, DEFAULT_MODE } from '../constants';
 import {
@@ -22,6 +23,7 @@ import type {
   Action,
   DifficultyState,
   WithRadius,
+  Powerup,
 } from '../types/index';
 
 type State = {
@@ -29,6 +31,7 @@ type State = {
   bullets: Bullet[],
   ship: Ship,
   debris: Debris[],
+  powerups: Powerup[],
   score: number,
   lives: number,
   multiplier: number,
@@ -39,6 +42,7 @@ const defaultState: State = {
   bullets: [],
   ship: SETTINGS.ship.defaultShip,
   debris: [],
+  powerups: [],
   score: 0,
   lives: SETTINGS.startingLives[DEFAULT_MODE],
   multiplier: 1,
@@ -62,6 +66,7 @@ const subReducer = combineReducers({
   bullets,
   debris,
   ship,
+  powerups,
 });
 
 // This reducer allows for state changes which rely on interactions between various moving objects,
@@ -73,6 +78,7 @@ export default function movingObjects(state: State = defaultState, action: Actio
     'ship',
     'bullets',
     'debris',
+    'powerups',
   ]), action);
   const defaultNewState: State = {
     ...state,
@@ -119,6 +125,7 @@ export default function movingObjects(state: State = defaultState, action: Actio
         bullets: notCollidedBullets,
         asteroids: newAsteroids.concat(additionalAsteroids),
         debris: subState.debris.concat(newDebris),
+        powerups: subState.powerups,
         score: state.score + pointsAwarded,
         multiplier: state.multiplier,
         lives: state.lives + livesDiff,

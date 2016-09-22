@@ -1,7 +1,7 @@
 // @flow
 
 import { compact, flatten, times } from 'lodash';
-import { SETTINGS, FRAMES_PER_SECOND, NAME_FOR_MODE } from './constants';
+import { SETTINGS, FRAMES_PER_SECOND, NAME_FOR_MODE, COLOR_FOR_POWERUP } from './constants';
 import { getRotateablePosition } from './utils/math';
 import {
   drawCircleInGame,
@@ -17,6 +17,7 @@ import type {
   Debris,
   DrawableCircle,
   Mode,
+  Powerup,
 } from './types/index';
 import isShipInvincible from './utils/isShipInvincible';
 
@@ -139,6 +140,19 @@ function debrisDrawInfo({ pos }: Debris): DrawableCircle {
   };
 }
 
+function powerupDrawInfo({ pos, type }: Powerup): DrawableCircle {
+  const {
+    powerups: {
+      radius,
+    },
+  } = SETTINGS;
+  return {
+    color: COLOR_FOR_POWERUP[type],
+    radius,
+    pos,
+  };
+}
+
 function drawPause() {
   drawTextInGame({
     text: 'Paused',
@@ -207,6 +221,7 @@ export default function draw({
     ship: Ship,
     bullets: Bullet[],
     debris: Debris[],
+    powerups: Powerup[],
     score: number,
     lives: number,
     multiplier: number,
@@ -215,12 +230,13 @@ export default function draw({
   frameCount: number,
   mode: Mode,
 }) {
-  const { asteroids, ship, bullets, debris, score, lives, multiplier } = movingObjects;
+  const { asteroids, ship, bullets, debris, score, lives, multiplier, powerups } = movingObjects;
   clear();
   const drawableInfos: DrawableCircle[] = [
     ...asteroids.map(asteroidDrawInfo),
     ...bullets.map(bulletDrawInfo),
     ...debris.map(debrisDrawInfo),
+    ...powerups.map(powerupDrawInfo),
     ...shipDrawInfo(ship, frameCount),
   ];
   drawableInfos.forEach(drawCircleInGame);

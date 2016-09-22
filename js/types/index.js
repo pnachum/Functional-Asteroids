@@ -64,7 +64,13 @@ export type DifficultyState = {
 
 // Flow can't handle using constants here, so it has to repeat the constasnt values
 export type Mode = 0 | 1 | 2 | 3;
+export type PowerupType = 0 | 1 | 2;
 
 export type Action = { type: string, payload?: any };
 
 export type TurnDirection = 1 | -1;
+
+export type Powerup = {
+  pos: [number, number],
+  type: PowerupType,
+};
