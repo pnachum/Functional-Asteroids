@@ -1,5 +1,5 @@
 import { times, sumBy } from 'lodash';
-import { SETTINGS } from '../constants';
+import { SETTINGS, SCORE, LIFE, BULLET } from '../constants';
 import randomAsteroids from './randomAsteroids';
 import { direction, sumOfAreas, isCollided } from './math';
 import isShipInvincible from './isShipInvincible';
@@ -10,6 +10,7 @@ import type {
   DifficultyState,
   Ship,
   Bullet,
+  Powerup,
 } from '../types/index';
 
 type AsteroidCollision = {
@@ -66,19 +67,23 @@ export function handleCollisions({
   ship,
   asteroids,
   bullets,
+  powerups,
   frameCount,
   pointsForCollision,
 } : {
   ship: Ship,
   asteroids: Asteroid[],
   bullets: Bullet[],
+  powerups: Powerup[],
   frameCount: number,
   pointsForCollision: (asteroid: Asteroid) => number,
 }): {
   livesDiff: number,
+  multiplierDiff: number,
   notCollidedBullets: Bullet[],
   collidedAsteroids: Asteroid[],
   notCollidedAsteroids: Asteroid[],
+  notCollidedPowerups: Powerup[],
   pointsAwarded: number,
   newShip: Ship,
 } {
@@ -90,8 +95,12 @@ export function handleCollisions({
     bullets: {
       radius: bulletRadius,
     },
+    powerups: {
+      radius: powerupRadius,
+    },
   } = SETTINGS;
-  let livesDiff = 0;
+  let livesDiff: number = 0;
+  let multiplierDiff: number = 0;
   const collidedBullets: Bullet[] = [];
   const asteroidCollisions: AsteroidCollision[] = [];
   let newShip: Ship;
@@ -105,11 +114,11 @@ export function handleCollisions({
         });
       }
     });
-    const didShipCollide: boolean = isCollided(
+    const didShipCollideWithAsteroid: boolean = isCollided(
       { ...ship, radius: shipRadius },
       asteroid
     );
-    if (!isShipInvincible(ship, frameCount) && didShipCollide) {
+    if (!isShipInvincible(ship, frameCount) && didShipCollideWithAsteroid) {
       livesDiff -= 1;
       asteroidCollisions.push({ points: 0, asteroid });
       // Maintain the ship's current direction and reset its spawnFrame
@@ -128,12 +137,22 @@ export function handleCollisions({
   ));
   const notCollidedBullets = bullets.filter(bullet => !collidedBullets.includes(bullet));
 
+  const collidedPowerups = powerups.filter(powerup => (
+    isCollided({ ...ship, radius: shipRadius }, { ...powerup, radius: powerupRadius })
+  ));
+  const notCollidedPowerups = powerups.filter(powerup => !collidedPowerups.includes(powerup));
+
+  multiplierDiff += collidedPowerups.filter(powerup => powerup.type === SCORE).length;
+  livesDiff += collidedPowerups.filter(powerup => powerup.type === LIFE).length;
+
   return {
     newShip: newShip || ship,
+    multiplierDiff,
     livesDiff,
     notCollidedBullets,
     collidedAsteroids,
     notCollidedAsteroids,
+    notCollidedPowerups,
     pointsAwarded,
   };
 }

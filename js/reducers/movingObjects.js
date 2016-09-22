@@ -101,12 +101,15 @@ export default function movingObjects(state: State = defaultState, action: Actio
         notCollidedBullets,
         collidedAsteroids,
         notCollidedAsteroids,
+        notCollidedPowerups,
         pointsAwarded,
         newShip,
+        multiplierDiff,
       } = handleCollisions({
         ship: defaultNewState.ship,
         asteroids: defaultNewState.asteroids,
         bullets: defaultNewState.bullets,
+        powerups: defaultNewState.powerups,
         pointsForCollision: pointsForCollision(state.multiplier),
         frameCount,
       });
@@ -119,15 +122,14 @@ export default function movingObjects(state: State = defaultState, action: Actio
         newAsteroids,
         difficulty
       );
-
       return {
         ship: newShip,
         bullets: notCollidedBullets,
         asteroids: newAsteroids.concat(additionalAsteroids),
         debris: subState.debris.concat(newDebris),
-        powerups: subState.powerups,
+        powerups: notCollidedPowerups,
         score: state.score + pointsAwarded,
-        multiplier: state.multiplier,
+        multiplier: state.multiplier + multiplierDiff,
         lives: state.lives + livesDiff,
       };
     }
