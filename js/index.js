@@ -40,13 +40,14 @@ function stop() {
   clearInterval(intervalId);
 }
 
-function gameOver() {
+function gameOver(hasWon: boolean) {
   const state = store.getState();
   stop();
   const endMessage: string = getEndMessage({
     score: state.movingObjects.score,
     frameCount: state.frameCount,
     mode: state.mode,
+    hasWon,
   });
   if (confirm(endMessage)) {
     store.dispatch(reset(state.mode));
@@ -60,7 +61,10 @@ function step() {
   store.dispatch(move(difficulty, frameCount));
   keyPressListener();
   if (movingObjects.lives < 0) {
-    gameOver();
+    gameOver(false);
+  }
+  if (frameCount !== 0 && movingObjects.asteroids.length === 0) {
+    gameOver(true);
   }
 }
 
