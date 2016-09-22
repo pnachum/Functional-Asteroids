@@ -1,6 +1,6 @@
 // @flow
 
-import type { Mode } from './types/index';
+import type { Mode, PowerupType } from './types/index';
 
 export const DIMENSION = 500;
 export const FRAMES_PER_SECOND = 30;
@@ -20,27 +20,24 @@ export const MODES: Mode[] = [CLASSIC, DODGEBALL, BOSS, SUPER_BOSS];
 
 export const DEFAULT_MODE = CLASSIC;
 
-export const NAME_FOR_MODE = {
-  [CLASSIC]: 'Classic',
-  [DODGEBALL]: 'Dodgeball',
-  [BOSS]: 'Bossteroid',
-  [SUPER_BOSS]: 'Super Bossteroid',
-};
+export const NAME_FOR_MODE: Map<Mode, string> = new Map();
+NAME_FOR_MODE.set(CLASSIC, 'Classic');
+NAME_FOR_MODE.set(DODGEBALL, 'Dodgeball');
+NAME_FOR_MODE.set(BOSS, 'Bossteroid');
+NAME_FOR_MODE.set(SUPER_BOSS, 'Super Bossteroid');
 
-export const DESCRIPTION_FOR_MODE = {
-  [CLASSIC]: 'Score as many points as you can before running out of lives',
-  [DODGEBALL]: 'If you can dodge an asteroid, you can dodge a ball',
-  [BOSS]: 'Kill the Bossteroid as quickly as possible. Like a boss',
-  [SUPER_BOSS]: 'Like the Bossteroid, but three times bigger',
-};
+export const DESCRIPTION_FOR_MODE: Map<Mode, string> = new Map();
+DESCRIPTION_FOR_MODE.set(CLASSIC, 'Score as many points as you can before running out of lives');
+DESCRIPTION_FOR_MODE.set(DODGEBALL, 'If you can dodge an asteroid, you can dodge a ball');
+DESCRIPTION_FOR_MODE.set(BOSS, 'Kill the Bossteroid as quickly as possible. Like a boss');
+DESCRIPTION_FOR_MODE.set(SUPER_BOSS, 'Like the Bossteroid, but three times bigger');
 
 // The powerups that are available in each game mode
-export const POWERUPS_FOR_MODE = {
-  [CLASSIC]: [LIFE, SCORE, BULLET],
-  [DODGEBALL]: [],
-  [BOSS]: [LIFE, BULLET],
-  [SUPER_BOSS]: [LIFE, BULLET],
-};
+export const POWERUPS_FOR_MODE: Map<Mode, PowerupType[]> = new Map();
+POWERUPS_FOR_MODE.set(CLASSIC, [LIFE, SCORE, BULLET]);
+POWERUPS_FOR_MODE.set(DODGEBALL, []);
+POWERUPS_FOR_MODE.set(BOSS, [LIFE, BULLET]);
+POWERUPS_FOR_MODE.set(SUPER_BOSS, [LIFE, BULLET]);
 
 export const SETTINGS = {
   asteroids: {
@@ -134,8 +131,7 @@ export const SETTINGS = {
   pointsForDestroy: 10,
 };
 
-export const COLOR_FOR_POWERUP = {
-  [BULLET]: SETTINGS.bullets.color,
-  [LIFE]: SETTINGS.ship.color,
-  [SCORE]: 'green',
-};
+export const COLOR_FOR_POWERUP: Map<PowerupType, string> = new Map();
+COLOR_FOR_POWERUP.set(BULLET, SETTINGS.bullets.color);
+COLOR_FOR_POWERUP.set(LIFE, SETTINGS.ship.color);
+COLOR_FOR_POWERUP.set(SCORE, 'green');

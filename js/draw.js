@@ -146,8 +146,13 @@ function powerupDrawInfo({ pos, type }: Powerup): DrawableCircle {
       radius,
     },
   } = SETTINGS;
+  // Make flow happy to account for Map#get returning undefined
+  const color = COLOR_FOR_POWERUP.get(type);
+  if (color == null) {
+    throw new Error(`No color for type ${type}`);
+  }
   return {
-    color: COLOR_FOR_POWERUP[type],
+    color,
     radius,
     pos,
   };
@@ -204,8 +209,13 @@ function drawMultiplier(multiplier: number) {
 }
 
 function drawMode(mode: Mode) {
+  const text = NAME_FOR_MODE.get(mode);
+  // Make flow happy to account for Map#get returning undefined
+  if (text == null) {
+    throw new Error(`No name for mode ${mode}`);
+  }
   drawUIText({
-    text: `Mode: ${NAME_FOR_MODE[mode]}`,
+    text: `Mode: ${text}`,
     pos: [5, 130],
   });
 }
