@@ -1,7 +1,7 @@
 // @flow
 
 import newPosition from '../utils/newPosition';
-import { MOVE, ADD_INITIAL_ASTEROIDS } from '../actions';
+import { MOVE, ADD_INITIAL_ASTEROIDS, RESET } from '../actions';
 import type { Asteroid, Action } from '../types/index';
 import { SETTINGS } from '../constants';
 import randomAsteroids from '../utils/randomAsteroids';
@@ -15,6 +15,7 @@ export default function asteroids(state: Asteroid[] = defaultState, action: Acti
         ...asteroid,
         pos: newPosition(asteroid),
       }));
+    case RESET:
     case ADD_INITIAL_ASTEROIDS: {
       if (action.payload == null) {
         return state;

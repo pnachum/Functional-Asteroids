@@ -7,7 +7,7 @@ import bullets from './bullets';
 import asteroids from './asteroids';
 import debris from './debris';
 import powerups from './powerups';
-import { MOVE, SET_MODE } from '../actions';
+import { MOVE, SET_MODE, RESET } from '../actions';
 import { SETTINGS, DEFAULT_MODE } from '../constants';
 import {
   debrisForDestroyedAsteroids,
@@ -140,6 +140,7 @@ export default function movingObjects(state: State = defaultState, action: Actio
         bulletPowerupStartFrame,
       };
     }
+    case RESET:
     case SET_MODE:
       if (action.payload == null) {
         return state;

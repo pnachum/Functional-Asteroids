@@ -1,7 +1,7 @@
 // @flow
 
 import { SETTINGS, FRAMES_PER_SECOND, DEFAULT_MODE, BOSS, SUPER_BOSS } from '../constants';
-import { MOVE, SET_MODE } from '../actions';
+import { MOVE, SET_MODE, RESET } from '../actions';
 import type { DifficultyState, Action, Mode } from '../types/index';
 
 function increasedDifficulty(prevDifficulty: DifficultyState): DifficultyState {
@@ -45,6 +45,7 @@ export default function difficulty(
       }
       return state;
     }
+    case RESET:
     case SET_MODE:
       if (action.payload == null) {
         return state;
