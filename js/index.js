@@ -57,20 +57,31 @@ function gameOver(hasWon: boolean) {
 }
 
 function step() {
-  const { frameCount, difficulty, movingObjects, mode }: Store = store.getState();
+  const {
+    movingObjects: {
+      lives,
+      freezePowerupStartFrame,
+      bombs,
+      asteroids,
+    },
+    frameCount,
+    difficulty,
+    mode,
+  }: Store = store.getState();
   store.dispatch(move({
-    lives: movingObjects.lives,
-    freezePowerupStartFrame: movingObjects.freezePowerupStartFrame,
+    lives,
+    freezePowerupStartFrame,
+    bombs,
     difficulty,
     frameCount,
     mode,
   }));
   keyPressListener();
-  if (movingObjects.lives < 0) {
+  if (lives < 0) {
     gameOver(false);
   }
   const isBossMode: boolean = [BOSS, SUPER_BOSS].includes(mode);
-  if (frameCount !== 0 && movingObjects.asteroids.length === 0 && isBossMode) {
+  if (frameCount !== 0 && asteroids.length === 0 && isBossMode) {
     gameOver(true);
   }
 }
