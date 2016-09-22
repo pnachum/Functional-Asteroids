@@ -120,17 +120,17 @@ export const SETTINGS = {
     minimumAsteroidAreaMultiplier: 1.25,
   },
 
-  // TODO: Make duration a hash from PowerupType to number of seconds
   powerups: {
     radius: 10,
+    duration: {
+      // seconds
+      [BULLET]: 5,
+      [FREEZE]: 3,
+    },
     bullet: {
       speedMultiplier: 1.5,
       radiusMultiplier: 2,
       distanceMultiplier: 1.5,
-      duration: 5, //seconds
-    },
-    freeze: {
-      duration: 3, // seconds
     },
   },
 
