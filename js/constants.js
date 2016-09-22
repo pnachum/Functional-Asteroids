@@ -5,6 +5,8 @@ import type { Mode, PowerupType } from './types/index';
 export const DIMENSION = 500;
 export const FRAMES_PER_SECOND = 30;
 
+// TODO: Use enums for mode and powerup
+
 // Flow's literal types can't use constants, so make sure the Mode and PowerupType types are
 // updated if these constants change
 export const CLASSIC: Mode = 0;
