@@ -61,12 +61,13 @@ export function togglePause(): Action {
   return { type: TOGGLE_PAUSE };
 }
 
-export function newFrame(frameCount: number, mode: Mode): Action {
+export function newFrame(frameCount: number, mode: Mode, lives: number): Action {
   return {
     type: NEW_FRAME,
     payload: {
       frameCount,
       mode,
+      lives,
     },
   };
 }
