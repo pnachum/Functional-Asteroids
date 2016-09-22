@@ -78,10 +78,12 @@ function bindKeyHandlers() {
     const {
       movingObjects: {
         ship,
+        bulletPowerupStartFrame,
       },
       mode,
+      frameCount,
     } = store.getState();
-    store.dispatch(shoot(ship, mode));
+    store.dispatch(shoot(ship, mode, bulletPowerupStartFrame, frameCount));
   });
 
   key('P', () => {

@@ -2,7 +2,7 @@ import { times, sumBy } from 'lodash';
 import { SETTINGS, SCORE, LIFE, BULLET } from '../constants';
 import randomAsteroids from './randomAsteroids';
 import { direction, sumOfAreas, isCollided } from './math';
-import isShipInvincible from './isShipInvincible';
+import { isShipInvincible } from './durationChecks';
 import type {
   Asteroid,
   Debris,
@@ -86,6 +86,7 @@ export function handleCollisions({
   notCollidedPowerups: Powerup[],
   pointsAwarded: number,
   newShip: Ship,
+  beginBulletPowerup: boolean,
 } {
   const {
     ship: {
@@ -144,6 +145,7 @@ export function handleCollisions({
 
   multiplierDiff += collidedPowerups.filter(powerup => powerup.type === SCORE).length;
   livesDiff += collidedPowerups.filter(powerup => powerup.type === LIFE).length;
+  const beginBulletPowerup = !!collidedPowerups.find(powerup => powerup.type === BULLET);
 
   return {
     newShip: newShip || ship,
@@ -154,5 +156,6 @@ export function handleCollisions({
     notCollidedAsteroids,
     notCollidedPowerups,
     pointsAwarded,
+    beginBulletPowerup,
   };
 }

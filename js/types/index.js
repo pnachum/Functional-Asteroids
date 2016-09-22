@@ -20,6 +20,8 @@ export type Bullet = {
   pos: [number, number],
   vel: [number, number],
   distance: number,
+  speed: number,
+  radius: number,
 };
 
 export type Debris = {

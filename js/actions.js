@@ -40,12 +40,19 @@ export function stopThrustingShip(): Action {
   return { type: STOP_THRUSTING_SHIP };
 }
 
-export function shoot(ship: Ship, mode: Mode): Action {
+export function shoot(
+  ship: Ship,
+  mode: Mode,
+  bulletPowerupStartFrame: number,
+  frameCount: number
+): Action {
   return {
     type: SHOOT,
     payload: {
       ship,
       mode,
+      bulletPowerupStartFrame,
+      frameCount,
     },
   };
 }

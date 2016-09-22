@@ -116,7 +116,7 @@ export const SETTINGS = {
       speedMultiplier: 1.5,
       radiusMultiplier: 2,
       distanceMultiplier: 1.5,
-      duration: 5000,
+      duration: 5, //seconds
     },
   },
 

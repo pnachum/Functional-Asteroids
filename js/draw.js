@@ -19,7 +19,7 @@ import type {
   Mode,
   Powerup,
 } from './types/index';
-import isShipInvincible from './utils/isShipInvincible';
+import { isShipInvincible } from './utils/durationChecks';
 
 let shipDrawFrame = 0;
 
@@ -108,10 +108,9 @@ function shipDrawInfo(ship: Ship, frameCount: ?number = null): DrawableCircle[] 
   return drawInfos;
 }
 
-function bulletDrawInfo({ pos }: Bullet): DrawableCircle {
+function bulletDrawInfo({ pos, radius }: Bullet): DrawableCircle {
   const {
     bullets: {
-      radius,
       color,
     },
   } = SETTINGS;

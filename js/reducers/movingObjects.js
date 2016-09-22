@@ -35,6 +35,7 @@ type State = {
   score: number,
   lives: number,
   multiplier: number,
+  bulletPowerupStartFrame: ?number,
 };
 
 const defaultState: State = {
@@ -46,6 +47,7 @@ const defaultState: State = {
   score: 0,
   lives: SETTINGS.startingLives[DEFAULT_MODE],
   multiplier: 1,
+  bulletPowerupStartFrame: null,
 };
 
 function smallerRadius(distance: number): (obj: WithRadius) => boolean {
@@ -105,6 +107,7 @@ export default function movingObjects(state: State = defaultState, action: Actio
         pointsAwarded,
         newShip,
         multiplierDiff,
+        beginBulletPowerup,
       } = handleCollisions({
         ship: defaultNewState.ship,
         asteroids: defaultNewState.asteroids,
@@ -114,6 +117,9 @@ export default function movingObjects(state: State = defaultState, action: Actio
         frameCount,
       });
 
+      const bulletPowerupStartFrame = beginBulletPowerup
+        ? frameCount
+        : defaultNewState.bulletPowerupStartFrame;
       const subAsteroids: Asteroid[] = subASteroidsForCollidedAsteroids(collidedAsteroids);
       const destroyedAsteroids: Asteroid[] = collidedAsteroids.filter(shouldBeDestroyed);
       const newDebris: Debris[] = debrisForDestroyedAsteroids(destroyedAsteroids);
@@ -128,9 +134,10 @@ export default function movingObjects(state: State = defaultState, action: Actio
         asteroids: newAsteroids.concat(additionalAsteroids),
         debris: subState.debris.concat(newDebris),
         powerups: notCollidedPowerups,
-        score: state.score + pointsAwarded,
-        multiplier: state.multiplier + multiplierDiff,
-        lives: state.lives + livesDiff,
+        score: defaultNewState.score + pointsAwarded,
+        multiplier: defaultNewState.multiplier + multiplierDiff,
+        lives: defaultNewState.lives + livesDiff,
+        bulletPowerupStartFrame,
       };
     }
     case SET_MODE:
