@@ -64,12 +64,8 @@ export function additionalAsteroidsForCurrentAsteroids(
     : [];
 }
 
-function powerupsOfType(powerups: Powerup[], type: PowerupType): Powerup[] {
-  return powerups.filter(powerup => powerup.type === type);
-}
-
-function containsPowerupOfType(powerups: Powerup[], type: PowerupType): boolean {
-  return powerupsOfType(powerups, type).length > 0;
+function powerupsOfType(powerups: Powerup[]): (type: PowerupType) => Powerup[] {
+  return (type: PowerupType) => powerups.filter(powerup => powerup.type === type);
 }
 
 export function handleCollisions({
@@ -154,11 +150,13 @@ export function handleCollisions({
   ));
   const notCollidedPowerups = powerups.filter(powerup => !collidedPowerups.includes(powerup));
 
-  multiplierDiff += powerupsOfType(collidedPowerups, SCORE).length;
-  livesDiff += powerupsOfType(collidedPowerups, LIFE).length;
-  const beginBulletPowerup = containsPowerupOfType(collidedPowerups, BULLET);
-  const beginFreezePowerup = containsPowerupOfType(collidedPowerups, FREEZE);
-  const addBomb = containsPowerupOfType(collidedPowerups, BOMB);
+  const collidedPowerupsOfType: (type: PowerupType) => Powerup[] = powerupsOfType(collidedPowerups);
+  multiplierDiff += collidedPowerupsOfType(SCORE).length;
+  livesDiff += collidedPowerupsOfType(LIFE).length;
+
+  const beginBulletPowerup = collidedPowerupsOfType(BULLET).length > 0;
+  const beginFreezePowerup = collidedPowerupsOfType(FREEZE).length > 0;
+  const addBomb = collidedPowerupsOfType(BOMB).length > 0;
 
   return {
     newShip: newShip || ship,
