@@ -108,6 +108,7 @@ export default function movingObjects(state: State = defaultState, action: Actio
         newShip,
         multiplierDiff,
         beginBulletPowerup,
+        blowUpBomb,
       } = handleCollisions({
         ship: defaultNewState.ship,
         asteroids: defaultNewState.asteroids,
@@ -121,7 +122,9 @@ export default function movingObjects(state: State = defaultState, action: Actio
         ? frameCount
         : defaultNewState.bulletPowerupStartFrame;
       const subAsteroids: Asteroid[] = subASteroidsForCollidedAsteroids(collidedAsteroids);
-      const destroyedAsteroids: Asteroid[] = collidedAsteroids.filter(shouldBeDestroyed);
+      const destroyedAsteroids: Asteroid[] = blowUpBomb
+        ? defaultNewState.asteroids
+        : collidedAsteroids.filter(shouldBeDestroyed);
       const newDebris: Debris[] = debrisForDestroyedAsteroids(destroyedAsteroids);
       const newAsteroids: Asteroid[] = notCollidedAsteroids.concat(subAsteroids);
       const additionalAsteroids: Asteroid[] = additionalAsteroidsForCurrentAsteroids(
@@ -131,7 +134,7 @@ export default function movingObjects(state: State = defaultState, action: Actio
       return {
         ship: newShip,
         bullets: notCollidedBullets,
-        asteroids: newAsteroids.concat(additionalAsteroids),
+        asteroids: blowUpBomb ? additionalAsteroids : newAsteroids.concat(additionalAsteroids),
         debris: subState.debris.concat(newDebris),
         powerups: notCollidedPowerups,
         score: defaultNewState.score + pointsAwarded,

@@ -12,9 +12,10 @@ export const DODGEBALL: Mode = 1;
 export const BOSS: Mode = 2;
 export const SUPER_BOSS: Mode = 3;
 
-export const LIFE = 0;
-export const SCORE = 1;
-export const BULLET = 2;
+export const LIFE: PowerupType = 0;
+export const SCORE: PowerupType = 1;
+export const BULLET: PowerupType = 2;
+export const BOMB: PowerupType = 3;
 
 export const MODES: Mode[] = [CLASSIC, DODGEBALL, BOSS, SUPER_BOSS];
 
@@ -34,7 +35,7 @@ DESCRIPTION_FOR_MODE.set(SUPER_BOSS, 'Like the Bossteroid, but three times bigge
 
 // The powerups that are available in each game mode
 export const POWERUPS_FOR_MODE: Map<Mode, PowerupType[]> = new Map();
-POWERUPS_FOR_MODE.set(CLASSIC, [LIFE, SCORE, BULLET]);
+POWERUPS_FOR_MODE.set(CLASSIC, [LIFE, SCORE, BULLET, BOMB]);
 POWERUPS_FOR_MODE.set(DODGEBALL, []);
 POWERUPS_FOR_MODE.set(BOSS, [LIFE, BULLET]);
 POWERUPS_FOR_MODE.set(SUPER_BOSS, [LIFE, BULLET]);
@@ -134,3 +135,4 @@ export const COLOR_FOR_POWERUP: Map<PowerupType, string> = new Map();
 COLOR_FOR_POWERUP.set(BULLET, SETTINGS.bullets.color);
 COLOR_FOR_POWERUP.set(LIFE, SETTINGS.ship.color);
 COLOR_FOR_POWERUP.set(SCORE, 'green');
+COLOR_FOR_POWERUP.set(BOMB, 'orange');

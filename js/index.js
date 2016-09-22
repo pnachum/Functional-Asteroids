@@ -11,7 +11,7 @@ import {
   reset,
   addInitialAsteroids,
 } from './actions';
-import { FRAMES_PER_SECOND } from './constants';
+import { FRAMES_PER_SECOND, BOSS, SUPER_BOSS } from './constants';
 import { initContext } from './utils/canvas';
 import store from './store';
 import draw from './draw';
@@ -61,7 +61,8 @@ function step() {
   if (movingObjects.lives < 0) {
     gameOver(false);
   }
-  if (frameCount !== 0 && movingObjects.asteroids.length === 0) {
+  const isBossMode = [BOSS, SUPER_BOSS].includes(mode);
+  if (frameCount !== 0 && movingObjects.asteroids.length === 0 && isBossMode) {
     gameOver(true);
   }
 }
