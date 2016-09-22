@@ -1,5 +1,5 @@
 import { times, sumBy } from 'lodash';
-import { SETTINGS, SCORE, LIFE, BULLET, BOMB } from '../constants';
+import { SETTINGS, SCORE, LIFE, BULLET, BOMB, FREEZE } from '../constants';
 import randomAsteroids from './randomAsteroids';
 import { direction, sumOfAreas, isCollided } from './math';
 import { isShipInvincible } from './durationChecks';
@@ -11,6 +11,7 @@ import type {
   Ship,
   Bullet,
   Powerup,
+  PowerupType,
 } from '../types/index';
 
 type AsteroidCollision = {
@@ -63,6 +64,14 @@ export function additionalAsteroidsForCurrentAsteroids(
     : [];
 }
 
+function powerupsOfType(powerups: Powerup[], type: PowerupType): Powerup[] {
+  return powerups.filter(powerup => powerup.type === type);
+}
+
+function containsPowerupOfType(powerups: Powerup[], type: PowerupType): boolean {
+  return powerupsOfType(powerups, type).length > 0;
+}
+
 export function handleCollisions({
   ship,
   asteroids,
@@ -87,6 +96,7 @@ export function handleCollisions({
   pointsAwarded: number,
   newShip: Ship,
   beginBulletPowerup: boolean,
+  beginFreezePowerup: boolean,
   addBomb: boolean,
 } {
   const {
@@ -144,10 +154,11 @@ export function handleCollisions({
   ));
   const notCollidedPowerups = powerups.filter(powerup => !collidedPowerups.includes(powerup));
 
-  multiplierDiff += collidedPowerups.filter(powerup => powerup.type === SCORE).length;
-  livesDiff += collidedPowerups.filter(powerup => powerup.type === LIFE).length;
-  const beginBulletPowerup = !!collidedPowerups.find(powerup => powerup.type === BULLET);
-  const addBomb = !!collidedPowerups.find(powerup => powerup.type === BOMB);
+  multiplierDiff += powerupsOfType(collidedPowerups, SCORE).length;
+  livesDiff += powerupsOfType(collidedPowerups, LIFE).length;
+  const beginBulletPowerup = containsPowerupOfType(collidedPowerups, BULLET);
+  const beginFreezePowerup = containsPowerupOfType(collidedPowerups, FREEZE);
+  const addBomb = containsPowerupOfType(collidedPowerups, BOMB);
 
   return {
     newShip: newShip || ship,
@@ -159,6 +170,7 @@ export function handleCollisions({
     notCollidedPowerups,
     pointsAwarded,
     beginBulletPowerup,
+    beginFreezePowerup,
     addBomb,
   };
 }

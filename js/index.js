@@ -57,7 +57,13 @@ function gameOver(hasWon: boolean) {
 
 function step() {
   const { frameCount, difficulty, movingObjects, mode } = store.getState();
-  store.dispatch(move({ difficulty, frameCount, mode, lives: movingObjects.lives }));
+  store.dispatch(move({
+    lives: movingObjects.lives,
+    freezePowerupStartFrame: movingObjects.freezePowerupStartFrame,
+    difficulty,
+    frameCount,
+    mode,
+  }));
   keyPressListener();
   if (movingObjects.lives < 0) {
     gameOver(false);

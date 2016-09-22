@@ -16,8 +16,10 @@ export const LIFE: PowerupType = 0;
 export const SCORE: PowerupType = 1;
 export const BULLET: PowerupType = 2;
 export const BOMB: PowerupType = 3;
+export const FREEZE: PowerupType = 4;
 
 export const MODES: Mode[] = [CLASSIC, DODGEBALL, BOSS, SUPER_BOSS];
+export const POWERUP_TYPES: PowerupType[] = [LIFE, SCORE, BULLET, BOMB, FREEZE];
 
 export const DEFAULT_MODE = CLASSIC;
 
@@ -33,12 +35,19 @@ DESCRIPTION_FOR_MODE.set(DODGEBALL, 'If you can dodge an asteroid, you can dodge
 DESCRIPTION_FOR_MODE.set(BOSS, 'Kill the Bossteroid as quickly as possible. Like a boss');
 DESCRIPTION_FOR_MODE.set(SUPER_BOSS, 'Like the Bossteroid, but three times bigger');
 
+export const DESCRIPTION_FOR_POWERUP: Map<PowerupType, string> = new Map();
+DESCRIPTION_FOR_POWERUP.set(SCORE, 'Increase score multiplier');
+DESCRIPTION_FOR_POWERUP.set(LIFE, 'Extra life');
+DESCRIPTION_FOR_POWERUP.set(BULLET, 'Gun upgrade');
+DESCRIPTION_FOR_POWERUP.set(BOMB, 'Extra bomb');
+DESCRIPTION_FOR_POWERUP.set(FREEZE, 'Freeze asteroids');
+
 // The powerups that are available in each game mode
 export const POWERUPS_FOR_MODE: Map<Mode, PowerupType[]> = new Map();
-POWERUPS_FOR_MODE.set(CLASSIC, [LIFE, SCORE, BULLET, BOMB]);
+POWERUPS_FOR_MODE.set(CLASSIC, [LIFE, SCORE, BULLET, BOMB, FREEZE]);
 POWERUPS_FOR_MODE.set(DODGEBALL, []);
-POWERUPS_FOR_MODE.set(BOSS, [LIFE, BULLET]);
-POWERUPS_FOR_MODE.set(SUPER_BOSS, [LIFE, BULLET]);
+POWERUPS_FOR_MODE.set(BOSS, [LIFE, BULLET, FREEZE]);
+POWERUPS_FOR_MODE.set(SUPER_BOSS, [LIFE, BULLET, FREEZE]);
 
 export const SETTINGS = {
   asteroids: {
@@ -111,6 +120,7 @@ export const SETTINGS = {
     minimumAsteroidAreaMultiplier: 1.25,
   },
 
+  // TODO: Make duration a hash from PowerupType to number of seconds
   powerups: {
     radius: 10,
     bullet: {
@@ -118,6 +128,9 @@ export const SETTINGS = {
       radiusMultiplier: 2,
       distanceMultiplier: 1.5,
       duration: 5, //seconds
+    },
+    freeze: {
+      duration: 3, // seconds
     },
   },
 
@@ -142,3 +155,4 @@ COLOR_FOR_POWERUP.set(BULLET, SETTINGS.bullets.color);
 COLOR_FOR_POWERUP.set(LIFE, SETTINGS.ship.color);
 COLOR_FOR_POWERUP.set(SCORE, 'green');
 COLOR_FOR_POWERUP.set(BOMB, 'orange');
+COLOR_FOR_POWERUP.set(FREEZE, 'lightblue');

@@ -13,9 +13,17 @@ export function isShipInvincible({ spawnFrame }: Ship, frameCount: number): bool
   return !hasTimePassed(spawnFrame, SETTINGS.ship.invincibilityTime, frameCount);
 }
 
+// TODO: These two functions look very similar
 export function isBulletPoweredUp(bulletPowerupStartFrame: ?number, frameCount: number): boolean {
   if (bulletPowerupStartFrame == null) {
     return false;
   }
   return !hasTimePassed(bulletPowerupStartFrame, SETTINGS.powerups.bullet.duration, frameCount);
+}
+
+export function areAsteroidsFrozen(freezePowerupStartFrame: ?number, frameCount: number): boolean {
+  if (freezePowerupStartFrame == null) {
+    return false;
+  }
+  return !hasTimePassed(freezePowerupStartFrame, SETTINGS.powerups.freeze.duration, frameCount);
 }

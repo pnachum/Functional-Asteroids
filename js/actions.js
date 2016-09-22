@@ -19,6 +19,7 @@ export function move(payload: {
   frameCount: number,
   mode: Mode,
   lives: number,
+  freezePowerupStartFrame: number,
 }): Action {
   return {
     type: MOVE,

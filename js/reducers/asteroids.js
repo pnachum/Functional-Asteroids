@@ -5,16 +5,23 @@ import { MOVE, ADD_INITIAL_ASTEROIDS, RESET } from '../actions';
 import type { Asteroid, Action } from '../types/index';
 import { SETTINGS } from '../constants';
 import randomAsteroids from '../utils/randomAsteroids';
+import { areAsteroidsFrozen } from '../utils/durationChecks';
 
 const defaultState: Asteroid[] = [];
 
 export default function asteroids(state: Asteroid[] = defaultState, action: Action): Asteroid[] {
   switch (action.type) {
-    case MOVE:
+    case MOVE: {
+      if (action.payload == null) {
+        return state;
+      }
+      const { frameCount, freezePowerupStartFrame } = action.payload;
+      const isFrozen = areAsteroidsFrozen(freezePowerupStartFrame, frameCount);
       return state.map(asteroid => ({
         ...asteroid,
-        pos: newPosition(asteroid),
+        pos: isFrozen ? asteroid.pos : newPosition(asteroid),
       }));
+    }
     case RESET:
     case ADD_INITIAL_ASTEROIDS: {
       if (action.payload == null) {

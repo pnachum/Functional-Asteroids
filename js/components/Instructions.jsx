@@ -1,6 +1,8 @@
 // @flow
 
 import React from 'react';
+import type { PowerupType } from '../types/index';
+import { POWERUP_TYPES, DESCRIPTION_FOR_POWERUP, COLOR_FOR_POWERUP } from '../constants';
 
 export default function Instructions() {
   return (
@@ -29,21 +31,15 @@ export default function Instructions() {
       <div id="powerups">
         <p>Powerups: </p>
         <ul id="powerups">
-          <li id="green" className="powerup-description">
-            Increase score multiplier
-          </li>
-
-          <li id="blue" className="powerup-description">
-            Extra life
-          </li>
-
-          <li id="red" className="powerup-description">
-            Gun upgrade
-          </li>
-
-          <li id="orange" className="powerup-description">
-            Extra bomb
-          </li>
+          {POWERUP_TYPES.map(powerupType => {
+            const description = DESCRIPTION_FOR_POWERUP.get(powerupType);
+            const color = COLOR_FOR_POWERUP.get(powerupType);
+            return (
+              <li style={{ color }} key={description} className="powerup-description">
+                {description}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

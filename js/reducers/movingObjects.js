@@ -37,6 +37,7 @@ type State = {
   lives: number,
   multiplier: number,
   bulletPowerupStartFrame: ?number,
+  freezePowerupStartFrame: ?number,
   bombs: number,
 };
 
@@ -50,6 +51,7 @@ const defaultState: State = {
   lives: SETTINGS.startingLives[DEFAULT_MODE],
   multiplier: 1,
   bulletPowerupStartFrame: null,
+  freezePowerupStartFrame: null,
   bombs: 0,
 };
 
@@ -113,6 +115,7 @@ export default function movingObjects(state: State = defaultState, action: Actio
         newShip,
         multiplierDiff,
         beginBulletPowerup,
+        beginFreezePowerup,
         addBomb,
       } = handleCollisions({
         ship: defaultNewState.ship,
@@ -126,6 +129,9 @@ export default function movingObjects(state: State = defaultState, action: Actio
       const bulletPowerupStartFrame = beginBulletPowerup
         ? frameCount
         : defaultNewState.bulletPowerupStartFrame;
+      const freezePowerupStartFrame = beginFreezePowerup
+        ? frameCount
+        : defaultNewState.freezePowerupStartFrame;
       const subAsteroids: Asteroid[] = subASteroidsForCollidedAsteroids(collidedAsteroids);
       const destroyedAsteroids: Asteroid[] = collidedAsteroids.filter(shouldBeDestroyed);
       const newDebris: Debris[] = debrisForDestroyedAsteroids(destroyedAsteroids);
@@ -143,8 +149,9 @@ export default function movingObjects(state: State = defaultState, action: Actio
         score: defaultNewState.score + pointsAwarded,
         multiplier: defaultNewState.multiplier + multiplierDiff,
         lives: defaultNewState.lives + livesDiff,
-        bulletPowerupStartFrame,
         bombs: addBomb ? defaultNewState.bombs + 1 : defaultNewState.bombs,
+        bulletPowerupStartFrame,
+        freezePowerupStartFrame,
       };
     }
     case TRIGGER_BOMB:
