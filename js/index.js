@@ -17,6 +17,7 @@ import { initContext } from './utils/canvas';
 import store from './store';
 import draw from './draw';
 import getEndMessage from './utils/getEndMessage';
+import type { Store } from './types/index';
 
 let intervalId;
 
@@ -41,7 +42,7 @@ function stop() {
 }
 
 function gameOver(hasWon: boolean) {
-  const state = store.getState();
+  const state: Store = store.getState();
   stop();
   const endMessage: string = getEndMessage({
     score: state.movingObjects.score,
@@ -56,7 +57,7 @@ function gameOver(hasWon: boolean) {
 }
 
 function step() {
-  const { frameCount, difficulty, movingObjects, mode } = store.getState();
+  const { frameCount, difficulty, movingObjects, mode }: Store = store.getState();
   store.dispatch(move({
     lives: movingObjects.lives,
     freezePowerupStartFrame: movingObjects.freezePowerupStartFrame,
@@ -68,7 +69,7 @@ function step() {
   if (movingObjects.lives < 0) {
     gameOver(false);
   }
-  const isBossMode = [BOSS, SUPER_BOSS].includes(mode);
+  const isBossMode: boolean = [BOSS, SUPER_BOSS].includes(mode);
   if (frameCount !== 0 && movingObjects.asteroids.length === 0 && isBossMode) {
     gameOver(true);
   }
@@ -88,7 +89,7 @@ function bindKeyHandlers() {
       },
       mode,
       frameCount,
-    } = store.getState();
+    }: Store = store.getState();
     store.dispatch(shoot(ship, mode, bulletPowerupStartFrame, frameCount));
   });
 
@@ -102,7 +103,7 @@ function bindKeyHandlers() {
   });
 
   key('b', () => {
-    store.dispatch(triggerBomb())
+    store.dispatch(triggerBomb());
   });
 }
 

@@ -17,31 +17,15 @@ import {
   handleCollisions,
 } from '../utils/asteroidCollisions';
 import type {
-  Ship,
   Asteroid,
-  Bullet,
   Debris,
   Action,
   DifficultyState,
   WithRadius,
-  Powerup,
+  MovingObjectsState,
 } from '../types/index';
 
-type State = {
-  asteroids: Asteroid[],
-  bullets: Bullet[],
-  ship: Ship,
-  debris: Debris[],
-  powerups: Powerup[],
-  score: number,
-  lives: number,
-  multiplier: number,
-  bulletPowerupStartFrame: ?number,
-  freezePowerupStartFrame: ?number,
-  bombs: number,
-};
-
-const defaultState: State = {
+const defaultState: MovingObjectsState = {
   asteroids: [],
   bullets: [],
   ship: SETTINGS.ship.defaultShip,
@@ -79,7 +63,10 @@ const subReducer = combineReducers({
 
 // This reducer allows for state changes which rely on interactions between various moving objects,
 // specifically to handle collisions.
-export default function movingObjects(state: State = defaultState, action: Action): State {
+export default function movingObjects(
+  state: MovingObjectsState = defaultState,
+  action: Action
+): MovingObjectsState {
   // TODO: This seems pretty messy
   const subState = subReducer(pick(state, [
     'asteroids',
@@ -89,7 +76,7 @@ export default function movingObjects(state: State = defaultState, action: Actio
     'powerups',
     'bombs',
   ]), action);
-  const defaultNewState: State = {
+  const defaultNewState: MovingObjectsState = {
     ...state,
     ...subState,
   };

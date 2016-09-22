@@ -76,3 +76,25 @@ export type Powerup = {
   pos: [number, number],
   type: PowerupType,
 };
+
+export type MovingObjectsState = {
+  asteroids: Asteroid[],
+  bullets: Bullet[],
+  ship: Ship,
+  debris: Debris[],
+  powerups: Powerup[],
+  score: number,
+  lives: number,
+  multiplier: number,
+  bulletPowerupStartFrame: ?number,
+  freezePowerupStartFrame: ?number,
+  bombs: number,
+};
+
+export type Store = {
+  movingObjects: MovingObjectsState,
+  isPaused: boolean,
+  frameCount: number,
+  difficulty: DifficultyState,
+  mode: Mode,
+};

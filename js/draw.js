@@ -18,6 +18,7 @@ import type {
   DrawableCircle,
   Mode,
   Powerup,
+  Store,
 } from './types/index';
 import { isShipInvincible } from './utils/durationChecks';
 
@@ -236,21 +237,7 @@ export default function draw({
   isPaused,
   frameCount,
   mode,
-}: {
-  movingObjects: {
-    asteroids: Asteroid[],
-    ship: Ship,
-    bullets: Bullet[],
-    debris: Debris[],
-    powerups: Powerup[],
-    score: number,
-    lives: number,
-    multiplier: number,
-  },
-  isPaused: boolean,
-  frameCount: number,
-  mode: Mode,
-}) {
+}: Store) {
   const {
     asteroids,
     ship,

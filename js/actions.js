@@ -19,7 +19,7 @@ export function move(payload: {
   frameCount: number,
   mode: Mode,
   lives: number,
-  freezePowerupStartFrame: number,
+  freezePowerupStartFrame: ?number,
 }): Action {
   return {
     type: MOVE,
@@ -46,7 +46,7 @@ export function stopThrustingShip(): Action {
 export function shoot(
   ship: Ship,
   mode: Mode,
-  bulletPowerupStartFrame: number,
+  bulletPowerupStartFrame: ?number,
   frameCount: number
 ): Action {
   return {
