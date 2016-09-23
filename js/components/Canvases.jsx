@@ -17,7 +17,7 @@ export default class Canvases extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{ display: 'inline-block' }}>
         <canvas
           id="game"
           width="500"

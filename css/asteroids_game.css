@@ -30,14 +30,6 @@ canvas {
   text-align: left;
 }
 
-#controls {
-  display: inline-block;
-}
-
-#powerups {
-  display: inline-block;
-}
-
 .powerup-description {
   font-weight: bold;
 }

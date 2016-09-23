@@ -4,9 +4,17 @@ import React from 'react';
 import type { PowerupType } from '../types/index';
 import { POWERUP_TYPES, DESCRIPTION_FOR_POWERUP, COLOR_FOR_POWERUP } from '../constants';
 
+const styles = {
+  container: {
+    display: 'inline-block',
+    verticalAlign: 'top',
+    marginLeft: 20,
+  },
+};
+
 export default function Instructions() {
   return (
-    <div id="instructions">
+    <div id="instructions" style={styles.container}>
       <div id="controls">
         <p>Controls: </p>
         <ul>
