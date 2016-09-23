@@ -9,8 +9,8 @@ function hasTimePassed(
   return startFrame + (FRAMES_PER_SECOND * duration) < currentFrame;
 }
 
-export function isShipInvincible({ spawnFrame }: Ship, frameCount: number): boolean {
-  return !hasTimePassed(spawnFrame, SETTINGS.ship.invincibilityTime, frameCount);
+export function isShipInvincible({ invincibilityStartFrame }: Ship, frameCount: number): boolean {
+  return !hasTimePassed(invincibilityStartFrame, SETTINGS.ship.invincibilityTime, frameCount);
 }
 
 // TODO: These two functions look very similar

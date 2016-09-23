@@ -19,6 +19,7 @@ export const SCORE: PowerupType = 1;
 export const BULLET: PowerupType = 2;
 export const BOMB: PowerupType = 3;
 export const FREEZE: PowerupType = 4;
+export const INVINCIBLE: PowerupType = 5;
 
 export const ASTEROID_BREAK: Sound = 'asteroidBreak';
 export const ASTEROID_DESTROY: Sound = 'asteroidDestroy';
@@ -26,7 +27,7 @@ export const GAME_OVER: Sound = 'gameOver';
 export const LASER: Sound = 'laser';
 
 export const MODES: Mode[] = [CLASSIC, DODGEBALL, BOSS, SUPER_BOSS];
-export const POWERUP_TYPES: PowerupType[] = [LIFE, SCORE, BULLET, BOMB, FREEZE];
+export const POWERUP_TYPES: PowerupType[] = [LIFE, SCORE, BULLET, BOMB, FREEZE, INVINCIBLE];
 
 export const DEFAULT_MODE = CLASSIC;
 
@@ -48,13 +49,14 @@ DESCRIPTION_FOR_POWERUP.set(LIFE, 'Extra life');
 DESCRIPTION_FOR_POWERUP.set(BULLET, 'Gun upgrade');
 DESCRIPTION_FOR_POWERUP.set(BOMB, 'Extra bomb');
 DESCRIPTION_FOR_POWERUP.set(FREEZE, 'Freeze asteroids');
+DESCRIPTION_FOR_POWERUP.set(INVINCIBLE, 'Invincibility');
 
 // The powerups that are available in each game mode
 export const POWERUPS_FOR_MODE: Map<Mode, PowerupType[]> = new Map();
-POWERUPS_FOR_MODE.set(CLASSIC, [LIFE, SCORE, BULLET, BOMB, FREEZE]);
+POWERUPS_FOR_MODE.set(CLASSIC, [LIFE, SCORE, BULLET, BOMB, FREEZE, INVINCIBLE]);
 POWERUPS_FOR_MODE.set(DODGEBALL, []);
-POWERUPS_FOR_MODE.set(BOSS, [LIFE, BULLET, FREEZE]);
-POWERUPS_FOR_MODE.set(SUPER_BOSS, [LIFE, BULLET, FREEZE]);
+POWERUPS_FOR_MODE.set(BOSS, [LIFE, BULLET, FREEZE, INVINCIBLE]);
+POWERUPS_FOR_MODE.set(SUPER_BOSS, [LIFE, BULLET, FREEZE, INVINCIBLE]);
 
 export const SETTINGS = {
   asteroids: {
@@ -97,7 +99,7 @@ export const SETTINGS = {
       vel: [0, 0],
       degrees: 90,
       isThrusting: false,
-      spawnFrame: 0,
+      invincibilityStartFrame: 0,
     },
   },
 
@@ -163,3 +165,4 @@ COLOR_FOR_POWERUP.set(LIFE, SETTINGS.ship.color);
 COLOR_FOR_POWERUP.set(SCORE, 'green');
 COLOR_FOR_POWERUP.set(BOMB, 'orange');
 COLOR_FOR_POWERUP.set(FREEZE, 'lightblue');
+COLOR_FOR_POWERUP.set(INVINCIBLE, 'purple');

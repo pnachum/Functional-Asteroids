@@ -1,5 +1,5 @@
 import { times, sumBy } from 'lodash';
-import { SETTINGS, SCORE, LIFE, BULLET, BOMB, FREEZE } from '../constants';
+import { SETTINGS, SCORE, LIFE, BULLET, BOMB, FREEZE, INVINCIBLE } from '../constants';
 import randomAsteroids from './randomAsteroids';
 import { direction, sumOfAreas, isCollided } from './math';
 import { isShipInvincible } from './durationChecks';
@@ -93,6 +93,7 @@ export function handleCollisions({
   newShip: Ship,
   beginBulletPowerup: boolean,
   beginFreezePowerup: boolean,
+  beginInvinciblePowerup: boolean,
   addBomb: boolean,
 } {
   const {
@@ -133,7 +134,7 @@ export function handleCollisions({
       newShip = {
         ...defaultShip,
         degrees: ship.degrees,
-        spawnFrame: frameCount,
+        invincibilityStartFrame: frameCount,
       };
     }
   });
@@ -156,6 +157,7 @@ export function handleCollisions({
 
   const beginBulletPowerup = collidedPowerupsOfType(BULLET).length > 0;
   const beginFreezePowerup = collidedPowerupsOfType(FREEZE).length > 0;
+  const beginInvinciblePowerup = collidedPowerupsOfType(INVINCIBLE).length > 0;
   const addBomb = collidedPowerupsOfType(BOMB).length > 0;
 
   return {
@@ -169,6 +171,7 @@ export function handleCollisions({
     pointsAwarded,
     beginBulletPowerup,
     beginFreezePowerup,
+    beginInvinciblePowerup,
     addBomb,
   };
 }
