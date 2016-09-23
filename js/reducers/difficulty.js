@@ -46,15 +46,17 @@ export default function difficulty(
       return state;
     }
     case RESET:
-    case SET_MODE:
+    case SET_MODE: {
       if (action.payload == null) {
         return state;
       }
+      const { mode } = action.payload;
       return {
         ...state,
-        asteroidSpawnRadius: SETTINGS.asteroids.startingSpawnRadius[action.payload],
-        minimumAsteroidArea: SETTINGS.asteroids.startingMinimumArea[action.payload],
+        asteroidSpawnRadius: SETTINGS.asteroids.startingSpawnRadius[mode],
+        minimumAsteroidArea: SETTINGS.asteroids.startingMinimumArea[mode],
       };
+    }
     default:
       return state;
   }

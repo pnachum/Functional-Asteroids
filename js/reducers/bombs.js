@@ -15,11 +15,13 @@ export default function bombs(state: number = defaultState, action: Action): num
       }
       return state;
     case SET_MODE:
-    case RESET:
+    case RESET: {
       if (action.payload == null) {
         return state;
       }
-      return startingBombs[action.payload];
+      const { mode } = action.payload;
+      return startingBombs[mode];
+    }
     default:
       return state;
   }

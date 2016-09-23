@@ -66,12 +66,23 @@ export function togglePause(): Action {
   return { type: TOGGLE_PAUSE };
 }
 
-export function reset(mode: Mode): Action {
-  return { type: RESET, payload: mode };
+export function reset(mode: Mode, isSoundOn: boolean): Action {
+  return {
+    type: RESET,
+    payload: {
+      mode,
+      isSoundOn,
+    },
+  };
 }
 
 export function setMode(newMode: Mode): Action {
-  return { type: SET_MODE, payload: newMode };
+  return {
+    type: SET_MODE,
+    payload: {
+      mode: newMode,
+    },
+  };
 }
 
 export function addInitialAsteroids(mode: Mode): Action {

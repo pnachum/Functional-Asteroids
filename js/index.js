@@ -60,9 +60,10 @@ function gameOver(hasWon: boolean) {
     frameCount,
     mode,
     hasWon,
+    isSoundOn,
   });
   if (confirm(endMessage)) {
-    store.dispatch(reset(mode));
+    store.dispatch(reset(mode, isSoundOn));
     start();
   }
 }

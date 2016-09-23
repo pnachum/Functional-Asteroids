@@ -27,8 +27,9 @@ export default function asteroids(state: Asteroid[] = defaultState, action: Acti
       if (action.payload == null) {
         return state;
       }
-      const num: number = SETTINGS.asteroids.startingNumber[action.payload];
-      const radius: number = SETTINGS.asteroids.startingSpawnRadius[action.payload];
+      const { mode } = action.payload;
+      const num: number = SETTINGS.asteroids.startingNumber[mode];
+      const radius: number = SETTINGS.asteroids.startingSpawnRadius[mode];
       return state.concat(randomAsteroids(num, { radius }));
     }
     default:

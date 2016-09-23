@@ -171,7 +171,7 @@ export default function movingObjects(
       if (action.payload == null) {
         return state;
       }
-      return { ...defaultNewState, lives: SETTINGS.startingLives[action.payload] };
+      return { ...defaultNewState, lives: SETTINGS.startingLives[action.payload.mode] };
     default:
       return defaultNewState;
   }

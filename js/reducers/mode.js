@@ -14,7 +14,7 @@ export default function mode(state: Mode = defaultState, action: Action): Mode {
       if (action.payload == null) {
         return state;
       }
-      return action.payload;
+      return action.payload.mode;
     default:
       return state;
   }
