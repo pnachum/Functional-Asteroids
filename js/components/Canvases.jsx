@@ -23,7 +23,7 @@ export default class Canvases extends React.Component {
           width="500"
           height="500"
           ref={gameCanvas => {
-            this.gameCanvas = gameCanvas
+            this.gameCanvas = gameCanvas;
           }}
         />
 
@@ -32,7 +32,7 @@ export default class Canvases extends React.Component {
           width="250"
           height="500"
           ref={uiCanvas => {
-            this.uiCanvas = uiCanvas
+            this.uiCanvas = uiCanvas;
           }}
         />
 
