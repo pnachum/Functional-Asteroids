@@ -13,6 +13,7 @@ export const RESET = 'RESET';
 export const SET_MODE = 'SET_MODE';
 export const ADD_INITIAL_ASTEROIDS = 'ADD_INITIAL_ASTEROIDS';
 export const TRIGGER_BOMB = 'TRIGGER_BOMB';
+export const TOGGLE_SOUND = 'TOGGLE_SOUND';
 
 export function move(payload: {
   difficulty: DifficultyState,
@@ -79,4 +80,8 @@ export function addInitialAsteroids(mode: Mode): Action {
 
 export function triggerBomb(): Action {
   return { type: TRIGGER_BOMB };
+}
+
+export function toggleSound(): Action {
+  return { type: TOGGLE_SOUND };
 }

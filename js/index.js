@@ -49,9 +49,10 @@ function gameOver(hasWon: boolean) {
     },
     frameCount,
     mode,
+    isSoundOn,
   }: Store = store.getState();
   stop();
-  if (!hasWon) {
+  if (!hasWon && isSoundOn) {
     playSounds([GAME_OVER]);
   }
   const endMessage: string = getEndMessage({
@@ -131,7 +132,9 @@ function bindKeyHandlers() {
 store.subscribe(() => {
   const state = store.getState();
   draw(state);
-  playSounds(state.movingObjects.queuedSounds);
+  if (state.isSoundOn) {
+    playSounds(state.movingObjects.queuedSounds);
+  }
 });
 
 export default function beginGame(

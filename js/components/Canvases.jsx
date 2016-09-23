@@ -2,6 +2,7 @@
 
 import React from 'react';
 import beginGame from '../index';
+import SoundControl from './SoundControl';
 
 export default class Canvases extends React.Component {
   gameCanvas: Object;
@@ -34,6 +35,8 @@ export default class Canvases extends React.Component {
             this.uiCanvas = uiCanvas
           }}
         />
+
+        <SoundControl />
       </div>
     );
   }

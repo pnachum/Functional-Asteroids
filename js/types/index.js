@@ -99,4 +99,5 @@ export type Store = {
   frameCount: number,
   difficulty: DifficultyState,
   mode: Mode,
+  isSoundOn: boolean,
 };

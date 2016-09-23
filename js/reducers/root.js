@@ -6,6 +6,7 @@ import isPaused from './isPaused';
 import frameCount from './frameCount';
 import difficulty from './difficulty';
 import mode from './mode';
+import isSoundOn from './isSoundOn';
 import { RESET } from '../actions';
 import type { Action } from '../types/index';
 
@@ -15,6 +16,7 @@ const appReducer = combineReducers({
   frameCount,
   difficulty,
   mode,
+  isSoundOn,
 });
 
 export default function rootReducer(state: Object, action: Action): Object {
