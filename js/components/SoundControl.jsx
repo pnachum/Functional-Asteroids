@@ -1,4 +1,6 @@
 import React from 'react';
+import VolumeOff from 'react-icons/lib/fa/volume-off';
+import VolumeUp from 'react-icons/lib/fa/volume-up';
 import { connect } from 'react-redux';
 import { toggleSound } from '../actions';
 
@@ -9,9 +11,9 @@ type Props = {
 
 function SoundControl({ toggle, isSoundOn }: Props) {
   return (
-    <button onClick={toggle}>
-      {isSoundOn ? 'Turn off sound' : 'Turn on sound'}
-    </button>
+    <div onClick={toggle}>
+      {isSoundOn ? <VolumeUp size={24} /> : <VolumeOff size={24} />}
+    </div>
   );
 }
 
