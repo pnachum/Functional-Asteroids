@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import type { PowerupType } from '../types/index';
 import { POWERUP_TYPES, DESCRIPTION_FOR_POWERUP, COLOR_FOR_POWERUP } from '../constants';
 
 const styles = {
