@@ -13,7 +13,8 @@
     "globals": {
       "document": 1,
       "CanvasRenderingContext2D": 1,
-      "confirm": 1
+      "confirm": 1,
+      "Audio": 1
     },
     "rules": {
       "react/sort-comp": 0,

@@ -1,6 +1,6 @@
 // @flow
 
-import { pick } from 'lodash';
+import { pick, times } from 'lodash';
 import { combineReducers } from 'redux';
 import ship from './ship';
 import bullets from './bullets';
@@ -8,8 +8,9 @@ import asteroids from './asteroids';
 import debris from './debris';
 import powerups from './powerups';
 import bombs from './bombs';
+import queuedSounds from './queuedSounds';
 import { MOVE, SET_MODE, RESET, TRIGGER_BOMB } from '../actions';
-import { SETTINGS, DEFAULT_MODE } from '../constants';
+import { SETTINGS, DEFAULT_MODE, ASTEROID_BREAK, ASTEROID_DESTROY } from '../constants';
 import {
   debrisForDestroyedAsteroids,
   subASteroidsForCollidedAsteroids,
@@ -37,6 +38,7 @@ const defaultState: MovingObjectsState = {
   bulletPowerupStartFrame: null,
   freezePowerupStartFrame: null,
   bombs: 0,
+  queuedSounds: [],
 };
 
 function smallerRadius(distance: number): (obj: WithRadius) => boolean {
@@ -59,6 +61,7 @@ const subReducer = combineReducers({
   ship,
   powerups,
   bombs,
+  queuedSounds,
 });
 
 // This reducer allows for state changes which rely on interactions between various moving objects,
@@ -75,6 +78,7 @@ export default function movingObjects(
     'debris',
     'powerups',
     'bombs',
+    'queuedSounds',
   ]), action);
   const defaultNewState: MovingObjectsState = {
     ...state,
@@ -127,6 +131,12 @@ export default function movingObjects(
         newAsteroids,
         difficulty
       );
+
+      const newSounds = [
+        ...times(collidedAsteroids.length, () => ASTEROID_BREAK),
+        ...times(destroyedAsteroids.length, () => ASTEROID_DESTROY),
+      ];
+
       return {
         ship: newShip,
         bullets: notCollidedBullets,
@@ -137,6 +147,7 @@ export default function movingObjects(
         multiplier: defaultNewState.multiplier + multiplierDiff,
         lives: defaultNewState.lives + livesDiff,
         bombs: addBomb ? defaultNewState.bombs + 1 : defaultNewState.bombs,
+        queuedSounds: defaultNewState.queuedSounds.concat(newSounds),
         bulletPowerupStartFrame,
         freezePowerupStartFrame,
       };

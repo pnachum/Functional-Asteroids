@@ -12,8 +12,9 @@ import {
   addInitialAsteroids,
   triggerBomb,
 } from './actions';
-import { FRAMES_PER_SECOND, BOSS, SUPER_BOSS } from './constants';
+import { FRAMES_PER_SECOND, BOSS, SUPER_BOSS, GAME_OVER } from './constants';
 import { initContext } from './utils/canvas';
+import playSounds from './utils/playSounds';
 import store from './store';
 import draw from './draw';
 import getEndMessage from './utils/getEndMessage';
@@ -42,16 +43,25 @@ function stop() {
 }
 
 function gameOver(hasWon: boolean) {
-  const state: Store = store.getState();
+  const {
+    movingObjects: {
+      score,
+    },
+    frameCount,
+    mode,
+  }: Store = store.getState();
   stop();
+  if (!hasWon) {
+    playSounds([GAME_OVER]);
+  }
   const endMessage: string = getEndMessage({
-    score: state.movingObjects.score,
-    frameCount: state.frameCount,
-    mode: state.mode,
+    score,
+    frameCount,
+    mode,
     hasWon,
   });
   if (confirm(endMessage)) {
-    store.dispatch(reset(state.mode));
+    store.dispatch(reset(mode));
     start();
   }
 }
@@ -119,7 +129,9 @@ function bindKeyHandlers() {
 }
 
 store.subscribe(() => {
-  draw(store.getState());
+  const state = store.getState();
+  draw(state);
+  playSounds(state.movingObjects.queuedSounds);
 });
 
 export default function beginGame(

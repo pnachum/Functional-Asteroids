@@ -67,6 +67,7 @@ export type DifficultyState = {
 // Flow can't handle using constants here, so it has to repeat the constasnt values
 export type Mode = 0 | 1 | 2 | 3;
 export type PowerupType = 0 | 1 | 2 | 3 | 4;
+export type Sound = 'asteroidBreak' | 'asteroidDestroy' | 'gameOver' | 'laser';
 
 export type Action = { type: string, payload?: any };
 
@@ -89,6 +90,7 @@ export type MovingObjectsState = {
   bulletPowerupStartFrame: ?number,
   freezePowerupStartFrame: ?number,
   bombs: number,
+  queuedSounds: Sound[],
 };
 
 export type Store = {

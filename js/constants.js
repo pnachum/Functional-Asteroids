@@ -1,6 +1,6 @@
 // @flow
 
-import type { Mode, PowerupType } from './types/index';
+import type { Mode, PowerupType, Sound } from './types/index';
 
 export const DIMENSION = 500;
 export const FRAMES_PER_SECOND = 30;
@@ -19,6 +19,11 @@ export const SCORE: PowerupType = 1;
 export const BULLET: PowerupType = 2;
 export const BOMB: PowerupType = 3;
 export const FREEZE: PowerupType = 4;
+
+export const ASTEROID_BREAK: Sound = 'asteroidBreak';
+export const ASTEROID_DESTROY: Sound = 'asteroidDestroy';
+export const GAME_OVER: Sound = 'gameOver';
+export const LASER: Sound = 'laser';
 
 export const MODES: Mode[] = [CLASSIC, DODGEBALL, BOSS, SUPER_BOSS];
 export const POWERUP_TYPES: PowerupType[] = [LIFE, SCORE, BULLET, BOMB, FREEZE];
