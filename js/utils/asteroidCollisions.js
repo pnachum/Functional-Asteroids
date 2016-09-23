@@ -124,7 +124,7 @@ export function handleCollisions({
       }
     });
     const didShipCollideWithAsteroid: boolean = isCollided(
-      { ...ship, radius: shipRadius },
+      { pos: ship.pos, radius: shipRadius },
       asteroid
     );
     if (!isShipInvincible(ship, frameCount) && didShipCollideWithAsteroid) {
