@@ -160,6 +160,9 @@ export default function movingObjects(
           debris: defaultNewState.debris.concat(
             debrisForDestroyedAsteroids(defaultNewState.asteroids)
           ),
+          queuedSounds: defaultNewState.queuedSounds.concat(
+            times(state.asteroids.length, () => ASTEROID_DESTROY)
+          ),
         };
       }
       return defaultNewState;
