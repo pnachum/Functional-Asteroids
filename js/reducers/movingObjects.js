@@ -107,7 +107,6 @@ export default function movingObjects(
         multiplierDiff,
         beginBulletPowerup,
         beginFreezePowerup,
-        beginInvinciblePowerup,
         addBomb,
       } = handleCollisions({
         ship: defaultNewState.ship,
@@ -124,9 +123,6 @@ export default function movingObjects(
       const freezePowerupStartFrame = beginFreezePowerup
         ? frameCount
         : defaultNewState.freezePowerupStartFrame;
-      const invincibilityStartFrame = beginInvinciblePowerup
-        ? frameCount
-        : defaultNewState.ship.invincibilityStartFrame;
       const subAsteroids: Asteroid[] = subASteroidsForCollidedAsteroids(collidedAsteroids);
       const destroyedAsteroids: Asteroid[] = collidedAsteroids.filter(shouldBeDestroyed);
       const newDebris: Debris[] = debrisForDestroyedAsteroids(destroyedAsteroids);
@@ -142,7 +138,7 @@ export default function movingObjects(
       ];
 
       return {
-        ship: { ...newShip, invincibilityStartFrame },
+        ship: newShip,
         bullets: notCollidedBullets,
         asteroids: newAsteroids.concat(additionalAsteroids),
         debris: subState.debris.concat(newDebris),
