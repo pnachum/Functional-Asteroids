@@ -86,7 +86,12 @@ export function setMode(newMode: Mode): Action {
 }
 
 export function addInitialAsteroids(mode: Mode): Action {
-  return { type: ADD_INITIAL_ASTEROIDS, payload: mode };
+  return {
+    type: ADD_INITIAL_ASTEROIDS,
+    payload: {
+      mode,
+    },
+  };
 }
 
 export function triggerBomb(): Action {
