@@ -42,7 +42,7 @@ export default function Instructions() {
             const description = DESCRIPTION_FOR_POWERUP.get(powerupType);
             const color = COLOR_FOR_POWERUP.get(powerupType);
             return (
-              <li style={{ color }} key={description} className="powerup-description">
+              <li style={{ color }} key={powerupType.name} className="powerup-description">
                 {description}
               </li>
             );

@@ -2,7 +2,7 @@
 
 import newPosition from '../utils/newPosition';
 import { MOVE, SHOOT } from '../actions';
-import { SETTINGS, DODGEBALL } from '../constants';
+import { SETTINGS, Mode } from '../constants';
 import {
   getRotateablePosition,
   direction,
@@ -65,7 +65,7 @@ export default function bullets(state: Bullet[] = defaultState, action: Action):
         frameCount,
       } = action.payload;
       // Disable shooting in DODGEBALL mode
-      if (mode === DODGEBALL) {
+      if (mode === Mode.DODGEBALL) {
         return state;
       }
       const turretPos: [number, number] = getRotateablePosition(shipRadius, pos, degrees);

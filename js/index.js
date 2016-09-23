@@ -12,7 +12,7 @@ import {
   addInitialAsteroids,
   triggerBomb,
 } from './actions';
-import { FRAMES_PER_SECOND, BOSS, SUPER_BOSS, GAME_OVER } from './constants';
+import { FRAMES_PER_SECOND, Mode, Sound } from './constants';
 import { initContext } from './utils/canvas';
 import playSounds from './utils/playSounds';
 import store from './store';
@@ -53,7 +53,7 @@ function gameOver(hasWon: boolean) {
   }: Store = store.getState();
   stop();
   if (!hasWon && isSoundOn) {
-    playSounds([GAME_OVER]);
+    playSounds([Sound.GAME_OVER]);
   }
   const endMessage: string = getEndMessage({
     score,
@@ -92,7 +92,7 @@ function step() {
   if (lives < 0) {
     gameOver(false);
   }
-  const isBossMode: boolean = [BOSS, SUPER_BOSS].includes(mode);
+  const isBossMode: boolean = [Mode.BOSS, Mode.SUPER_BOSS].includes(mode);
   if (frameCount !== 0 && asteroids.length === 0 && isBossMode) {
     gameOver(true);
   }

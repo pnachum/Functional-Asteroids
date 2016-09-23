@@ -20,7 +20,7 @@ export default function bombs(state: number = defaultState, action: Action): num
         return state;
       }
       const { mode } = action.payload;
-      return startingBombs[mode];
+      return startingBombs[mode.name];
     }
     default:
       return state;

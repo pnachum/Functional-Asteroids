@@ -1,8 +1,8 @@
 // @flow
 
 import { SET_MODE, RESET } from '../actions';
-import { DEFAULT_MODE } from '../constants';
-import type { Mode, Action } from '../types/index';
+import { DEFAULT_MODE, Mode } from '../constants';
+import type { Action } from '../types/index';
 
 const defaultState: Mode = DEFAULT_MODE;
 

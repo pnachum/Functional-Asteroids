@@ -1,8 +1,8 @@
 // @flow
 
-import { SETTINGS, FRAMES_PER_SECOND, DEFAULT_MODE, BOSS, SUPER_BOSS } from '../constants';
+import { SETTINGS, FRAMES_PER_SECOND, DEFAULT_MODE, Mode } from '../constants';
 import { MOVE, SET_MODE, RESET } from '../actions';
-import type { DifficultyState, Action, Mode } from '../types/index';
+import type { DifficultyState, Action } from '../types/index';
 
 function increasedDifficulty(prevDifficulty: DifficultyState): DifficultyState {
   const {
@@ -35,12 +35,12 @@ export default function difficulty(
       }
       const { frameCount, mode }: { frameCount: number, mode: Mode } = action.payload;
       // There are no difficulty increases for these modes
-      if ([BOSS, SUPER_BOSS].includes(mode)) {
+      if ([Mode.BOSS, Mode.SUPER_BOSS].includes(mode)) {
         return state;
       }
       const elapsedSeconds: number = frameCount / FRAMES_PER_SECOND;
       // Don't do a difficulty increase when the game starts
-      if (frameCount !== 0 && elapsedSeconds % SETTINGS.difficulty.timeInterval[mode] === 0) {
+      if (frameCount !== 0 && elapsedSeconds % SETTINGS.difficulty.timeInterval[mode.name] === 0) {
         return increasedDifficulty(state);
       }
       return state;
@@ -53,8 +53,8 @@ export default function difficulty(
       const { mode } = action.payload;
       return {
         ...state,
-        asteroidSpawnRadius: SETTINGS.asteroids.startingSpawnRadius[mode],
-        minimumAsteroidArea: SETTINGS.asteroids.startingMinimumArea[mode],
+        asteroidSpawnRadius: SETTINGS.asteroids.startingSpawnRadius[mode.name],
+        minimumAsteroidArea: SETTINGS.asteroids.startingMinimumArea[mode.name],
       };
     }
     default:

@@ -1,82 +1,107 @@
 // @flow
 
-import type { Mode, PowerupType, Sound } from './types/index';
+import { Enum } from 'enumify';
 
 export const DIMENSION = 500;
 export const FRAMES_PER_SECOND = 30;
 
-// TODO: Use enums for mode and powerup
+export class Mode extends Enum {}
+Mode.initEnum(['CLASSIC', 'DODGEBALL', 'BOSS', 'SUPER_BOSS']);
 
-// Flow's literal types can't use constants, so make sure the Mode and PowerupType types are
-// updated if these constants change
-export const CLASSIC: Mode = 0;
-export const DODGEBALL: Mode = 1;
-export const BOSS: Mode = 2;
-export const SUPER_BOSS: Mode = 3;
+export class PowerupType extends Enum {}
+PowerupType.initEnum(['LIFE', 'SCORE', 'BULLET', 'BOMB', 'FREEZE', 'INVINCIBLE']);
 
-export const LIFE: PowerupType = 0;
-export const SCORE: PowerupType = 1;
-export const BULLET: PowerupType = 2;
-export const BOMB: PowerupType = 3;
-export const FREEZE: PowerupType = 4;
-export const INVINCIBLE: PowerupType = 5;
+export class Sound extends Enum {}
+Sound.initEnum({
+  ASTEROID_BREAK: {
+    get file() { return 'asteroidBreak'; },
+  },
+  ASTEROID_DESTROY: {
+    get file() { return 'asteroidDestroy'; },
+  },
+  GAME_OVER: {
+    get file() { return 'gameOver'; },
+  },
+  LASER: {
+    get file() { return 'laser'; },
+  },
+});
 
-export const ASTEROID_BREAK: Sound = 'asteroidBreak';
-export const ASTEROID_DESTROY: Sound = 'asteroidDestroy';
-export const GAME_OVER: Sound = 'gameOver';
-export const LASER: Sound = 'laser';
+export const MODES: Mode[] = [Mode.CLASSIC, Mode.DODGEBALL, Mode.BOSS, Mode.SUPER_BOSS];
+export const POWERUP_TYPES: PowerupType[] = [
+  PowerupType.LIFE,
+  PowerupType.SCORE,
+  PowerupType.BULLET,
+  PowerupType.BOMB,
+  PowerupType.FREEZE,
+  PowerupType.INVINCIBLE,
+];
 
-export const MODES: Mode[] = [CLASSIC, DODGEBALL, BOSS, SUPER_BOSS];
-export const POWERUP_TYPES: PowerupType[] = [LIFE, SCORE, BULLET, BOMB, FREEZE, INVINCIBLE];
-
-export const DEFAULT_MODE = CLASSIC;
+export const DEFAULT_MODE = Mode.CLASSIC;
 
 export const NAME_FOR_MODE: Map<Mode, string> = new Map();
-NAME_FOR_MODE.set(CLASSIC, 'Classic');
-NAME_FOR_MODE.set(DODGEBALL, 'Dodgeball');
-NAME_FOR_MODE.set(BOSS, 'Bossteroid');
-NAME_FOR_MODE.set(SUPER_BOSS, 'Super Bossteroid');
+NAME_FOR_MODE.set(Mode.CLASSIC, 'Classic');
+NAME_FOR_MODE.set(Mode.DODGEBALL, 'Dodgeball');
+NAME_FOR_MODE.set(Mode.BOSS, 'Bossteroid');
+NAME_FOR_MODE.set(Mode.SUPER_BOSS, 'Super Bossteroid');
 
 export const DESCRIPTION_FOR_MODE: Map<Mode, string> = new Map();
-DESCRIPTION_FOR_MODE.set(CLASSIC, 'Score as many points as you can before running out of lives');
-DESCRIPTION_FOR_MODE.set(DODGEBALL, 'If you can dodge an asteroid, you can dodge a ball');
-DESCRIPTION_FOR_MODE.set(BOSS, 'Kill the Bossteroid as quickly as possible. Like a boss');
-DESCRIPTION_FOR_MODE.set(SUPER_BOSS, 'Like the Bossteroid, but three times bigger');
+DESCRIPTION_FOR_MODE.set(Mode.CLASSIC, 'Score as many points as you can before running out of lives');
+DESCRIPTION_FOR_MODE.set(Mode.DODGEBALL, 'If you can dodge an asteroid, you can dodge a ball');
+DESCRIPTION_FOR_MODE.set(Mode.BOSS, 'Kill the Bossteroid as quickly as possible. Like a boss');
+DESCRIPTION_FOR_MODE.set(Mode.SUPER_BOSS, 'Like the Bossteroid, but three times bigger');
 
 export const DESCRIPTION_FOR_POWERUP: Map<PowerupType, string> = new Map();
-DESCRIPTION_FOR_POWERUP.set(SCORE, 'Increase score multiplier');
-DESCRIPTION_FOR_POWERUP.set(LIFE, 'Extra life');
-DESCRIPTION_FOR_POWERUP.set(BULLET, 'Gun upgrade');
-DESCRIPTION_FOR_POWERUP.set(BOMB, 'Extra bomb');
-DESCRIPTION_FOR_POWERUP.set(FREEZE, 'Freeze asteroids');
-DESCRIPTION_FOR_POWERUP.set(INVINCIBLE, 'Invincibility');
+DESCRIPTION_FOR_POWERUP.set(PowerupType.SCORE, 'Increase score multiplier');
+DESCRIPTION_FOR_POWERUP.set(PowerupType.LIFE, 'Extra life');
+DESCRIPTION_FOR_POWERUP.set(PowerupType.BULLET, 'Gun upgrade');
+DESCRIPTION_FOR_POWERUP.set(PowerupType.BOMB, 'Extra bomb');
+DESCRIPTION_FOR_POWERUP.set(PowerupType.FREEZE, 'Freeze asteroids');
+DESCRIPTION_FOR_POWERUP.set(PowerupType.INVINCIBLE, 'Invincibility');
 
 // The powerups that are available in each game mode
 export const POWERUPS_FOR_MODE: Map<Mode, PowerupType[]> = new Map();
-POWERUPS_FOR_MODE.set(CLASSIC, [LIFE, SCORE, BULLET, BOMB, FREEZE, INVINCIBLE]);
-POWERUPS_FOR_MODE.set(DODGEBALL, []);
-POWERUPS_FOR_MODE.set(BOSS, [LIFE, BULLET, FREEZE, INVINCIBLE]);
-POWERUPS_FOR_MODE.set(SUPER_BOSS, [LIFE, BULLET, FREEZE, INVINCIBLE]);
+POWERUPS_FOR_MODE.set(Mode.CLASSIC, [
+  PowerupType.LIFE,
+  PowerupType.SCORE,
+  PowerupType.BULLET,
+  PowerupType.BOMB,
+  PowerupType.FREEZE,
+  PowerupType.INVINCIBLE,
+]);
+POWERUPS_FOR_MODE.set(Mode.DODGEBALL, []);
+POWERUPS_FOR_MODE.set(Mode.BOSS, [
+  PowerupType.LIFE,
+  PowerupType.BULLET,
+  PowerupType.FREEZE,
+  PowerupType.INVINCIBLE,
+]);
+POWERUPS_FOR_MODE.set(Mode.SUPER_BOSS, [
+  PowerupType.LIFE,
+  PowerupType.BULLET,
+  PowerupType.FREEZE,
+  PowerupType.INVINCIBLE,
+]);
 
 export const SETTINGS = {
   asteroids: {
     startingMinimumArea: {
-      [CLASSIC]: 5000,
-      [DODGEBALL]: 5000,
-      [BOSS]: 0,
-      [SUPER_BOSS]: 0,
+      [Mode.CLASSIC.name]: 5000,
+      [Mode.DODGEBALL.name]: 5000,
+      [Mode.BOSS.name]: 0,
+      [Mode.SUPER_BOSS.name]: 0,
     },
     startingSpawnRadius: {
-      [CLASSIC]: 30,
-      [DODGEBALL]: 30,
-      [BOSS]: 100,
-      [SUPER_BOSS]: 173,
+      [Mode.CLASSIC.name]: 30,
+      [Mode.DODGEBALL.name]: 30,
+      [Mode.BOSS.name]: 100,
+      [Mode.SUPER_BOSS.name]: 173,
     },
     startingNumber: {
-      [CLASSIC]: 2,
-      [DODGEBALL]: 2,
-      [BOSS]: 1,
-      [SUPER_BOSS]: 1,
+      [Mode.CLASSIC.name]: 2,
+      [Mode.DODGEBALL.name]: 2,
+      [Mode.BOSS.name]: 1,
+      [Mode.SUPER_BOSS.name]: 1,
     },
     minimumRadius: 10,
     color: 'sienna',
@@ -119,10 +144,10 @@ export const SETTINGS = {
   difficulty: {
     timeInterval: {
       // seconds
-      [CLASSIC]: 10,
-      [DODGEBALL]: 5,
-      [BOSS]: 10,
-      [SUPER_BOSS]: 10,
+      [Mode.CLASSIC.name]: 10,
+      [Mode.DODGEBALL.name]: 5,
+      [Mode.BOSS.name]: 10,
+      [Mode.SUPER_BOSS.name]: 10,
     },
     asteroidSpeedIncrease: 0.15,
     asteroidSpawnRadiusMultiplier: 1.0,
@@ -133,8 +158,8 @@ export const SETTINGS = {
     radius: 10,
     duration: {
       // seconds
-      [BULLET]: 5,
-      [FREEZE]: 3,
+      [PowerupType.BULLET]: 5,
+      [PowerupType.FREEZE]: 3,
     },
     bullet: {
       speedMultiplier: 1.5,
@@ -144,25 +169,25 @@ export const SETTINGS = {
   },
 
   startingLives: {
-    [CLASSIC]: 2,
-    [DODGEBALL]: 0,
-    [BOSS]: 2,
-    [SUPER_BOSS]: 6,
+    [Mode.CLASSIC.name]: 2,
+    [Mode.DODGEBALL.name]: 0,
+    [Mode.BOSS.name]: 2,
+    [Mode.SUPER_BOSS.name]: 6,
   },
   startingBombs: {
-    [CLASSIC]: 2,
-    [DODGEBALL]: 0,
-    [BOSS]: 0,
-    [SUPER_BOSS]: 0,
+    [Mode.CLASSIC.name]: 2,
+    [Mode.DODGEBALL.name]: 0,
+    [Mode.BOSS.name]: 0,
+    [Mode.SUPER_BOSS.name]: 0,
   },
   pointsForBreak: 2,
   pointsForDestroy: 10,
 };
 
 export const COLOR_FOR_POWERUP: Map<PowerupType, string> = new Map();
-COLOR_FOR_POWERUP.set(BULLET, SETTINGS.bullets.color);
-COLOR_FOR_POWERUP.set(LIFE, SETTINGS.ship.color);
-COLOR_FOR_POWERUP.set(SCORE, 'green');
-COLOR_FOR_POWERUP.set(BOMB, 'orange');
-COLOR_FOR_POWERUP.set(FREEZE, 'lightblue');
-COLOR_FOR_POWERUP.set(INVINCIBLE, 'purple');
+COLOR_FOR_POWERUP.set(PowerupType.BULLET, SETTINGS.bullets.color);
+COLOR_FOR_POWERUP.set(PowerupType.LIFE, SETTINGS.ship.color);
+COLOR_FOR_POWERUP.set(PowerupType.SCORE, 'green');
+COLOR_FOR_POWERUP.set(PowerupType.BOMB, 'orange');
+COLOR_FOR_POWERUP.set(PowerupType.FREEZE, 'lightblue');
+COLOR_FOR_POWERUP.set(PowerupType.INVINCIBLE, 'purple');

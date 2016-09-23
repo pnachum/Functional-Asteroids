@@ -1,6 +1,6 @@
 import { MOVE, SHOOT } from '../actions';
-import { LASER } from '../constants';
-import type { Sound, Action } from '../types/index';
+import { Sound } from '../constants';
+import type { Action } from '../types/index';
 
 const defaultState = [];
 
@@ -9,7 +9,7 @@ export default function queuedSounds(state: Sound[] = defaultState, action: Acti
     case MOVE:
       return defaultState;
     case SHOOT:
-      return [...state, LASER];
+      return [...state, Sound.LASER];
     default:
       return state;
   }

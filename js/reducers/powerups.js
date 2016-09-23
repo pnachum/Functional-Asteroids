@@ -6,25 +6,24 @@ import {
   FRAMES_PER_SECOND,
   DIMENSION,
   POWERUPS_FOR_MODE,
-  DODGEBALL,
-  LIFE,
-  BOMB,
+  Mode,
+  PowerupType,
 } from '../constants';
 import { MOVE } from '../actions';
-import type { Powerup, Action, Mode } from '../types/index';
+import type { Powerup, Action } from '../types/index';
 
 function newPowerup(mode: Mode, lives: number, bombs: number): Powerup {
   // Do not give more lives if current lives >= 2
   // Do not give more bombs if current bombs >= 2
   const possiblePowerups = POWERUPS_FOR_MODE.get(mode);
   if (possiblePowerups == null) {
-    throw new Error(`Cannot find powerup for mode ${mode}`);
+    throw new Error(`Cannot find powerup for mode ${mode.name}`);
   }
   const options = possiblePowerups.filter(powerupType => {
-    if (powerupType === LIFE && lives >= 2) {
+    if (powerupType === PowerupType.LIFE && lives >= 2) {
       return false;
     }
-    if (powerupType === BOMB && bombs >= 2) {
+    if (powerupType === PowerupType.BOMB && bombs >= 2) {
       return false;
     }
     return true;
@@ -50,7 +49,7 @@ export default function powerups(state: Powerup[] = defaultState, action: Action
       }
       const { frameCount, mode, lives, bombs } = action.payload;
       // No powerups in DODGEBALL
-      if (mode === DODGEBALL) {
+      if (mode === Mode.DODGEBALL) {
         return state;
       }
       const elapsedSeconds: number = frameCount / FRAMES_PER_SECOND;

@@ -1,5 +1,7 @@
 // @flow
 
+import { Mode, PowerupType, Sound } from '../constants';
+
 export type Asteroid = {
   pos: [number, number],
   radius: number,
@@ -62,11 +64,6 @@ export type DifficultyState = {
   minimumAsteroidArea: number,
   asteroidSpeed: number,
 };
-
-// Flow can't handle using constants here, so it has to repeat the constasnt values
-export type Mode = 0 | 1 | 2 | 3;
-export type PowerupType = 0 | 1 | 2 | 3 | 4 | 5;
-export type Sound = 'asteroidBreak' | 'asteroidDestroy' | 'gameOver' | 'laser';
 
 export type Action = { type: string, payload?: any };
 

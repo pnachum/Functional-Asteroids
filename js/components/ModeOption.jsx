@@ -1,8 +1,7 @@
 // @flow
 
 import React from 'react';
-import { DESCRIPTION_FOR_MODE, NAME_FOR_MODE } from '../constants';
-import type { Mode } from '../types/index';
+import { DESCRIPTION_FOR_MODE, NAME_FOR_MODE, Mode } from '../constants';
 
 type Props = {
   mode: Mode,

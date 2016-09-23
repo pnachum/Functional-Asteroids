@@ -1,7 +1,14 @@
 // @flow
 
 import { compact, flatten, times } from 'lodash';
-import { SETTINGS, FRAMES_PER_SECOND, NAME_FOR_MODE, COLOR_FOR_POWERUP, BOMB } from './constants';
+import {
+  SETTINGS,
+  FRAMES_PER_SECOND,
+  NAME_FOR_MODE,
+  COLOR_FOR_POWERUP,
+  Mode,
+  PowerupType,
+} from './constants';
 import { getRotateablePosition } from './utils/math';
 import {
   drawCircleInGame,
@@ -16,7 +23,6 @@ import type {
   Bullet,
   Debris,
   DrawableCircle,
-  Mode,
   Powerup,
   Store,
 } from './types/index';
@@ -149,7 +155,7 @@ function powerupDrawInfo({ pos, type }: Powerup): DrawableCircle {
   // Make flow happy to account for Map#get returning undefined
   const color = COLOR_FOR_POWERUP.get(type);
   if (color == null) {
-    throw new Error(`No color for type ${type}`);
+    throw new Error(`No color for type ${type.name}`);
   }
   return {
     color,
@@ -195,7 +201,7 @@ function drawLives(lives: number) {
 function drawBombs(bombs: number) {
   drawRepeated(bombs, i => (
     powerupDrawInfo({
-      type: BOMB,
+      type: PowerupType.BOMB,
       pos: [20 + (25 * i), 120],
     })
   ));
@@ -224,7 +230,7 @@ function drawMode(mode: Mode) {
   const text = NAME_FOR_MODE.get(mode);
   // Make flow happy to account for Map#get returning undefined
   if (text == null) {
-    throw new Error(`No name for mode ${mode}`);
+    throw new Error(`No name for mode ${mode.name}`);
   }
   drawUIText({
     text: `Mode: ${text}`,

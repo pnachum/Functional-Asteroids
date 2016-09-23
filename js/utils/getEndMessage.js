@@ -1,10 +1,9 @@
 // @flow
 
 import {
-  DODGEBALL,
   FRAMES_PER_SECOND,
+  Mode,
 } from '../constants';
-import type { Mode } from '../types/index';
 
 type Argument = {
   score: number,
@@ -20,7 +19,7 @@ function getEndMessageHelper({ score, frameCount, mode, hasWon }: Argument): str
   if (hasWon) {
     return `You win! That took you ${seconds} seconds.`;
   }
-  if (mode === DODGEBALL) {
+  if (mode === Mode.DODGEBALL) {
     return `Game Over! You survived for ${seconds} seconds.`;
   }
   return `Game Over! Your score is ${score}. You survived for ${seconds} seconds.`;

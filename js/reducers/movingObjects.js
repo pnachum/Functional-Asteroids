@@ -10,7 +10,7 @@ import powerups from './powerups';
 import bombs from './bombs';
 import queuedSounds from './queuedSounds';
 import { MOVE, SET_MODE, RESET, TRIGGER_BOMB } from '../actions';
-import { SETTINGS, DEFAULT_MODE, ASTEROID_BREAK, ASTEROID_DESTROY } from '../constants';
+import { SETTINGS, DEFAULT_MODE, Sound } from '../constants';
 import {
   debrisForDestroyedAsteroids,
   subASteroidsForCollidedAsteroids,
@@ -33,7 +33,7 @@ const defaultState: MovingObjectsState = {
   debris: [],
   powerups: [],
   score: 0,
-  lives: SETTINGS.startingLives[DEFAULT_MODE],
+  lives: SETTINGS.startingLives[DEFAULT_MODE.name],
   multiplier: 1,
   bulletPowerupStartFrame: null,
   freezePowerupStartFrame: null,
@@ -133,8 +133,8 @@ export default function movingObjects(
       );
 
       const newSounds = [
-        ...times(collidedAsteroids.length, () => ASTEROID_BREAK),
-        ...times(destroyedAsteroids.length, () => ASTEROID_DESTROY),
+        ...times(collidedAsteroids.length, () => Sound.ASTEROID_BREAK),
+        ...times(destroyedAsteroids.length, () => Sound.ASTEROID_DESTROY),
       ];
 
       return {
@@ -161,7 +161,7 @@ export default function movingObjects(
             debrisForDestroyedAsteroids(defaultNewState.asteroids)
           ),
           queuedSounds: defaultNewState.queuedSounds.concat(
-            times(state.asteroids.length, () => ASTEROID_DESTROY)
+            times(state.asteroids.length, () => Sound.ASTEROID_DESTROY)
           ),
         };
       }
@@ -171,7 +171,7 @@ export default function movingObjects(
       if (action.payload == null) {
         return state;
       }
-      return { ...defaultNewState, lives: SETTINGS.startingLives[action.payload.mode] };
+      return { ...defaultNewState, lives: SETTINGS.startingLives[action.payload.mode.name] };
     default:
       return defaultNewState;
   }

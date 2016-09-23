@@ -2,11 +2,10 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { MODES } from '../constants';
+import { MODES, Mode } from '../constants';
 import ModeOption from './ModeOption';
 import Instructions from './Instructions';
 import Canvases from './Canvases';
-import type { Mode } from '../types/index';
 import { setMode } from '../actions';
 
 type State = {
@@ -45,7 +44,7 @@ class App extends React.Component {
             <div>
               {MODES.map(mode => (
                 <ModeOption
-                  key={mode}
+                  key={mode.name}
                   mode={mode}
                   onClick={() => this.selectMode(mode)}
                 />
