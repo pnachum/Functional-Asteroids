@@ -61,7 +61,6 @@ function gameOver(hasWon: boolean) {
     frameCount,
     mode,
     hasWon,
-    isSoundOn,
   });
   if (confirm(endMessage)) {
     store.dispatch(reset(mode, isSoundOn));
@@ -117,7 +116,7 @@ function bindKeyHandlers() {
     store.dispatch(shoot(ship, mode, bulletPowerupStartFrame, frameCount));
   });
 
-  key('P', () => {
+  key('p', () => {
     store.dispatch(togglePause());
     if (store.getState().isPaused) {
       stop();
@@ -132,7 +131,7 @@ function bindKeyHandlers() {
 
   key('m', () => {
     store.dispatch(toggleSound());
-  })
+  });
 }
 
 store.subscribe(() => {
