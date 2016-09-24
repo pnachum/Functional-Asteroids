@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 
 class App extends React.Component {
   props: Props;
-  state: State
+  state: State;
 
   constructor(props) {
     super(props);
