@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     border: '2px solid #000000',
   },
   gameCanvas: {
-    background: "url('coolfont.woff2') format('woff2')",
+    backgroundImage: "url('./images/background.jpg')",
   },
 });
 
