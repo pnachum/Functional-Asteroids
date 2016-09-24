@@ -1,19 +1,23 @@
 // @flow
 
 import React from 'react';
+import { StyleSheet, css } from 'aphrodite';
 import { POWERUP_TYPES, SETTINGS } from '../constants';
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     display: 'inline-block',
     verticalAlign: 'top',
     marginLeft: 20,
   },
-};
+  description: {
+    fontWeight: 'bold',
+  },
+});
 
 export default function Instructions() {
   return (
-    <div id="instructions" style={styles.container}>
+    <div id="instructions" className={css(styles.container)}>
       <div id="controls">
         <p>Controls: </p>
         <ul>
@@ -44,7 +48,7 @@ export default function Instructions() {
             const description = SETTINGS.powerups.description[powerupType];
             const color = SETTINGS.powerups.color[powerupType];
             return (
-              <li style={{ color }} key={powerupType.name} className="powerup-description">
+              <li style={{ color }} key={powerupType.name} className={css(styles.description)}>
                 {description}
               </li>
             );

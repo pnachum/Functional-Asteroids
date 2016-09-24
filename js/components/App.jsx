@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import { StyleSheet, css } from 'aphrodite';
 import { connect } from 'react-redux';
 import { MODES, Mode } from '../constants';
 import ModeOption from './ModeOption';
@@ -15,6 +16,12 @@ type State = {
 type Props = {
   modeSelected: (mode: Mode) => void,
 };
+
+const styles = StyleSheet.create({
+  container: {
+    fontFamily: 'Arial',
+  },
+});
 
 class App extends React.Component {
   props: Props;
@@ -37,7 +44,7 @@ class App extends React.Component {
     const { isSelectingMode } = this.state;
 
     return (
-      <div>
+      <div className={css(styles.container)}>
         {isSelectingMode ? (
           <div>
             <h2>Choose a Mode</h2>
