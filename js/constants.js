@@ -10,7 +10,7 @@ export class Mode extends Enum {}
 Mode.initEnum(['CLASSIC', 'DODGEBALL', 'BOSS', 'SUPER_BOSS']);
 
 export class PowerupType extends Enum {}
-PowerupType.initEnum(['LIFE', 'SCORE', 'BULLET', 'BOMB', 'FREEZE', 'INVINCIBLE']);
+PowerupType.initEnum(['LIFE', 'BULLET', 'BOMB', 'FREEZE', 'INVINCIBLE']);
 
 export class Sound extends Enum {}
 Sound.initEnum(['ASTEROID_BREAK', 'ASTEROID_DESTROY', 'GAME_OVER', 'LASER']);
@@ -18,7 +18,6 @@ Sound.initEnum(['ASTEROID_BREAK', 'ASTEROID_DESTROY', 'GAME_OVER', 'LASER']);
 export const MODES: Mode[] = [Mode.CLASSIC, Mode.DODGEBALL, Mode.BOSS, Mode.SUPER_BOSS];
 export const POWERUP_TYPES: PowerupType[] = [
   PowerupType.LIFE,
-  PowerupType.SCORE,
   PowerupType.BULLET,
   PowerupType.BOMB,
   PowerupType.FREEZE,
@@ -173,7 +172,6 @@ export const SETTINGS: SettingsType = {
       [PowerupType.FREEZE]: 3,
     },
     description: {
-      [PowerupType.SCORE]: 'Increase score multiplier',
       [PowerupType.LIFE]: 'Extra life',
       [PowerupType.BULLET]: 'Gun upgrade',
       [PowerupType.BOMB]: 'Extra bomb',
@@ -183,7 +181,6 @@ export const SETTINGS: SettingsType = {
     color: {
       [PowerupType.BULLET]: bulletColor,
       [PowerupType.LIFE]: shipColor,
-      [PowerupType.SCORE]: 'green',
       [PowerupType.BOMB]: 'orange',
       [PowerupType.FREEZE]: 'lightblue',
       [PowerupType.INVINCIBLE]: 'purple',
@@ -231,7 +228,6 @@ export const SETTINGS: SettingsType = {
     powerups: {
       [Mode.CLASSIC]: [
         PowerupType.LIFE,
-        PowerupType.SCORE,
         PowerupType.BULLET,
         PowerupType.BOMB,
         PowerupType.FREEZE,

@@ -9,6 +9,7 @@ import debris from './debris';
 import powerups from './powerups';
 import bombs from './bombs';
 import queuedSounds from './queuedSounds';
+import multiplier from './multiplier';
 import { MOVE, SET_MODE, RESET, TRIGGER_BOMB } from '../actions';
 import { SETTINGS, DEFAULT_MODE, Sound } from '../constants';
 import {
@@ -62,6 +63,7 @@ const subReducer = combineReducers({
   powerups,
   bombs,
   queuedSounds,
+  multiplier,
 });
 
 // This reducer allows for state changes which rely on interactions between various moving objects,
@@ -79,6 +81,7 @@ export default function movingObjects(
     'powerups',
     'bombs',
     'queuedSounds',
+    'multiplier',
   ]), action);
   const defaultNewState: MovingObjectsState = {
     ...state,
