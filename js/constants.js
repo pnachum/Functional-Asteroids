@@ -101,8 +101,8 @@ export const SETTINGS: SettingsType = {
     startingMinimumArea: {
       [Mode.CLASSIC]: 5000,
       [Mode.DODGEBALL]: 5000,
-      [Mode.BOSS]: 1,
-      [Mode.SUPER_BOSS]: 1,
+      [Mode.BOSS]: 0,
+      [Mode.SUPER_BOSS]: 0,
     },
     startingSpawnRadius: {
       [Mode.CLASSIC]: 30,
