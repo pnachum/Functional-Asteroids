@@ -30,10 +30,6 @@ export function move(payload: {
   };
 }
 
-export function addAsteroid(asteroid: Asteroid): Action {
-  return { type: ADD_ASTEROID, payload: asteroid };
-}
-
 export function thrustShip(): Action {
   return { type: THRUST_SHIP };
 }
