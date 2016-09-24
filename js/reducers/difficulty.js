@@ -40,7 +40,7 @@ export default function difficulty(
       }
       const elapsedSeconds: number = frameCount / FRAMES_PER_SECOND;
       // Don't do a difficulty increase when the game starts
-      if (frameCount !== 0 && elapsedSeconds % SETTINGS.difficulty.timeInterval[mode.name] === 0) {
+      if (frameCount !== 0 && elapsedSeconds % SETTINGS.difficulty.timeInterval[mode] === 0) {
         return increasedDifficulty(state);
       }
       return state;
@@ -53,8 +53,8 @@ export default function difficulty(
       const { mode } = action.payload;
       return {
         ...state,
-        asteroidSpawnRadius: SETTINGS.asteroids.startingSpawnRadius[mode.name],
-        minimumAsteroidArea: SETTINGS.asteroids.startingMinimumArea[mode.name],
+        asteroidSpawnRadius: SETTINGS.asteroids.startingSpawnRadius[mode],
+        minimumAsteroidArea: SETTINGS.asteroids.startingMinimumArea[mode],
       };
     }
     default:

@@ -1,7 +1,7 @@
-import type { Sound } from '../types/index';
+import { Sound, SETTINGS } from '../constants';
 
 function playSound(sound: Sound) {
-  const soundPath = `audio/${sound.file}.mp3`;
+  const soundPath = `audio/${SETTINGS.audioFile[sound]}.mp3`;
   const audio = new Audio(soundPath);
   audio.play();
 }

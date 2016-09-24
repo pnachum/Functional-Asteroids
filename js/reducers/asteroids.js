@@ -28,8 +28,8 @@ export default function asteroids(state: Asteroid[] = defaultState, action: Acti
         return state;
       }
       const { mode } = action.payload;
-      const num: number = SETTINGS.asteroids.startingNumber[mode.name];
-      const radius: number = SETTINGS.asteroids.startingSpawnRadius[mode.name];
+      const num: number = SETTINGS.asteroids.startingNumber[mode];
+      const radius: number = SETTINGS.asteroids.startingSpawnRadius[mode];
       return state.concat(randomAsteroids(num, { radius }));
     }
     default:

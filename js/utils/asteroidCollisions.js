@@ -1,5 +1,5 @@
 import { times, sumBy } from 'lodash';
-import { SETTINGS, SCORE, LIFE, BULLET, BOMB, FREEZE, INVINCIBLE } from '../constants';
+import { SETTINGS, PowerupType } from '../constants';
 import randomAsteroids from './randomAsteroids';
 import { direction, sumOfAreas, isCollided } from './math';
 import { isShipInvincible } from './durationChecks';
@@ -11,7 +11,6 @@ import type {
   Ship,
   Bullet,
   Powerup,
-  PowerupType,
 } from '../types/index';
 
 type AsteroidCollision = {
@@ -151,19 +150,19 @@ export function handleCollisions({
   const notCollidedPowerups = powerups.filter(powerup => !collidedPowerups.includes(powerup));
 
   const collidedPowerupsOfType: (type: PowerupType) => Powerup[] = powerupsOfType(collidedPowerups);
-  multiplierDiff += collidedPowerupsOfType(SCORE).length;
-  livesDiff += collidedPowerupsOfType(LIFE).length;
+  multiplierDiff += collidedPowerupsOfType(PowerupType.SCORE).length;
+  livesDiff += collidedPowerupsOfType(PowerupType.LIFE).length;
 
-  const beginBulletPowerup = collidedPowerupsOfType(BULLET).length > 0;
-  const beginFreezePowerup = collidedPowerupsOfType(FREEZE).length > 0;
-  const beginInvinciblePowerup = collidedPowerupsOfType(INVINCIBLE).length > 0;
+  const beginBulletPowerup = collidedPowerupsOfType(PowerupType.BULLET).length > 0;
+  const beginFreezePowerup = collidedPowerupsOfType(PowerupType.FREEZE).length > 0;
+  const beginInvinciblePowerup = collidedPowerupsOfType(PowerupType.INVINCIBLE).length > 0;
   if (beginInvinciblePowerup) {
     newShip = {
       ...newShip,
       invincibilityStartFrame: frameCount,
     };
   }
-  const addBomb = collidedPowerupsOfType(BOMB).length > 0;
+  const addBomb = collidedPowerupsOfType(PowerupType.BOMB).length > 0;
   return {
     newShip: newShip || ship,
     multiplierDiff,

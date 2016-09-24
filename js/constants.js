@@ -1,6 +1,7 @@
 // @flow
 
 import { Enum } from 'enumify';
+import type { Ship } from './types/index';
 
 export const DIMENSION = 500;
 export const FRAMES_PER_SECOND = 30;
@@ -12,20 +13,7 @@ export class PowerupType extends Enum {}
 PowerupType.initEnum(['LIFE', 'SCORE', 'BULLET', 'BOMB', 'FREEZE', 'INVINCIBLE']);
 
 export class Sound extends Enum {}
-Sound.initEnum({
-  ASTEROID_BREAK: {
-    get file() { return 'asteroidBreak'; },
-  },
-  ASTEROID_DESTROY: {
-    get file() { return 'asteroidDestroy'; },
-  },
-  GAME_OVER: {
-    get file() { return 'gameOver'; },
-  },
-  LASER: {
-    get file() { return 'laser'; },
-  },
-});
+Sound.initEnum(['ASTEROID_BREAK', 'ASTEROID_DESTROY', 'GAME_OVER', 'LASER']);
 
 export const MODES: Mode[] = [Mode.CLASSIC, Mode.DODGEBALL, Mode.BOSS, Mode.SUPER_BOSS];
 export const POWERUP_TYPES: PowerupType[] = [
@@ -83,25 +71,82 @@ POWERUPS_FOR_MODE.set(Mode.SUPER_BOSS, [
   PowerupType.INVINCIBLE,
 ]);
 
-export const SETTINGS = {
+type ModeToNumber = { [key: Mode]: number };
+
+type SettingsType = {
+  asteroids: {
+    startingMinimumArea: ModeToNumber,
+    startingSpawnRadius: ModeToNumber,
+    startingNumber: ModeToNumber,
+    minimumRadius: number,
+    color: string,
+    startingSpeed: number,
+  },
+  ship: {
+    radius: number,
+    color: string,
+    maxSpeed: number,
+    turnSpeed: number,
+    acceleration: number,
+    thrusterRadius: number,
+    thrusterColor: string,
+    turretRadius: number,
+    airResistance: number,
+    invincibilityTime: number,
+    defaultShip: Ship,
+  },
+  bullets: {
+    radius: number,
+    color: string,
+    speed: number,
+    distance: number,
+  },
+  debris: {
+    distance: number,
+    number: number,
+    speed: number,
+  },
+  difficulty: {
+    timeInterval: ModeToNumber,
+    asteroidSpeedIncrease: number,
+    asteroidSpawnRadiusMultiplier: number,
+    minimumAsteroidAreaMultiplier: number,
+  },
+  powerups: {
+    radius: number,
+    duration: { [key: PowerupType]: number },
+    bullet: {
+      speedMultiplier: number,
+      radiusMultiplier: number,
+      distanceMultiplier: number,
+    },
+  },
+  startingLives: ModeToNumber,
+  startingBombs: ModeToNumber,
+  pointsForBreak: number,
+  pointsForDestroy: number,
+  audioFile: { [key: Sound]: string },
+};
+
+export const SETTINGS: SettingsType = {
   asteroids: {
     startingMinimumArea: {
-      [Mode.CLASSIC.name]: 5000,
-      [Mode.DODGEBALL.name]: 5000,
-      [Mode.BOSS.name]: 0,
-      [Mode.SUPER_BOSS.name]: 0,
+      [Mode.CLASSIC]: 5000,
+      [Mode.DODGEBALL]: 5000,
+      [Mode.BOSS]: 1,
+      [Mode.SUPER_BOSS]: 1,
     },
     startingSpawnRadius: {
-      [Mode.CLASSIC.name]: 30,
-      [Mode.DODGEBALL.name]: 30,
-      [Mode.BOSS.name]: 100,
-      [Mode.SUPER_BOSS.name]: 173,
+      [Mode.CLASSIC]: 30,
+      [Mode.DODGEBALL]: 30,
+      [Mode.BOSS]: 100,
+      [Mode.SUPER_BOSS]: 173,
     },
     startingNumber: {
-      [Mode.CLASSIC.name]: 2,
-      [Mode.DODGEBALL.name]: 2,
-      [Mode.BOSS.name]: 1,
-      [Mode.SUPER_BOSS.name]: 1,
+      [Mode.CLASSIC]: 2,
+      [Mode.DODGEBALL]: 2,
+      [Mode.BOSS]: 1,
+      [Mode.SUPER_BOSS]: 1,
     },
     minimumRadius: 10,
     color: 'sienna',
@@ -144,10 +189,10 @@ export const SETTINGS = {
   difficulty: {
     timeInterval: {
       // seconds
-      [Mode.CLASSIC.name]: 10,
-      [Mode.DODGEBALL.name]: 5,
-      [Mode.BOSS.name]: 10,
-      [Mode.SUPER_BOSS.name]: 10,
+      [Mode.CLASSIC]: 10,
+      [Mode.DODGEBALL]: 5,
+      [Mode.BOSS]: 10,
+      [Mode.SUPER_BOSS]: 10,
     },
     asteroidSpeedIncrease: 0.15,
     asteroidSpawnRadiusMultiplier: 1.0,
@@ -169,19 +214,26 @@ export const SETTINGS = {
   },
 
   startingLives: {
-    [Mode.CLASSIC.name]: 2,
-    [Mode.DODGEBALL.name]: 0,
-    [Mode.BOSS.name]: 2,
-    [Mode.SUPER_BOSS.name]: 6,
+    [Mode.CLASSIC]: 2,
+    [Mode.DODGEBALL]: 0,
+    [Mode.BOSS]: 2,
+    [Mode.SUPER_BOSS]: 6,
   },
   startingBombs: {
-    [Mode.CLASSIC.name]: 2,
-    [Mode.DODGEBALL.name]: 0,
-    [Mode.BOSS.name]: 0,
-    [Mode.SUPER_BOSS.name]: 0,
+    [Mode.CLASSIC]: 2,
+    [Mode.DODGEBALL]: 0,
+    [Mode.BOSS]: 0,
+    [Mode.SUPER_BOSS]: 0,
   },
   pointsForBreak: 2,
   pointsForDestroy: 10,
+
+  audioFile: {
+    [Sound.ASTEROID_BREAK]: 'asteroidBreak',
+    [Sound.ASTEROID_DESTROY]: 'asteroidDestroy',
+    [Sound.GAME_OVER]: 'gameOver',
+    [Sound.LASER]: 'laser',
+  },
 };
 
 export const COLOR_FOR_POWERUP: Map<PowerupType, string> = new Map();

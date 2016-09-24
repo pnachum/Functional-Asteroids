@@ -1,4 +1,4 @@
-import { FRAMES_PER_SECOND, SETTINGS, BULLET, FREEZE } from '../constants';
+import { FRAMES_PER_SECOND, SETTINGS, PowerupType } from '../constants';
 import type { Ship } from '../types/index';
 
 function hasTimePassed(
@@ -18,12 +18,20 @@ export function isBulletPoweredUp(bulletPowerupStartFrame: ?number, frameCount: 
   if (bulletPowerupStartFrame == null) {
     return false;
   }
-  return !hasTimePassed(bulletPowerupStartFrame, SETTINGS.powerups.duration[BULLET], frameCount);
+  return !hasTimePassed(
+    bulletPowerupStartFrame,
+    SETTINGS.powerups.duration[PowerupType.BULLET],
+    frameCount
+  );
 }
 
 export function areAsteroidsFrozen(freezePowerupStartFrame: ?number, frameCount: number): boolean {
   if (freezePowerupStartFrame == null) {
     return false;
   }
-  return !hasTimePassed(freezePowerupStartFrame, SETTINGS.powerups.duration[FREEZE], frameCount);
+  return !hasTimePassed(
+    freezePowerupStartFrame,
+    SETTINGS.powerups.duration[PowerupType.FREEZE],
+    frameCount
+  );
 }

@@ -33,7 +33,7 @@ const defaultState: MovingObjectsState = {
   debris: [],
   powerups: [],
   score: 0,
-  lives: SETTINGS.startingLives[DEFAULT_MODE.name],
+  lives: SETTINGS.startingLives[DEFAULT_MODE],
   multiplier: 1,
   bulletPowerupStartFrame: null,
   freezePowerupStartFrame: null,
@@ -171,7 +171,7 @@ export default function movingObjects(
       if (action.payload == null) {
         return state;
       }
-      return { ...defaultNewState, lives: SETTINGS.startingLives[action.payload.mode.name] };
+      return { ...defaultNewState, lives: SETTINGS.startingLives[action.payload.mode] };
     default:
       return defaultNewState;
   }
