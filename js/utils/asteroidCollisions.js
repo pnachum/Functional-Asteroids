@@ -86,7 +86,6 @@ export function handleCollisions({
   pointsForCollision: (asteroid: Asteroid) => number,
 }): {
   livesDiff: number,
-  multiplierDiff: number,
   notCollidedBullets: Bullet[],
   collidedAsteroids: Asteroid[],
   notCollidedAsteroids: Asteroid[],
@@ -96,6 +95,7 @@ export function handleCollisions({
   beginBulletPowerup: boolean,
   beginFreezePowerup: boolean,
   addBomb: boolean,
+  resetMultiplier: boolean,
 } {
   const {
     ship: {
@@ -110,7 +110,7 @@ export function handleCollisions({
     },
   } = SETTINGS;
   let livesDiff: number = 0;
-  let multiplierDiff: number = 0;
+  let resetMultiplier: boolean = false;
   const collidedBullets: Bullet[] = [];
   const asteroidCollisions: AsteroidCollision[] = [];
   let newShip: Ship = ship;
@@ -137,6 +137,7 @@ export function handleCollisions({
         degrees: ship.degrees,
         invincibilityStartFrame: frameCount,
       };
+      resetMultiplier = true;
     }
   });
 
@@ -153,7 +154,6 @@ export function handleCollisions({
   const notCollidedPowerups = powerups.filter(powerup => !collidedPowerups.includes(powerup));
 
   const collidedPowerupsOfType: (type: PowerupType) => Powerup[] = powerupsOfType(collidedPowerups);
-  multiplierDiff += collidedPowerupsOfType(PowerupType.SCORE).length;
   livesDiff += collidedPowerupsOfType(PowerupType.LIFE).length;
 
   const beginBulletPowerup = collidedPowerupsOfType(PowerupType.BULLET).length > 0;
@@ -168,7 +168,6 @@ export function handleCollisions({
   const addBomb = collidedPowerupsOfType(PowerupType.BOMB).length > 0;
   return {
     newShip: newShip || ship,
-    multiplierDiff,
     livesDiff,
     notCollidedBullets,
     collidedAsteroids,
@@ -178,5 +177,6 @@ export function handleCollisions({
     beginBulletPowerup,
     beginFreezePowerup,
     addBomb,
+    resetMultiplier,
   };
 }
