@@ -11,6 +11,7 @@ import {
   reset,
   addInitialAsteroids,
   triggerBomb,
+  toggleSound,
 } from './actions';
 import { FRAMES_PER_SECOND, Mode, Sound } from './constants';
 import { initContext } from './utils/canvas';
@@ -128,6 +129,10 @@ function bindKeyHandlers() {
   key('b', () => {
     store.dispatch(triggerBomb());
   });
+
+  key('m', () => {
+    store.dispatch(toggleSound());
+  })
 }
 
 store.subscribe(() => {

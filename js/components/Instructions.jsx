@@ -32,6 +32,8 @@ export default function Instructions() {
           <li><strong>Pause: </strong>P</li>
 
           <li><strong>Bomb: </strong>B</li>
+
+          <li><strong>Toggle sound: </strong>M</li>
         </ul>
       </div>
 
