@@ -39,9 +39,7 @@ export default function bullets(state: Bullet[] = defaultState, action: Action):
     },
     powerups: {
       bullet: {
-        speedMultiplier,
-        radiusMultiplier,
-        distanceMultiplier,
+        spreadDegrees,
       },
     },
   } = SETTINGS;
@@ -68,17 +66,21 @@ export default function bullets(state: Bullet[] = defaultState, action: Action):
       if (mode === Mode.DODGEBALL) {
         return state;
       }
-      const turretPos: [number, number] = getRotateablePosition(shipRadius, pos, degrees);
       const isPoweredUp = isBulletPoweredUp(bulletPowerupStartFrame, frameCount);
-      const realSpeed = isPoweredUp ? speed * speedMultiplier : speed;
-      const newBullet: Bullet = {
-        pos: turretPos,
-        vel: direction(degrees).map(d => d * realSpeed),
-        distance: isPoweredUp ? distance * distanceMultiplier : distance,
-        speed: realSpeed,
-        radius: isPoweredUp ? bulletRadius * radiusMultiplier : bulletRadius,
-      };
-      return [...state, newBullet];
+
+      // Add three bullet spread when powered up
+      const newBullets = (isPoweredUp ? [-1, 0, 1] : [0]).map(k => {
+        const modifiedDegrees = degrees + (k * spreadDegrees);
+        const position = getRotateablePosition(shipRadius, pos, modifiedDegrees);
+        return {
+          vel: direction(modifiedDegrees).map(d => d * speed),
+          radius: bulletRadius,
+          pos: position,
+          distance,
+          speed,
+        };
+      });
+      return state.concat(newBullets);
     }
     default:
       return state;

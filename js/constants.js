@@ -79,9 +79,7 @@ type SettingsType = {
     description: PowerupTypeToString,
     color: PowerupTypeToString,
     bullet: {
-      speedMultiplier: number,
-      radiusMultiplier: number,
-      distanceMultiplier: number,
+      spreadDegrees: number,
     },
   },
   startingLives: ModeToNumber,
@@ -191,9 +189,7 @@ export const SETTINGS: SettingsType = {
       [PowerupType.INVINCIBLE]: 'purple',
     },
     bullet: {
-      speedMultiplier: 1.5,
-      radiusMultiplier: 2,
-      distanceMultiplier: 1.5,
+      spreadDegrees: 15,
     },
   },
 
