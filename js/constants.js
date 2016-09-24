@@ -248,7 +248,7 @@ export const SETTINGS: SettingsType = {
         PowerupType.FREEZE,
         PowerupType.INVINCIBLE,
       ],
-      [Mode.SUPER_BSS]: [
+      [Mode.SUPER_BOSS]: [
         PowerupType.LIFE,
         PowerupType.BULLET,
         PowerupType.FREEZE,
