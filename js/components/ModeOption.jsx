@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { DESCRIPTION_FOR_MODE, NAME_FOR_MODE, Mode } from '../constants';
+import { SETTINGS, Mode } from '../constants';
 
 type Props = {
   mode: Mode,
@@ -11,8 +11,8 @@ type Props = {
 export default function ModeOption({ mode, onClick }: Props) {
   return (
     <button className="mode-button" onClick={onClick}>
-      <p className="mode-title">{NAME_FOR_MODE.get(mode)}</p>
-      <p className="mode-text">{DESCRIPTION_FOR_MODE.get(mode)}</p>
+      <p className="mode-title">{SETTINGS.modes.name[mode]}</p>
+      <p className="mode-text">{SETTINGS.modes.description[mode]}</p>
     </button>
   );
 }

@@ -5,7 +5,6 @@ import {
   SETTINGS,
   FRAMES_PER_SECOND,
   DIMENSION,
-  POWERUPS_FOR_MODE,
   Mode,
   PowerupType,
 } from '../constants';
@@ -15,10 +14,7 @@ import type { Powerup, Action } from '../types/index';
 function newPowerup(mode: Mode, lives: number, bombs: number): Powerup {
   // Do not give more lives if current lives >= 2
   // Do not give more bombs if current bombs >= 2
-  const possiblePowerups = POWERUPS_FOR_MODE.get(mode);
-  if (possiblePowerups == null) {
-    throw new Error(`Cannot find powerup for mode ${mode.name}`);
-  }
+  const possiblePowerups = SETTINGS.modes.powerups[mode];
   const options = possiblePowerups.filter(powerupType => {
     if (powerupType === PowerupType.LIFE && lives >= 2) {
       return false;

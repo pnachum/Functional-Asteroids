@@ -27,51 +27,12 @@ export const POWERUP_TYPES: PowerupType[] = [
 
 export const DEFAULT_MODE = Mode.CLASSIC;
 
-export const NAME_FOR_MODE: Map<Mode, string> = new Map();
-NAME_FOR_MODE.set(Mode.CLASSIC, 'Classic');
-NAME_FOR_MODE.set(Mode.DODGEBALL, 'Dodgeball');
-NAME_FOR_MODE.set(Mode.BOSS, 'Bossteroid');
-NAME_FOR_MODE.set(Mode.SUPER_BOSS, 'Super Bossteroid');
-
-export const DESCRIPTION_FOR_MODE: Map<Mode, string> = new Map();
-DESCRIPTION_FOR_MODE.set(Mode.CLASSIC, 'Score as many points as you can before running out of lives');
-DESCRIPTION_FOR_MODE.set(Mode.DODGEBALL, 'If you can dodge an asteroid, you can dodge a ball');
-DESCRIPTION_FOR_MODE.set(Mode.BOSS, 'Kill the Bossteroid as quickly as possible. Like a boss');
-DESCRIPTION_FOR_MODE.set(Mode.SUPER_BOSS, 'Like the Bossteroid, but three times bigger');
-
-export const DESCRIPTION_FOR_POWERUP: Map<PowerupType, string> = new Map();
-DESCRIPTION_FOR_POWERUP.set(PowerupType.SCORE, 'Increase score multiplier');
-DESCRIPTION_FOR_POWERUP.set(PowerupType.LIFE, 'Extra life');
-DESCRIPTION_FOR_POWERUP.set(PowerupType.BULLET, 'Gun upgrade');
-DESCRIPTION_FOR_POWERUP.set(PowerupType.BOMB, 'Extra bomb');
-DESCRIPTION_FOR_POWERUP.set(PowerupType.FREEZE, 'Freeze asteroids');
-DESCRIPTION_FOR_POWERUP.set(PowerupType.INVINCIBLE, 'Invincibility');
-
-// The powerups that are available in each game mode
-export const POWERUPS_FOR_MODE: Map<Mode, PowerupType[]> = new Map();
-POWERUPS_FOR_MODE.set(Mode.CLASSIC, [
-  PowerupType.LIFE,
-  PowerupType.SCORE,
-  PowerupType.BULLET,
-  PowerupType.BOMB,
-  PowerupType.FREEZE,
-  PowerupType.INVINCIBLE,
-]);
-POWERUPS_FOR_MODE.set(Mode.DODGEBALL, []);
-POWERUPS_FOR_MODE.set(Mode.BOSS, [
-  PowerupType.LIFE,
-  PowerupType.BULLET,
-  PowerupType.FREEZE,
-  PowerupType.INVINCIBLE,
-]);
-POWERUPS_FOR_MODE.set(Mode.SUPER_BOSS, [
-  PowerupType.LIFE,
-  PowerupType.BULLET,
-  PowerupType.FREEZE,
-  PowerupType.INVINCIBLE,
-]);
+const bulletColor = 'red';
+const shipColor = 'blue';
 
 type ModeToNumber = { [key: Mode]: number };
+type ModeToString = { [key: Mode]: string };
+type PowerupTypeToString = { [key: PowerupType]: string };
 
 type SettingsType = {
   asteroids: {
@@ -115,6 +76,8 @@ type SettingsType = {
   powerups: {
     radius: number,
     duration: { [key: PowerupType]: number },
+    description: PowerupTypeToString,
+    color: PowerupTypeToString,
     bullet: {
       speedMultiplier: number,
       radiusMultiplier: number,
@@ -126,6 +89,11 @@ type SettingsType = {
   pointsForBreak: number,
   pointsForDestroy: number,
   audioFile: { [key: Sound]: string },
+  modes: {
+    name: ModeToString,
+    description: ModeToString,
+    powerups: { [key: Mode]: PowerupType[] },
+  },
 };
 
 export const SETTINGS: SettingsType = {
@@ -155,7 +123,7 @@ export const SETTINGS: SettingsType = {
 
   ship: {
     radius: 10,
-    color: 'blue',
+    color: shipColor,
     maxSpeed: 5,
     turnSpeed: 10,
     acceleration: 0.3,
@@ -175,7 +143,7 @@ export const SETTINGS: SettingsType = {
 
   bullets: {
     radius: 2,
-    color: 'red',
+    color: bulletColor,
     speed: 20,
     distance: 400,
   },
@@ -206,6 +174,22 @@ export const SETTINGS: SettingsType = {
       [PowerupType.BULLET]: 5,
       [PowerupType.FREEZE]: 3,
     },
+    description: {
+      [PowerupType.SCORE]: 'Increase score multiplier',
+      [PowerupType.LIFE]: 'Extra life',
+      [PowerupType.BULLET]: 'Gun upgrade',
+      [PowerupType.BOMB]: 'Extra bomb',
+      [PowerupType.FREEZE]: 'Freeze asteroids',
+      [PowerupType.INVINCIBLE]: 'Invincibility',
+    },
+    color: {
+      [PowerupType.BULLET]: bulletColor,
+      [PowerupType.LIFE]: shipColor,
+      [PowerupType.SCORE]: 'green',
+      [PowerupType.BOMB]: 'orange',
+      [PowerupType.FREEZE]: 'lightblue',
+      [PowerupType.INVINCIBLE]: 'purple',
+    },
     bullet: {
       speedMultiplier: 1.5,
       radiusMultiplier: 2,
@@ -234,12 +218,42 @@ export const SETTINGS: SettingsType = {
     [Sound.GAME_OVER]: 'gameOver',
     [Sound.LASER]: 'laser',
   },
-};
 
-export const COLOR_FOR_POWERUP: Map<PowerupType, string> = new Map();
-COLOR_FOR_POWERUP.set(PowerupType.BULLET, SETTINGS.bullets.color);
-COLOR_FOR_POWERUP.set(PowerupType.LIFE, SETTINGS.ship.color);
-COLOR_FOR_POWERUP.set(PowerupType.SCORE, 'green');
-COLOR_FOR_POWERUP.set(PowerupType.BOMB, 'orange');
-COLOR_FOR_POWERUP.set(PowerupType.FREEZE, 'lightblue');
-COLOR_FOR_POWERUP.set(PowerupType.INVINCIBLE, 'purple');
+  modes: {
+    name: {
+      [Mode.CLASSIC]: 'Classic',
+      [Mode.DODGEBALL]: 'Dodgeball',
+      [Mode.BOSS]: 'Bossteroid',
+      [Mode.SUPER_BOSS]: 'Super Bossteroid',
+    },
+    description: {
+      [Mode.CLASSIC]: 'Score as many points as you can before running out of lives',
+      [Mode.DODGEBALL]: 'If you can dodge an asteroid, you can dodge a ball',
+      [Mode.BOSS]: 'Kill the Bossteroid as quickly as possible. Like a boss',
+      [Mode.SUPER_BOSS]: 'Like the Bossteroid, but three times bigger',
+    },
+    powerups: {
+      [Mode.CLASSIC]: [
+        PowerupType.LIFE,
+        PowerupType.SCORE,
+        PowerupType.BULLET,
+        PowerupType.BOMB,
+        PowerupType.FREEZE,
+        PowerupType.INVINCIBLE,
+      ],
+      [Mode.DODGEBALL]: [],
+      [Mode.BOSS]: [
+        PowerupType.LIFE,
+        PowerupType.BULLET,
+        PowerupType.FREEZE,
+        PowerupType.INVINCIBLE,
+      ],
+      [Mode.SUPER_BSS]: [
+        PowerupType.LIFE,
+        PowerupType.BULLET,
+        PowerupType.FREEZE,
+        PowerupType.INVINCIBLE,
+      ],
+    },
+  },
+};

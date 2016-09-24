@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { POWERUP_TYPES, DESCRIPTION_FOR_POWERUP, COLOR_FOR_POWERUP } from '../constants';
+import { POWERUP_TYPES, SETTINGS } from '../constants';
 
 const styles = {
   container: {
@@ -39,8 +39,8 @@ export default function Instructions() {
         <p>Powerups: </p>
         <ul id="powerups">
           {POWERUP_TYPES.map(powerupType => {
-            const description = DESCRIPTION_FOR_POWERUP.get(powerupType);
-            const color = COLOR_FOR_POWERUP.get(powerupType);
+            const description = SETTINGS.powerups.description[powerupType];
+            const color = SETTINGS.powerups.color[powerupType];
             return (
               <li style={{ color }} key={powerupType.name} className="powerup-description">
                 {description}
