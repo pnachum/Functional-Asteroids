@@ -1,7 +1,7 @@
 // @flow
 
 import { DIMENSION } from '../constants';
-import type { Moveable } from '../types/index';
+import type { Moveable } from '../types/types';
 
 // Given the position and radius of an object, and the dimension of the screen, map the object
 // to the screeen so that it wraps around the edge of screen.

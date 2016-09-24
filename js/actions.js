@@ -1,7 +1,7 @@
 // @flow
 
-import type { Asteroid, Ship, DifficultyState, Action, TurnDirection } from './types/index';
-import { Mode } from './constants';
+import type { Ship, DifficultyState, Action, TurnDirection } from './types/types';
+import { Mode } from './types/enums';
 
 export const MOVE = 'MOVE';
 export const ADD_ASTEROID = 'ADD_ASTEROID';

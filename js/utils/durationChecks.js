@@ -1,5 +1,8 @@
-import { FRAMES_PER_SECOND, SETTINGS, PowerupType } from '../constants';
-import type { Ship } from '../types/index';
+// @flow
+
+import { FRAMES_PER_SECOND, SETTINGS } from '../constants';
+import type { Ship } from '../types/types';
+import { PowerupType } from '../types/enums';
 
 function hasTimePassed(
   startFrame: ?number,

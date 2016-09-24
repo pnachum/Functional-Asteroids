@@ -1,8 +1,9 @@
 // @flow
 
 import { MOVE } from '../actions';
-import { FRAMES_PER_SECOND, SETTINGS, Mode } from '../constants';
-import type { Action } from '../types/index';
+import { FRAMES_PER_SECOND, SETTINGS } from '../constants';
+import type { Action } from '../types/types';
+import { Mode } from '../types/enums';
 
 const defaultState = 1;
 

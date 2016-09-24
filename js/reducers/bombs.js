@@ -2,7 +2,7 @@
 
 import { TRIGGER_BOMB, SET_MODE, RESET } from '../actions';
 import { SETTINGS } from '../constants';
-import type { Action } from '../types/index';
+import type { Action } from '../types/types';
 
 const defaultState: number = 0;
 

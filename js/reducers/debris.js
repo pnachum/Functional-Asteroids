@@ -3,7 +3,7 @@
 import { MOVE } from '../actions';
 import newPosition from '../utils/newPosition';
 import { SETTINGS } from '../constants';
-import type { Debris, Action } from '../types/index';
+import type { Debris, Action } from '../types/types';
 
 // TODO: These reducers are nearly identical to the bullet reducers. Share the code
 

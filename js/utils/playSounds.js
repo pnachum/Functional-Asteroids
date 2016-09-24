@@ -1,8 +1,11 @@
-import { Sound, SETTINGS } from '../constants';
+// @flow
+
+import { SETTINGS } from '../constants';
+import { Sound } from '../types/enums';
 
 function playSound(sound: Sound) {
   const soundPath = `audio/${SETTINGS.audioFile[sound]}.mp3`;
-  const audio = new Audio(soundPath);
+  const audio = new global.Audio(soundPath);
   audio.play();
 }
 

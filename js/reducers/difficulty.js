@@ -1,8 +1,9 @@
 // @flow
 
-import { SETTINGS, FRAMES_PER_SECOND, DEFAULT_MODE, Mode } from '../constants';
+import { SETTINGS, FRAMES_PER_SECOND, DEFAULT_MODE } from '../constants';
 import { MOVE, SET_MODE, RESET } from '../actions';
-import type { DifficultyState, Action } from '../types/index';
+import type { DifficultyState, Action } from '../types/types';
+import { Mode } from '../types/enums';
 
 function increasedDifficulty(prevDifficulty: DifficultyState): DifficultyState {
   const {

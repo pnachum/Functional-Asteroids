@@ -1,7 +1,7 @@
 // @flow
 
 import { TOGGLE_PAUSE } from '../actions';
-import type { Action } from '../types/index';
+import type { Action } from '../types/types';
 
 const defaultState: boolean = false;
 

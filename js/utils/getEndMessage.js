@@ -1,9 +1,7 @@
 // @flow
 
-import {
-  FRAMES_PER_SECOND,
-  Mode,
-} from '../constants';
+import { FRAMES_PER_SECOND } from '../constants';
+import { Mode } from '../types/enums';
 
 type Argument = {
   score: number,

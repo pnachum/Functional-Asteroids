@@ -1,7 +1,7 @@
 // @flow
 
 import { DIMENSION } from '../constants';
-import type { DrawableCircle, DrawableText } from '../types/index';
+import type { DrawableCircle, DrawableText } from '../types/types';
 
 let gameCtx: CanvasRenderingContext2D;
 let uiCtx: CanvasRenderingContext2D;

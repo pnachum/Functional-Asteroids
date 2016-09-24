@@ -4,7 +4,7 @@ import { MOVE, THRUST_SHIP, ROTATE_SHIP, STOP_THRUSTING_SHIP } from '../actions'
 import newPosition from '../utils/newPosition';
 import computeNewVel from '../utils/computeNewVel';
 import { SETTINGS } from '../constants';
-import type { Ship, Action } from '../types/index';
+import type { Ship, Action } from '../types/types';
 
 function airResistedVelocity(oldVel: [number, number], airResistance: number): [number, number] {
   return oldVel.map((d) => {

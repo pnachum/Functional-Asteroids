@@ -2,13 +2,14 @@
 
 import newPosition from '../utils/newPosition';
 import { MOVE, SHOOT } from '../actions';
-import { SETTINGS, Mode } from '../constants';
+import { SETTINGS } from '../constants';
 import {
   getRotateablePosition,
   direction,
 } from '../utils/math';
 import { isBulletPoweredUp } from '../utils/durationChecks';
-import type { Bullet, Action } from '../types/index';
+import type { Bullet, Action } from '../types/types';
+import { Mode } from '../types/enums';
 
 const defaultState: Bullet[] = [];
 

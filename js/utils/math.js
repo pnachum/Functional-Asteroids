@@ -1,7 +1,7 @@
 // @flow
 
 import { sumBy } from 'lodash';
-import type { WithRadius, Distanceable } from '../types/index';
+import type { WithRadius, Distanceable } from '../types/types';
 
 export function toRadians(degrees: number): number {
   return degrees * (Math.PI / 180);

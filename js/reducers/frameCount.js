@@ -1,7 +1,7 @@
 // @flow
 
 import { MOVE } from '../actions';
-import type { Action } from '../types/index';
+import type { Action } from '../types/types';
 
 const defaultState: number = 0;
 

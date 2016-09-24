@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import VolumeOff from 'react-icons/lib/fa/volume-off';
 import VolumeUp from 'react-icons/lib/fa/volume-up';

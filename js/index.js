@@ -13,13 +13,14 @@ import {
   triggerBomb,
   toggleSound,
 } from './actions';
-import { FRAMES_PER_SECOND, Mode, Sound } from './constants';
+import { FRAMES_PER_SECOND } from './constants';
 import { initContext } from './utils/canvas';
 import playSounds from './utils/playSounds';
 import store from './store';
 import draw from './draw';
 import getEndMessage from './utils/getEndMessage';
-import type { Store } from './types/index';
+import type { Store } from './types/types';
+import { Mode, Sound } from './types/enums';
 
 let intervalId;
 

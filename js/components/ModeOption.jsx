@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import { SETTINGS, Mode } from '../constants';
+import { SETTINGS } from '../constants';
+import { Mode } from '../types/enums';
 
 const styles = StyleSheet.create({
   modeOption: {

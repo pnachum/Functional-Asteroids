@@ -5,11 +5,13 @@ import {
   SETTINGS,
   FRAMES_PER_SECOND,
   DIMENSION,
-  Mode,
-  PowerupType,
 } from '../constants';
 import { MOVE } from '../actions';
-import type { Powerup, Action } from '../types/index';
+import type { Powerup, Action } from '../types/types';
+import {
+  Mode,
+  PowerupType,
+} from '../types/enums';
 
 function newPowerup(mode: Mode, lives: number, bombs: number): Powerup {
   // Do not give more lives if current lives >= 2

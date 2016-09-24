@@ -1,6 +1,8 @@
+// @flow
+
 import { MOVE, SHOOT } from '../actions';
-import { Sound, Mode } from '../constants';
-import type { Action } from '../types/index';
+import { Sound, Mode } from '../types/enums';
+import type { Action } from '../types/types';
 
 const defaultState = [];
 

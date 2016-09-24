@@ -1,19 +1,9 @@
 // @flow
-
-import { Enum } from 'enumify';
-import type { Ship } from './types/index';
+import type { Ship } from './types/types';
+import { Mode, PowerupType, Sound } from './types/enums';
 
 export const DIMENSION = 500;
 export const FRAMES_PER_SECOND = 30;
-
-export class Mode extends Enum {}
-Mode.initEnum(['CLASSIC', 'DODGEBALL', 'BOSS', 'SUPER_BOSS']);
-
-export class PowerupType extends Enum {}
-PowerupType.initEnum(['LIFE', 'BULLET', 'BOMB', 'FREEZE', 'INVINCIBLE']);
-
-export class Sound extends Enum {}
-Sound.initEnum(['ASTEROID_BREAK', 'ASTEROID_DESTROY', 'GAME_OVER', 'LASER']);
 
 export const MODES: Mode[] = [Mode.CLASSIC, Mode.DODGEBALL, Mode.BOSS, Mode.SUPER_BOSS];
 export const POWERUP_TYPES: PowerupType[] = [

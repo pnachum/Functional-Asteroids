@@ -3,11 +3,12 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { connect } from 'react-redux';
-import { MODES, Mode } from '../constants';
+import { MODES } from '../constants';
 import ModeOption from './ModeOption';
 import Instructions from './Instructions';
 import Canvases from './Canvases';
 import { setMode } from '../actions';
+import { Mode } from '../types/enums';
 
 type State = {
   isSelectingMode: boolean,

@@ -1,5 +1,7 @@
+// @flow
+
 import { times, sumBy } from 'lodash';
-import { SETTINGS, PowerupType } from '../constants';
+import { SETTINGS } from '../constants';
 import randomAsteroids from './randomAsteroids';
 import { direction, sumOfAreas, isCollided } from './math';
 import { isShipInvincible } from './durationChecks';
@@ -11,7 +13,8 @@ import type {
   Ship,
   Bullet,
   Powerup,
-} from '../types/index';
+} from '../types/types';
+import { PowerupType } from '../types/enums';
 
 type AsteroidCollision = {
   asteroid: Asteroid,

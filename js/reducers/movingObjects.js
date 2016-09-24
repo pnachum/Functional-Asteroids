@@ -11,7 +11,7 @@ import bombs from './bombs';
 import queuedSounds from './queuedSounds';
 import multiplier from './multiplier';
 import { MOVE, SET_MODE, RESET, TRIGGER_BOMB } from '../actions';
-import { SETTINGS, DEFAULT_MODE, Sound } from '../constants';
+import { SETTINGS, DEFAULT_MODE } from '../constants';
 import {
   debrisForDestroyedAsteroids,
   subASteroidsForCollidedAsteroids,
@@ -25,7 +25,8 @@ import type {
   DifficultyState,
   WithRadius,
   MovingObjectsState,
-} from '../types/index';
+} from '../types/types';
+import { Sound } from '../types/enums';
 
 const defaultState: MovingObjectsState = {
   asteroids: [],

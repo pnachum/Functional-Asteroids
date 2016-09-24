@@ -4,8 +4,6 @@ import { compact, flatten, times } from 'lodash';
 import {
   SETTINGS,
   FRAMES_PER_SECOND,
-  Mode,
-  PowerupType,
 } from './constants';
 import { getRotateablePosition } from './utils/math';
 import {
@@ -23,8 +21,9 @@ import type {
   DrawableCircle,
   Powerup,
   Store,
-} from './types/index';
+} from './types/types';
 import { isShipInvincible } from './utils/durationChecks';
+import {  Mode, PowerupType } from './types/enums';
 
 let shipDrawFrame = 0;
 

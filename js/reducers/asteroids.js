@@ -2,7 +2,7 @@
 
 import newPosition from '../utils/newPosition';
 import { MOVE, ADD_INITIAL_ASTEROIDS, RESET } from '../actions';
-import type { Asteroid, Action } from '../types/index';
+import type { Asteroid, Action } from '../types/types';
 import { SETTINGS } from '../constants';
 import randomAsteroids from '../utils/randomAsteroids';
 import { areAsteroidsFrozen } from '../utils/durationChecks';
