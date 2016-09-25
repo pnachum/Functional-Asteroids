@@ -5,6 +5,7 @@ import VolumeOff from 'react-icons/lib/fa/volume-off';
 import VolumeUp from 'react-icons/lib/fa/volume-up';
 import { connect } from 'react-redux';
 import { toggleSound } from '../actions';
+import type { Store } from '../types/types';
 
 type Props = {
   toggle: () => void,
@@ -20,6 +21,6 @@ function SoundControl({ toggle, isSoundOn }: Props) {
 }
 
 export default connect(
-  ({ isSoundOn }) => ({ isSoundOn }),
+  ({ isSoundOn }: Store) => ({ isSoundOn }: { isSoundOn: boolean }),
   dispatch => ({ toggle: () => dispatch(toggleSound()) })
 )(SoundControl);
