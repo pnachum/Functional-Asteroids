@@ -110,7 +110,7 @@ export default function movingObjects(
         newShip,
         beginBulletPowerup,
         beginFreezePowerup,
-        addBomb,
+        bombsDiff,
         resetMultiplier,
       } = handleCollisions({
         ship: defaultNewState.ship,
@@ -150,7 +150,7 @@ export default function movingObjects(
         score: defaultNewState.score + pointsAwarded,
         multiplier: resetMultiplier ? 1 : defaultNewState.multiplier,
         lives: defaultNewState.lives + livesDiff,
-        bombs: addBomb ? defaultNewState.bombs + 1 : defaultNewState.bombs,
+        bombs: defaultNewState.bombs + bombsDiff,
         queuedSounds: defaultNewState.queuedSounds.concat(newSounds),
         bulletPowerupStartFrame,
         freezePowerupStartFrame,

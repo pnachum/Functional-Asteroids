@@ -94,7 +94,7 @@ export function handleCollisions({
   newShip: Ship,
   beginBulletPowerup: boolean,
   beginFreezePowerup: boolean,
-  addBomb: boolean,
+  bombsDiff: number,
   resetMultiplier: boolean,
 } {
   const {
@@ -110,6 +110,7 @@ export function handleCollisions({
     },
   } = SETTINGS;
   let livesDiff: number = 0;
+  let bombsDiff: number = 0;
   let resetMultiplier: boolean = false;
   const collidedBullets: Bullet[] = [];
   const asteroidCollisions: AsteroidCollision[] = [];
@@ -155,6 +156,7 @@ export function handleCollisions({
 
   const collidedPowerupsOfType: (type: PowerupType) => Powerup[] = powerupsOfType(collidedPowerups);
   livesDiff += collidedPowerupsOfType(PowerupType.LIFE).length;
+  bombsDiff = collidedPowerupsOfType(PowerupType.BOMB).length;
 
   const beginBulletPowerup = collidedPowerupsOfType(PowerupType.BULLET).length > 0;
   const beginFreezePowerup = collidedPowerupsOfType(PowerupType.FREEZE).length > 0;
@@ -165,7 +167,6 @@ export function handleCollisions({
       invincibilityStartFrame: frameCount,
     };
   }
-  const addBomb = collidedPowerupsOfType(PowerupType.BOMB).length > 0;
   return {
     newShip: newShip || ship,
     livesDiff,
@@ -176,7 +177,7 @@ export function handleCollisions({
     pointsAwarded,
     beginBulletPowerup,
     beginFreezePowerup,
-    addBomb,
+    bombsDiff,
     resetMultiplier,
   };
 }
