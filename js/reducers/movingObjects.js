@@ -9,7 +9,6 @@ import debris from './debris';
 import powerups from './powerups';
 import bombs from './bombs';
 import queuedSounds from './queuedSounds';
-import multiplier from './multiplier';
 import { MOVE, SET_MODE, RESET, TRIGGER_BOMB } from '../actions';
 import { SETTINGS, DEFAULT_MODE } from '../constants';
 import {
@@ -17,6 +16,7 @@ import {
   subASteroidsForCollidedAsteroids,
   additionalAsteroidsForCurrentAsteroids,
   handleCollisions,
+  updateMultipliers,
 } from '../utils/asteroidCollisions';
 import type {
   Asteroid,
@@ -37,6 +37,7 @@ const defaultState: MovingObjectsState = {
   score: 0,
   lives: SETTINGS.startingLives[DEFAULT_MODE],
   multiplier: 1,
+  multiplierBar: 0,
   bulletPowerupStartFrame: null,
   freezePowerupStartFrame: null,
   bombs: 0,
@@ -64,7 +65,6 @@ const subReducer = combineReducers({
   powerups,
   bombs,
   queuedSounds,
-  multiplier,
 });
 
 // This reducer allows for state changes which rely on interactions between various moving objects,
@@ -82,7 +82,6 @@ export default function movingObjects(
     'powerups',
     'bombs',
     'queuedSounds',
-    'multiplier',
   ]), action);
   const defaultNewState: MovingObjectsState = {
     ...state,
@@ -141,6 +140,13 @@ export default function movingObjects(
         ...times(destroyedAsteroids.length, () => Sound.ASTEROID_DESTROY),
       ];
 
+      const { multiplier, multiplierBar } = updateMultipliers({
+        previousMultiplier: defaultNewState.multiplier,
+        previousMultiplierBar: defaultNewState.multiplierBar,
+        numHits: collidedAsteroids.length,
+        resetMultiplier,
+      });
+
       return {
         ship: newShip,
         bullets: notCollidedBullets,
@@ -148,7 +154,8 @@ export default function movingObjects(
         debris: subState.debris.concat(newDebris),
         powerups: notCollidedPowerups,
         score: defaultNewState.score + pointsAwarded,
-        multiplier: resetMultiplier ? 1 : defaultNewState.multiplier,
+        multiplier,
+        multiplierBar,
         lives: defaultNewState.lives + livesDiff,
         bombs: defaultNewState.bombs + bombsDiff,
         queuedSounds: defaultNewState.queuedSounds.concat(newSounds),

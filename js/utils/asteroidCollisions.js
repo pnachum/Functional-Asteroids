@@ -181,3 +181,31 @@ export function handleCollisions({
     resetMultiplier,
   };
 }
+
+export function updateMultipliers({
+  previousMultiplier,
+  previousMultiplierBar,
+  numHits,
+  resetMultiplier,
+}: {
+  previousMultiplier: number,
+  previousMultiplierBar: number,
+  numHits: number,
+  resetMultiplier: boolean,
+}): { multiplier: number, multiplierBar: number } {
+  if (resetMultiplier) {
+    return { multiplier: 1, multiplierBar: 0 };
+  }
+  let newMultiplier = previousMultiplier;
+  let newMultiplierBar = Math.max(0, previousMultiplierBar + (10 * numHits) - 0.2);
+  if (newMultiplierBar === 0) {
+    newMultiplier = 1;
+  } else if (newMultiplierBar > 100) {
+    newMultiplierBar %= 100;
+    newMultiplier += 1;
+  }
+  return {
+    multiplier: Math.max(1, newMultiplier),
+    multiplierBar: newMultiplierBar,
+  };
+}

@@ -11,6 +11,7 @@ import {
   drawCircleInUI,
   drawTextInGame,
   drawTextInUI,
+  drawRectangleInUI,
   clear,
 } from './utils/canvas';
 import type {
@@ -23,7 +24,7 @@ import type {
   Store,
 } from './types/types';
 import { isShipInvincible } from './utils/durationChecks';
-import {  Mode, PowerupType } from './types/enums';
+import { Mode, PowerupType } from './types/enums';
 
 let shipDrawFrame = 0;
 
@@ -212,11 +213,40 @@ function drawTime(frameCount: number) {
   });
 }
 
-function drawMultiplier(multiplier: number) {
+function drawMultiplier(multiplier: number, multiplierBar: number) {
+  const outerWidth = 180;
+  const outerHeight = 40;
+  const borderThickness = 2;
+  const innerWidth = outerWidth - (2 * borderThickness);
+  const innerHeight = outerHeight - (2 * borderThickness);
+  const outerPos = [5, 60];
+  const innerPos = outerPos.map(d => d + borderThickness);
+  // Draw an outer black rectangle to create the border
+  drawRectangleInUI({
+    pos: outerPos,
+    color: 'black',
+    width: outerWidth,
+    height: outerHeight,
+  });
+  // Draw an inner white rectangle to create make it a border
+  drawRectangleInUI({
+    pos: innerPos,
+    color: 'white',
+    width: innerWidth,
+    height: innerHeight,
+  });
+  // Fill it up with the green bar
+  drawRectangleInUI({
+    pos: innerPos,
+    color: 'green',
+    width: (multiplierBar / 100) * innerWidth,
+    height: innerHeight,
+  });
   drawUIText({
     text: `x${multiplier}`,
-    pos: [5, 60],
+    pos: [outerPos[0] + outerWidth + 15, outerPos[1] + 30],
   });
+
 }
 
 function drawMode(mode: Mode) {
@@ -241,6 +271,7 @@ export default function draw({
     score,
     lives,
     multiplier,
+    multiplierBar,
     powerups,
     bombs,
   } = movingObjects;
@@ -261,6 +292,6 @@ export default function draw({
   drawLives(lives);
   drawBombs(bombs);
   drawTime(frameCount);
-  drawMultiplier(multiplier);
+  drawMultiplier(multiplier, multiplierBar);
   drawMode(mode);
 }

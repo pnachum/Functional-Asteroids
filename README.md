@@ -24,6 +24,8 @@ Asteroids is built using the following tools:
 This version has the same features as the previous version, plus some new ones.
 
 * The player has a limited number of bombs, which destroy every asteroid in the game.
+* Instead of increasing the score multiplier with a powerup, it is now increased by hitting
+  asteroids in quick succession.
 * There are new powerups.
 * The gun powerup causes the ship to temporarily shoot a three-bullet spread. Previously it would
   make the bullets larger and faster.

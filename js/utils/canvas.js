@@ -1,7 +1,7 @@
 // @flow
 
 import { DIMENSION } from '../constants';
-import type { DrawableCircle, DrawableText } from '../types/types';
+import type { DrawableCircle, DrawableText, DrawableRectangle } from '../types/types';
 
 let gameCtx: CanvasRenderingContext2D;
 let uiCtx: CanvasRenderingContext2D;
@@ -71,3 +71,17 @@ function ungardedDrawTextInUI(obj: DrawableText) {
   drawText(uiCtx, obj);
 }
 export const drawTextInUI = guardForInitialized(ungardedDrawTextInUI);
+
+function drawRectangle(
+  ctx: CanvasRenderingContext2D,
+  { pos, width, height, color }: DrawableRectangle
+) {
+  ctx.fillStyle = color;
+  ctx.fillRect(pos[0], pos[1], width, height);
+}
+
+function unguardedDrawRectangleInUI(obj: DrawableRectangle) {
+  drawRectangle(uiCtx, obj);
+}
+
+export const drawRectangleInUI = guardForInitialized(unguardedDrawRectangleInUI);

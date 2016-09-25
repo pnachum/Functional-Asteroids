@@ -59,6 +59,13 @@ export type DrawableText = {
   color: string
 };
 
+export type DrawableRectangle = {
+  pos: [number, number],
+  color: string,
+  width: number,
+  height: number,
+};
+
 export type DifficultyState = {
   asteroidSpawnRadius: number,
   minimumAsteroidArea: number,
@@ -83,6 +90,7 @@ export type MovingObjectsState = {
   score: number,
   lives: number,
   multiplier: number,
+  multiplierBar: number,
   bulletPowerupStartFrame: ?number,
   freezePowerupStartFrame: ?number,
   bombs: number,
