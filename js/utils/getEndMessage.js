@@ -20,7 +20,7 @@ function getEndMessageHelper({ score, frameCount, mode, hasWon }: Argument): str
   if (mode === Mode.DODGEBALL) {
     return `Game Over! You survived for ${seconds} seconds.`;
   }
-  return `Game Over! Your score is ${score}. You survived for ${seconds} seconds.`;
+  return `Game Over! Your score is ${score.toLocaleString()}. You survived for ${seconds} seconds.`;
 }
 
 export default function getEndMessage(options: Argument): string {

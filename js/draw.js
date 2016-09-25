@@ -178,7 +178,7 @@ function drawUIText({ text, pos }: { text: string, pos: [number, number] }) {
 
 function drawScore(score: number) {
   drawUIText({
-    text: `Score: ${score}`,
+    text: `Score: ${score.toLocaleString()}`,
     pos: [5, 30],
   });
 }
