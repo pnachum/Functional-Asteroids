@@ -187,7 +187,7 @@ function drawLives(lives: number) {
   drawRepeated(lives, i => (
     shipDrawInfo({
       ...SETTINGS.ship.defaultShip,
-      pos: [20 + (25 * i), 90],
+      pos: [20 + (25 * i), 100],
     })
   ));
 }
@@ -196,7 +196,7 @@ function drawBombs(bombs: number) {
   drawRepeated(bombs, i => (
     powerupDrawInfo({
       type: PowerupType.BOMB,
-      pos: [20 + (25 * i), 120],
+      pos: [20 + (25 * i), 130],
     })
   ));
 }
@@ -209,7 +209,7 @@ function drawTime(frameCount: number) {
   const seconds: number = Math.floor(frameCount / FRAMES_PER_SECOND);
   drawUIText({
     text: `Time: ${seconds}`,
-    pos: [5, 190],
+    pos: [5, 200],
   });
 }
 
@@ -219,7 +219,7 @@ function drawMultiplier(multiplier: number, multiplierBar: number) {
   const borderThickness = 2;
   const innerWidth = outerWidth - (2 * borderThickness);
   const innerHeight = outerHeight - (2 * borderThickness);
-  const outerPos = [5, 60];
+  const outerPos = [5, 40];
   const innerPos = outerPos.map(d => d + borderThickness);
   // Draw an outer black rectangle to create the border
   drawRectangleInUI({
@@ -253,7 +253,7 @@ function drawMode(mode: Mode) {
   const text = SETTINGS.modes.name[mode];
   drawUIText({
     text: `Mode: ${text}`,
-    pos: [5, 160],
+    pos: [5, 170],
   });
 }
 
