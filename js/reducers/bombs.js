@@ -10,10 +10,7 @@ export default function bombs(state: number = defaultState, action: Action): num
   const { startingBombs } = SETTINGS;
   switch (action.type) {
     case TRIGGER_BOMB:
-      if (state > 0) {
-        return state - 1;
-      }
-      return state;
+      return Math.max(state - 1, 0);
     case SET_MODE:
     case RESET: {
       if (action.payload == null) {
