@@ -104,8 +104,10 @@ function start() {
   intervalId = setInterval(step, interval);
 }
 
+const guardForPaused = (f, getState) => (...args) => !getState().isPaused && f(...args);
+
 function bindKeyHandlers() {
-  key('space', () => {
+  key('space', guardForPaused(() => {
     const {
       movingObjects: {
         ship,
@@ -115,20 +117,16 @@ function bindKeyHandlers() {
       frameCount,
     }: Store = store.getState();
     store.dispatch(shoot(ship, mode, bulletPowerupStartFrame, frameCount));
-  });
+  }, store.getState));
 
   key('p', () => {
     store.dispatch(togglePause());
-    if (store.getState().isPaused) {
-      stop();
-    } else {
-      start();
-    }
+    return store.getState().isPaused ? stop() : start();
   });
 
-  key('b', () => {
+  key('b', guardForPaused(() => {
     store.dispatch(triggerBomb());
-  });
+  }, store.getState));
 
   key('m', () => {
     store.dispatch(toggleSound());
