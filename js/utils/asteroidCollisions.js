@@ -66,9 +66,9 @@ export function additionalAsteroidsForCurrentAsteroids(
     : [];
 }
 
-function powerupsOfType(powerups: Powerup[]): (type: PowerupType) => Powerup[] {
-  return (type: PowerupType) => powerups.filter(powerup => powerup.type === type);
-}
+const numPowerupsOfType = (powerups: Powerup[]) => (type: PowerupType): number => (
+  powerups.filter(powerup => powerup.type === type).length
+);
 
 export function handleCollisions({
   ship,
@@ -154,13 +154,13 @@ export function handleCollisions({
   ));
   const notCollidedPowerups = powerups.filter(powerup => !collidedPowerups.includes(powerup));
 
-  const collidedPowerupsOfType: (type: PowerupType) => Powerup[] = powerupsOfType(collidedPowerups);
-  livesDiff += collidedPowerupsOfType(PowerupType.LIFE).length;
-  bombsDiff = collidedPowerupsOfType(PowerupType.BOMB).length;
+  const numCollidedPowerupsOfType = numPowerupsOfType(collidedPowerups);
+  livesDiff += numCollidedPowerupsOfType(PowerupType.LIFE);
+  bombsDiff = numCollidedPowerupsOfType(PowerupType.BOMB);
 
-  const beginBulletPowerup = collidedPowerupsOfType(PowerupType.BULLET).length > 0;
-  const beginFreezePowerup = collidedPowerupsOfType(PowerupType.FREEZE).length > 0;
-  const beginInvinciblePowerup = collidedPowerupsOfType(PowerupType.INVINCIBLE).length > 0;
+  const beginBulletPowerup = numCollidedPowerupsOfType(PowerupType.BULLET) > 0;
+  const beginFreezePowerup = numCollidedPowerupsOfType(PowerupType.FREEZE) > 0;
+  const beginInvinciblePowerup = numCollidedPowerupsOfType(PowerupType.INVINCIBLE) > 0;
   if (beginInvinciblePowerup) {
     newShip = {
       ...newShip,
