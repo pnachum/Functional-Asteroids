@@ -1,6 +1,7 @@
 // @flow
 
 import { sumBy } from 'lodash';
+import { map, add, subtract } from './tupleMap';
 import type { WithRadius, Distanceable } from '../types/types';
 
 export function toRadians(degrees: number): number {
@@ -8,7 +9,7 @@ export function toRadians(degrees: number): number {
 }
 
 export function direction(degrees: number): [number, number] {
-  const radians: number = toRadians(degrees);
+  const radians = toRadians(degrees);
   return [Math.cos(radians), -Math.sin(radians)];
 }
 
@@ -19,12 +20,12 @@ export function getRotateablePosition(
   pos: [number, number],
   degrees: number
 ): [number, number] {
-  const distances: [number, number] = direction(degrees).map(d => d * radius);
-  return pos.map((d, i) => d + distances[i]);
+  const distances = map(direction(degrees), d => d * radius);
+  return add(pos, distances);
 }
 
 export function distance(obj1: Distanceable, obj2: Distanceable): number {
-  const [xDiff, yDiff]: [number, number] = obj1.pos.map((d, i) => d - obj2.pos[i]);
+  const [xDiff, yDiff] = subtract(obj1.pos, obj2.pos);
   return Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
 }
 

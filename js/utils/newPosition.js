@@ -1,6 +1,7 @@
 // @flow
 
 import { DIMENSION } from '../constants';
+import { map, add } from './tupleMap';
 import type { Moveable } from '../types/types';
 
 // Given the position and radius of an object, and the dimension of the screen, map the object
@@ -10,7 +11,7 @@ function mapToScreen(
   radius: number,
   dimension: number = DIMENSION
 ): [number, number] {
-  return pos.map((d) => {
+  return map(pos, (d) => {
     if (d >= dimension + radius) {
       return d - (dimension + (2 * radius));
     } else if (d <= 0 - radius) {
@@ -21,6 +22,6 @@ function mapToScreen(
 }
 
 export default function newPosition({ vel, radius, pos }: Moveable): [number, number] {
-  const newPos: [number, number] = pos.map((d, i) => d + vel[i]);
+  const newPos = add(pos, vel);
   return mapToScreen(newPos, radius);
 }

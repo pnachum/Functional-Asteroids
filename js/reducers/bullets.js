@@ -8,6 +8,7 @@ import {
   direction,
 } from '../utils/math';
 import { isBulletPoweredUp } from '../utils/durationChecks';
+import { map } from '../utils/tupleMap';
 import type { Bullet, Action } from '../types/types';
 import { Mode } from '../types/enums';
 
@@ -74,7 +75,7 @@ export default function bullets(state: Bullet[] = defaultState, action: Action):
         const modifiedDegrees = degrees + (k * spreadDegrees);
         const position = getRotateablePosition(shipRadius, pos, modifiedDegrees);
         return {
-          vel: direction(modifiedDegrees).map(d => d * speed),
+          vel: map(direction(modifiedDegrees), d => d * speed),
           radius: bulletRadius,
           pos: position,
           distance,

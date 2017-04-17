@@ -1,12 +1,13 @@
 // @flow
 
-import { random, times, sample } from 'lodash';
+import { random, sample } from 'lodash';
 import {
   SETTINGS,
   FRAMES_PER_SECOND,
   DIMENSION,
 } from '../constants';
 import { MOVE } from '../actions';
+import { makePair } from '../utils/tupleMap';
 import type { Powerup, Action } from '../types/types';
 import {
   Mode,
@@ -27,7 +28,7 @@ function newPowerup(mode: Mode, lives: number, bombs: number): Powerup {
     return true;
   });
   return {
-    pos: times(2, () => random(0, DIMENSION)),
+    pos: makePair(() => random(0, DIMENSION)),
     type: sample(options),
   };
 }
