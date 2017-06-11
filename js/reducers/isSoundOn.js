@@ -8,9 +8,6 @@ export default function isSoundOn(state: boolean = true, action: Action): boolea
     case TOGGLE_SOUND:
       return !state;
     case RESET:
-      if (action.payload == null) {
-        return state;
-      }
       return action.payload.isSoundOn;
     default:
       return state;

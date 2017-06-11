@@ -11,9 +11,6 @@ export default function queuedSounds(state: Sound[] = defaultState, action: Acti
     case MOVE:
       return defaultState;
     case SHOOT: {
-      if (action.payload == null) {
-        return state;
-      }
       const { mode } = action.payload;
       // Disable shooting in DODGEBALL mode
       if (mode === Mode.DODGEBALL) {

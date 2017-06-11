@@ -12,9 +12,6 @@ const defaultState: Asteroid[] = [];
 export default function asteroids(state: Asteroid[] = defaultState, action: Action): Asteroid[] {
   switch (action.type) {
     case MOVE: {
-      if (action.payload == null) {
-        return state;
-      }
       const { frameCount, freezePowerupStartFrame } = action.payload;
       const isFrozen = areAsteroidsFrozen(freezePowerupStartFrame, frameCount);
       return state.map(asteroid => ({
@@ -24,9 +21,6 @@ export default function asteroids(state: Asteroid[] = defaultState, action: Acti
     }
     case RESET:
     case ADD_INITIAL_ASTEROIDS: {
-      if (action.payload == null) {
-        return state;
-      }
       const { mode } = action.payload;
       const num = SETTINGS.asteroids.startingNumber[mode];
       const radius = SETTINGS.asteroids.startingSpawnRadius[mode];

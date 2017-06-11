@@ -72,8 +72,6 @@ export type DifficultyState = {
   asteroidSpeed: number,
 };
 
-export type Action = { type: string, payload?: any };
-
 export type TurnDirection = 1 | -1;
 
 export type Powerup = {
@@ -105,3 +103,75 @@ export type Store = {
   mode: Mode,
   isSoundOn: boolean,
 };
+
+export type MoveAction = {
+  type: 'MOVE',
+  payload: {
+    difficulty: DifficultyState,
+    frameCount: number,
+    mode: Mode,
+    lives: number,
+    bombs: number,
+    freezePowerupStartFrame: ?number,
+  }
+}
+
+export type ThrustShipAction = { type: 'THRUST_SHIP' };
+
+export type RotateShipAction = {
+  type: 'ROTATE_SHIP',
+  payload: TurnDirection,
+};
+
+export type StopThrustingAction = { type: 'STOP_THRUSTING_SHIP' };
+
+export type ShootAction = {
+  type: 'SHOOT',
+  payload: {
+    ship: Ship,
+    mode: Mode,
+    bulletPowerupStartFrame: ?number,
+    frameCount: number,
+  },
+};
+
+export type TogglePauseAction = { type: 'TOGGLE_PAUSE' };
+
+export type ResetAction = {
+  type: 'RESET',
+  payload: {
+    mode: Mode,
+    isSoundOn: boolean,
+  },
+}
+
+export type SetModeAction = {
+  type: 'SET_MODE',
+  payload: {
+    mode: Mode,
+  },
+}
+
+export type AddInitialAsteroidsAction = {
+  type: 'ADD_INITIAL_ASTEROIDS',
+  payload: {
+    mode: Mode,
+  },
+}
+
+export type TriggerBombAction = { type: 'TRIGGER_BOMB' };
+
+export type ToggleSoundAction = { type: 'TOGGLE_SOUND' };
+
+export type Action =
+  | ToggleSoundAction
+  | TriggerBombAction
+  | AddInitialAsteroidsAction
+  | SetModeAction
+  | ResetAction
+  | ShootAction
+  | TogglePauseAction
+  | StopThrustingAction
+  | RotateShipAction
+  | ThrustShipAction
+  | MoveAction

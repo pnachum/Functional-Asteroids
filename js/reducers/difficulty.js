@@ -31,9 +31,6 @@ export default function difficulty(
 ): DifficultyState {
   switch (action.type) {
     case MOVE: {
-      if (action.payload == null) {
-        return state;
-      }
       const { frameCount, mode } = action.payload;
       // There are no difficulty increases for these modes
       if ([Mode.BOSS, Mode.SUPER_BOSS].includes(mode)) {
@@ -48,9 +45,6 @@ export default function difficulty(
     }
     case RESET:
     case SET_MODE: {
-      if (action.payload == null) {
-        return state;
-      }
       const { mode } = action.payload;
       return {
         ...state,

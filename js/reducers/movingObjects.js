@@ -87,9 +87,6 @@ export default function movingObjects(
   };
   switch (action.type) {
     case MOVE: {
-      if (action.payload == null) {
-        return state;
-      }
       const {
         difficulty,
         frameCount,
@@ -174,9 +171,6 @@ export default function movingObjects(
       return defaultNewState;
     case RESET:
     case SET_MODE:
-      if (action.payload == null) {
-        return state;
-      }
       return { ...defaultNewState, lives: SETTINGS.startingLives[action.payload.mode] };
     default:
       return defaultNewState;

@@ -43,9 +43,6 @@ export default function powerups(state: Powerup[] = defaultState, action: Action
   } = SETTINGS;
   switch (action.type) {
     case MOVE: {
-      if (action.payload == null) {
-        return state;
-      }
       const { frameCount, mode, lives, bombs } = action.payload;
       // No powerups in DODGEBALL
       if (mode === Mode.DODGEBALL) {

@@ -52,9 +52,6 @@ export default function bullets(state: Bullet[] = defaultState, action: Action):
         .map(b => bullet(b, action))
         .filter(b => b.distance > 0);
     case SHOOT: {
-      if (action.payload == null) {
-        return state;
-      }
       const {
         ship: {
           pos,

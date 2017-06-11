@@ -13,9 +13,6 @@ export default function bombs(state: number = defaultState, action: Action): num
       return Math.max(state - 1, 0);
     case SET_MODE:
     case RESET: {
-      if (action.payload == null) {
-        return state;
-      }
       const { mode } = action.payload;
       return startingBombs[mode];
     }

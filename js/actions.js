@@ -1,6 +1,21 @@
 // @flow
 
-import type { Ship, DifficultyState, Action, TurnDirection } from './types/types';
+import type {
+  Ship,
+  DifficultyState,
+  TurnDirection,
+  ToggleSoundAction,
+  TriggerBombAction,
+  AddInitialAsteroidsAction,
+  SetModeAction,
+  ResetAction,
+  ShootAction,
+  TogglePauseAction,
+  StopThrustingAction,
+  RotateShipAction,
+  ThrustShipAction,
+  MoveAction,
+} from './types/types';
 import { Mode } from './types/enums';
 
 export const MOVE = 'MOVE';
@@ -23,23 +38,23 @@ export function move(payload: {
   lives: number,
   bombs: number,
   freezePowerupStartFrame: ?number,
-}): Action {
+}): MoveAction {
   return {
     type: MOVE,
     payload,
   };
 }
 
-export function thrustShip(): Action {
-  return { type: THRUST_SHIP };
+export function thrustShip(): ThrustShipAction {
+  return { type: 'THRUST_SHIP' };
 }
 
-export function rotateShip(direction: TurnDirection): Action {
-  return { type: ROTATE_SHIP, payload: direction };
+export function rotateShip(direction: TurnDirection): RotateShipAction {
+  return { type: 'ROTATE_SHIP', payload: direction };
 }
 
-export function stopThrustingShip(): Action {
-  return { type: STOP_THRUSTING_SHIP };
+export function stopThrustingShip(): StopThrustingAction {
+  return { type: 'STOP_THRUSTING_SHIP' };
 }
 
 export function shoot(
@@ -47,9 +62,9 @@ export function shoot(
   mode: Mode,
   bulletPowerupStartFrame: ?number,
   frameCount: number
-): Action {
+): ShootAction {
   return {
-    type: SHOOT,
+    type: 'SHOOT',
     payload: {
       ship,
       mode,
@@ -59,11 +74,11 @@ export function shoot(
   };
 }
 
-export function togglePause(): Action {
-  return { type: TOGGLE_PAUSE };
+export function togglePause(): TogglePauseAction {
+  return { type: 'TOGGLE_PAUSE' };
 }
 
-export function reset(mode: Mode, isSoundOn: boolean): Action {
+export function reset(mode: Mode, isSoundOn: boolean): ResetAction {
   return {
     type: RESET,
     payload: {
@@ -73,28 +88,28 @@ export function reset(mode: Mode, isSoundOn: boolean): Action {
   };
 }
 
-export function setMode(newMode: Mode): Action {
+export function setMode(newMode: Mode): SetModeAction {
   return {
-    type: SET_MODE,
+    type: 'SET_MODE',
     payload: {
       mode: newMode,
     },
   };
 }
 
-export function addInitialAsteroids(mode: Mode): Action {
+export function addInitialAsteroids(mode: Mode): AddInitialAsteroidsAction {
   return {
-    type: ADD_INITIAL_ASTEROIDS,
+    type: 'ADD_INITIAL_ASTEROIDS',
     payload: {
       mode,
     },
   };
 }
 
-export function triggerBomb(): Action {
-  return { type: TRIGGER_BOMB };
+export function triggerBomb(): TriggerBombAction {
+  return { type: 'TRIGGER_BOMB' };
 }
 
-export function toggleSound(): Action {
-  return { type: TOGGLE_SOUND };
+export function toggleSound(): ToggleSoundAction {
+  return { type: 'TOGGLE_SOUND' };
 }
