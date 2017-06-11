@@ -8,7 +8,7 @@ import difficulty from './difficulty';
 import mode from './mode';
 import isSoundOn from './isSoundOn';
 import { RESET } from '../actions';
-import type { Action } from '../types/types';
+import type { Action, Store } from '../types/types';
 
 const appReducer = combineReducers({
   movingObjects,
@@ -19,7 +19,7 @@ const appReducer = combineReducers({
   isSoundOn,
 });
 
-export default function rootReducer(state: Object, action: Action): Object {
+export default function rootReducer(state: Store, action: Action): Store {
   if (action.type === RESET) {
     return appReducer(undefined, action);
   }

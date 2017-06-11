@@ -31,7 +31,7 @@ export function debrisForDestroyedAsteroids(destroyedAsteroids: Asteroid[]): Deb
   } = SETTINGS;
   const angle: number = 360 / numDebris;
   return destroyedAsteroids.reduce((prev, current) => {
-    const debrisForAsteroid: Debris[] = times(numDebris, index => ({
+    const debrisForAsteroid = times(numDebris, index => ({
       pos: current.pos,
       vel: direction(angle * index),
       distance: debrisDistance,
@@ -109,12 +109,12 @@ export function handleCollisions({
       radius: powerupRadius,
     },
   } = SETTINGS;
-  let livesDiff: number = 0;
-  let bombsDiff: number = 0;
-  let resetMultiplier: boolean = false;
+  let livesDiff = 0;
+  let bombsDiff = 0;
+  let resetMultiplier = false;
   const collidedBullets: Bullet[] = [];
   const asteroidCollisions: AsteroidCollision[] = [];
-  let newShip: Ship = ship;
+  let newShip = ship;
   asteroids.forEach((asteroid) => {
     bullets.forEach((bullet) => {
       if (isCollided({ ...bullet, radius: bulletRadius }, asteroid)) {
@@ -125,7 +125,7 @@ export function handleCollisions({
         });
       }
     });
-    const didShipCollideWithAsteroid: boolean = isCollided(
+    const didShipCollideWithAsteroid = isCollided(
       { pos: ship.pos, radius: shipRadius },
       asteroid
     );
@@ -142,9 +142,9 @@ export function handleCollisions({
     }
   });
 
-  const collidedAsteroids: Asteroid[] = asteroidCollisions.map(ac => ac.asteroid);
-  const pointsAwarded: number = sumBy(asteroidCollisions, ac => ac.points);
-  const notCollidedAsteroids: Asteroid[] = asteroids.filter(asteroid => (
+  const collidedAsteroids = asteroidCollisions.map(ac => ac.asteroid);
+  const pointsAwarded = sumBy(asteroidCollisions, ac => ac.points);
+  const notCollidedAsteroids = asteroids.filter(asteroid => (
     !collidedAsteroids.includes(asteroid)
   ));
   const notCollidedBullets = bullets.filter(bullet => !collidedBullets.includes(bullet));

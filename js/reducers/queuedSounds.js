@@ -4,7 +4,7 @@ import { MOVE, SHOOT } from '../actions';
 import { Sound, Mode } from '../types/enums';
 import type { Action } from '../types/types';
 
-const defaultState = [];
+const defaultState: Sound[] = [];
 
 export default function queuedSounds(state: Sound[] = defaultState, action: Action): Sound[] {
   switch (action.type) {

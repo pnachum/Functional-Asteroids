@@ -30,7 +30,7 @@ export default function ship(state: Ship = defaultState, action: Action): Ship {
   } = SETTINGS.ship;
   switch (action.type) {
     case MOVE: {
-      const newPos: [number, number] = newPosition({
+      const newPos = newPosition({
         ...state,
         radius: shipRadius,
       });
@@ -41,7 +41,7 @@ export default function ship(state: Ship = defaultState, action: Action): Ship {
       };
     }
     case THRUST_SHIP: {
-      const vel: [number, number] = computeNewVel(
+      const vel = computeNewVel(
         state.vel,
         state.degrees,
         acceleration,
@@ -53,7 +53,7 @@ export default function ship(state: Ship = defaultState, action: Action): Ship {
       if (action.payload == null) {
         return state;
       }
-      const degrees: number = (state.degrees + (action.payload * turnSpeed)) % 360;
+      const degrees = (state.degrees + (action.payload * turnSpeed)) % 360;
       return { ...state, degrees };
     }
     case STOP_THRUSTING_SHIP:

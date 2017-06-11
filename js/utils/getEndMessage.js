@@ -10,10 +10,10 @@ type Argument = {
   hasWon: boolean,
 };
 
-const ending: string = 'Would you like to play again?';
+const ending = 'Would you like to play again?';
 
 function getEndMessageHelper({ score, frameCount, mode, hasWon }: Argument): string {
-  const seconds: number = Math.floor(frameCount / FRAMES_PER_SECOND);
+  const seconds = Math.floor(frameCount / FRAMES_PER_SECOND);
   if (hasWon) {
     return `You win! That took you ${seconds} seconds.`;
   }

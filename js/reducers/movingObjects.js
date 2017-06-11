@@ -20,9 +20,7 @@ import {
 } from '../utils/asteroidCollisions';
 import type {
   Asteroid,
-  Debris,
   Action,
-  DifficultyState,
   WithRadius,
   MovingObjectsState,
 } from '../types/types';
@@ -95,9 +93,6 @@ export default function movingObjects(
       const {
         difficulty,
         frameCount,
-      }: {
-        difficulty: DifficultyState,
-        frameCount: number,
       } = action.payload;
       const {
         livesDiff,
@@ -126,11 +121,11 @@ export default function movingObjects(
       const freezePowerupStartFrame = beginFreezePowerup
         ? frameCount
         : defaultNewState.freezePowerupStartFrame;
-      const subAsteroids: Asteroid[] = subASteroidsForCollidedAsteroids(collidedAsteroids);
-      const destroyedAsteroids: Asteroid[] = collidedAsteroids.filter(shouldBeDestroyed);
-      const newDebris: Debris[] = debrisForDestroyedAsteroids(destroyedAsteroids);
-      const newAsteroids: Asteroid[] = notCollidedAsteroids.concat(subAsteroids);
-      const additionalAsteroids: Asteroid[] = additionalAsteroidsForCurrentAsteroids(
+      const subAsteroids = subASteroidsForCollidedAsteroids(collidedAsteroids);
+      const destroyedAsteroids = collidedAsteroids.filter(shouldBeDestroyed);
+      const newDebris = debrisForDestroyedAsteroids(destroyedAsteroids);
+      const newAsteroids = notCollidedAsteroids.concat(subAsteroids);
+      const additionalAsteroids = additionalAsteroidsForCurrentAsteroids(
         newAsteroids,
         difficulty
       );

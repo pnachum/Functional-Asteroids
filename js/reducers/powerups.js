@@ -51,7 +51,7 @@ export default function powerups(state: Powerup[] = defaultState, action: Action
       if (mode === Mode.DODGEBALL) {
         return state;
       }
-      const elapsedSeconds: number = frameCount / FRAMES_PER_SECOND;
+      const elapsedSeconds = frameCount / FRAMES_PER_SECOND;
       if (frameCount !== 0 && elapsedSeconds % timeInterval[mode] === 0) {
         return [...state, newPowerup(mode, lives, bombs)];
       }

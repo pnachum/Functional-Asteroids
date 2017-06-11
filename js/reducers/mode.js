@@ -5,7 +5,7 @@ import { DEFAULT_MODE } from '../constants';
 import type { Action } from '../types/types';
 import { Mode } from '../types/enums';
 
-const defaultState: Mode = DEFAULT_MODE;
+const defaultState = DEFAULT_MODE;
 
 export default function mode(state: Mode = defaultState, action: Action): Mode {
   switch (action.type) {

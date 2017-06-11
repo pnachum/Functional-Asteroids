@@ -34,12 +34,12 @@ export default function difficulty(
       if (action.payload == null) {
         return state;
       }
-      const { frameCount, mode }: { frameCount: number, mode: Mode } = action.payload;
+      const { frameCount, mode } = action.payload;
       // There are no difficulty increases for these modes
       if ([Mode.BOSS, Mode.SUPER_BOSS].includes(mode)) {
         return state;
       }
-      const elapsedSeconds: number = frameCount / FRAMES_PER_SECOND;
+      const elapsedSeconds = frameCount / FRAMES_PER_SECOND;
       // Don't do a difficulty increase when the game starts
       if (frameCount !== 0 && elapsedSeconds % SETTINGS.difficulty.timeInterval[mode] === 0) {
         return increasedDifficulty(state);

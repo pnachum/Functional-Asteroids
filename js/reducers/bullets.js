@@ -17,7 +17,7 @@ const defaultState: Bullet[] = [];
 function bullet(state: Bullet, action: Action): Bullet {
   switch (action.type) {
     case MOVE: {
-      const newPos: [number, number] = newPosition(state);
+      const newPos = newPosition(state);
       return {
         ...state,
         pos: newPos,

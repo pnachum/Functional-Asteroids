@@ -246,7 +246,6 @@ function drawMultiplier(multiplier: number, multiplierBar: number) {
     text: `x${multiplier}`,
     pos: [outerPos[0] + outerWidth + 15, outerPos[1] + 30],
   });
-
 }
 
 function drawMode(mode: Mode) {

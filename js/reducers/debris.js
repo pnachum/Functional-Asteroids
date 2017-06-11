@@ -21,7 +21,7 @@ function oneDebris(state: Debris, action: Action): Debris {
   } = SETTINGS;
   switch (action.type) {
     case MOVE: {
-      const newPos: [number, number] = newPosition({
+      const newPos = newPosition({
         ...state,
         radius: minimumRadius / number,
       });
