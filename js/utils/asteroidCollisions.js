@@ -14,7 +14,7 @@ import type {
   Bullet,
   Powerup,
 } from '../types/types';
-import { PowerupType } from '../types/enums';
+import type { PowerupType } from '../types/enums';
 
 type AsteroidCollision = {
   asteroid: Asteroid,
@@ -155,12 +155,12 @@ export function handleCollisions({
   const notCollidedPowerups = powerups.filter(powerup => !collidedPowerups.includes(powerup));
 
   const numCollidedPowerupsOfType = numPowerupsOfType(collidedPowerups);
-  livesDiff += numCollidedPowerupsOfType(PowerupType.LIFE);
-  bombsDiff = numCollidedPowerupsOfType(PowerupType.BOMB);
+  livesDiff += numCollidedPowerupsOfType('LIFE');
+  bombsDiff = numCollidedPowerupsOfType('BOMB');
 
-  const beginBulletPowerup = numCollidedPowerupsOfType(PowerupType.BULLET) > 0;
-  const beginFreezePowerup = numCollidedPowerupsOfType(PowerupType.FREEZE) > 0;
-  const beginInvinciblePowerup = numCollidedPowerupsOfType(PowerupType.INVINCIBLE) > 0;
+  const beginBulletPowerup = numCollidedPowerupsOfType('BULLET') > 0;
+  const beginFreezePowerup = numCollidedPowerupsOfType('FREEZE') > 0;
+  const beginInvinciblePowerup = numCollidedPowerupsOfType('INVINCIBLE') > 0;
   if (beginInvinciblePowerup) {
     newShip = {
       ...newShip,

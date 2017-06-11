@@ -24,7 +24,6 @@ import type {
   WithRadius,
   MovingObjectsState,
 } from '../types/types';
-import { Sound } from '../types/enums';
 
 const defaultState: MovingObjectsState = {
   asteroids: [],
@@ -72,7 +71,7 @@ export default function movingObjects(
   action: Action
 ): MovingObjectsState {
   // TODO: This seems pretty messy
-  const subState = subReducer(pick(state, [
+  const subState: MovingObjectsState = subReducer(pick(state, [
     'asteroids',
     'ship',
     'bullets',
@@ -128,8 +127,8 @@ export default function movingObjects(
       );
 
       const newSounds = [
-        ...times(collidedAsteroids.length, () => Sound.ASTEROID_BREAK),
-        ...times(destroyedAsteroids.length, () => Sound.ASTEROID_DESTROY),
+        ...times(collidedAsteroids.length, () => 'ASTEROID_BREAK'),
+        ...times(destroyedAsteroids.length, () => 'ASTEROID_DESTROY'),
       ];
 
       const { multiplier, multiplierBar } = updateMultipliers({
@@ -164,7 +163,7 @@ export default function movingObjects(
             debrisForDestroyedAsteroids(defaultNewState.asteroids)
           ),
           queuedSounds: defaultNewState.queuedSounds.concat(
-            times(state.asteroids.length, () => Sound.ASTEROID_DESTROY)
+            times(state.asteroids.length, () => 'ASTEROID_DESTROY')
           ),
         };
       }

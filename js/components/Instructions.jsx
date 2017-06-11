@@ -48,7 +48,7 @@ export default function Instructions() {
             const description = SETTINGS.powerups.description[powerupType];
             const color = SETTINGS.powerups.color[powerupType];
             return (
-              <li style={{ color }} key={powerupType.name} className={css(styles.description)}>
+              <li style={{ color }} key={powerupType} className={css(styles.description)}>
                 {description}
               </li>
             );

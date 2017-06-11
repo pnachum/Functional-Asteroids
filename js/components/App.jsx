@@ -8,7 +8,7 @@ import ModeOption from './ModeOption';
 import Instructions from './Instructions';
 import Canvases from './Canvases';
 import { setMode } from '../actions';
-import { Mode } from '../types/enums';
+import type { Mode } from '../types/enums';
 
 type State = {
   isSelectingMode: boolean,
@@ -28,7 +28,7 @@ class App extends React.Component {
   props: Props;
   state: State;
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -52,7 +52,7 @@ class App extends React.Component {
             <div>
               {MODES.map(mode => (
                 <ModeOption
-                  key={mode.name}
+                  key={mode}
                   mode={mode}
                   onClick={() => this.selectMode(mode)}
                 />

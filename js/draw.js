@@ -24,7 +24,7 @@ import type {
   Store,
 } from './types/types';
 import { isShipInvincible } from './utils/durationChecks';
-import { Mode, PowerupType } from './types/enums';
+import type { Mode } from './types/enums';
 
 let shipDrawFrame = 0;
 
@@ -195,7 +195,7 @@ function drawLives(lives: number) {
 function drawBombs(bombs: number) {
   drawRepeated(bombs, i => (
     powerupDrawInfo({
-      type: PowerupType.BOMB,
+      type: 'BOMB',
       pos: [20 + (25 * i), 130],
     })
   ));

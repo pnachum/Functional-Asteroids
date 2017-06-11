@@ -1,6 +1,6 @@
 // @flow
 
-import { Mode, PowerupType, Sound } from './enums';
+import type { Mode, PowerupType, Sound } from './enums';
 
 export type Asteroid = {
   pos: [number, number],

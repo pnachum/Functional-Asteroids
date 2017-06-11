@@ -3,7 +3,7 @@
 import { SET_MODE, RESET } from '../actions';
 import { DEFAULT_MODE } from '../constants';
 import type { Action } from '../types/types';
-import { Mode } from '../types/enums';
+import type { Mode } from '../types/enums';
 
 const defaultState = DEFAULT_MODE;
 

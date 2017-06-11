@@ -1,9 +1,8 @@
 // @flow
 
-import { SETTINGS, FRAMES_PER_SECOND, DEFAULT_MODE } from '../constants';
+import { SETTINGS, FRAMES_PER_SECOND, DEFAULT_MODE, BOSS_MODES } from '../constants';
 import { MOVE, SET_MODE, RESET } from '../actions';
 import type { DifficultyState, Action } from '../types/types';
-import { Mode } from '../types/enums';
 
 function increasedDifficulty(prevDifficulty: DifficultyState): DifficultyState {
   const {
@@ -33,7 +32,7 @@ export default function difficulty(
     case MOVE: {
       const { frameCount, mode } = action.payload;
       // There are no difficulty increases for these modes
-      if ([Mode.BOSS, Mode.SUPER_BOSS].includes(mode)) {
+      if (BOSS_MODES.includes(mode)) {
         return state;
       }
       const elapsedSeconds = frameCount / FRAMES_PER_SECOND;

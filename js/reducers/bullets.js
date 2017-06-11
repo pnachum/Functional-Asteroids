@@ -10,7 +10,6 @@ import {
 import { isBulletPoweredUp } from '../utils/durationChecks';
 import { map } from '../utils/tupleMap';
 import type { Bullet, Action } from '../types/types';
-import { Mode } from '../types/enums';
 
 const defaultState: Bullet[] = [];
 
@@ -62,7 +61,7 @@ export default function bullets(state: Bullet[] = defaultState, action: Action):
         frameCount,
       } = action.payload;
       // Disable shooting in DODGEBALL mode
-      if (mode === Mode.DODGEBALL) {
+      if (mode === 'DODGEBALL') {
         return state;
       }
       const isPoweredUp = isBulletPoweredUp(bulletPowerupStartFrame, frameCount);

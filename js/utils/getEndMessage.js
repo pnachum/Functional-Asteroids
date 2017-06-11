@@ -1,7 +1,7 @@
 // @flow
 
 import { FRAMES_PER_SECOND } from '../constants';
-import { Mode } from '../types/enums';
+import type { Mode } from '../types/enums';
 
 type Argument = {
   score: number,
@@ -17,7 +17,7 @@ function getEndMessageHelper({ score, frameCount, mode, hasWon }: Argument): str
   if (hasWon) {
     return `You win! That took you ${seconds} seconds.`;
   }
-  if (mode === Mode.DODGEBALL) {
+  if (mode === 'DODGEBALL') {
     return `Game Over! You survived for ${seconds} seconds.`;
   }
   return `Game Over! Your score is ${score.toLocaleString()}. You survived for ${seconds} seconds.`;

@@ -1,20 +1,21 @@
 // @flow
 import type { Ship } from './types/types';
-import { Mode, PowerupType, Sound } from './types/enums';
+import type { Mode, PowerupType, Sound } from './types/enums';
 
 export const DIMENSION = 500;
 export const FRAMES_PER_SECOND = 30;
 
-export const MODES: Mode[] = [Mode.CLASSIC, Mode.DODGEBALL, Mode.BOSS, Mode.SUPER_BOSS];
+export const MODES: Mode[] = ['CLASSIC', 'DODGEBALL', 'BOSS', 'SUPER_BOSS'];
+export const BOSS_MODES: Mode[] = ['BOSS', 'SUPER_BOSS'];
 export const POWERUP_TYPES: PowerupType[] = [
-  PowerupType.LIFE,
-  PowerupType.BULLET,
-  PowerupType.BOMB,
-  PowerupType.FREEZE,
-  PowerupType.INVINCIBLE,
+  'LIFE',
+  'BULLET',
+  'BOMB',
+  'FREEZE',
+  'INVINCIBLE',
 ];
 
-export const DEFAULT_MODE = Mode.CLASSIC;
+export const DEFAULT_MODE: Mode = 'CLASSIC';
 
 const bulletColor = 'red';
 const shipColor = 'blue';
@@ -86,22 +87,22 @@ type SettingsType = {
 export const SETTINGS: SettingsType = {
   asteroids: {
     startingMinimumArea: {
-      [Mode.CLASSIC]: 5000,
-      [Mode.DODGEBALL]: 5000,
-      [Mode.BOSS]: 0,
-      [Mode.SUPER_BOSS]: 0,
+      CLASSIC: 5000,
+      DODGEBALL: 5000,
+      BOSS: 0,
+      SUPER_BOSS: 0,
     },
     startingSpawnRadius: {
-      [Mode.CLASSIC]: 30,
-      [Mode.DODGEBALL]: 30,
-      [Mode.BOSS]: 100,
-      [Mode.SUPER_BOSS]: 173,
+      CLASSIC: 30,
+      DODGEBALL: 30,
+      BOSS: 100,
+      SUPER_BOSS: 173,
     },
     startingNumber: {
-      [Mode.CLASSIC]: 2,
-      [Mode.DODGEBALL]: 2,
-      [Mode.BOSS]: 1,
-      [Mode.SUPER_BOSS]: 1,
+      CLASSIC: 2,
+      DODGEBALL: 2,
+      BOSS: 1,
+      SUPER_BOSS: 1,
     },
     minimumRadius: 10,
     color: 'sienna',
@@ -144,10 +145,10 @@ export const SETTINGS: SettingsType = {
   difficulty: {
     timeInterval: {
       // seconds
-      [Mode.CLASSIC]: 10,
-      [Mode.DODGEBALL]: 5,
-      [Mode.BOSS]: 10,
-      [Mode.SUPER_BOSS]: 10,
+      CLASSIC: 10,
+      DODGEBALL: 5,
+      BOSS: 10,
+      SUPER_BOSS: 10,
     },
     asteroidSpeedIncrease: 0.15,
     asteroidSpawnRadiusMultiplier: 1.0,
@@ -158,22 +159,22 @@ export const SETTINGS: SettingsType = {
     radius: 10,
     duration: {
       // seconds
-      [PowerupType.BULLET]: 5,
-      [PowerupType.FREEZE]: 3,
+      BULLET: 5,
+      FREEZE: 3,
     },
     description: {
-      [PowerupType.LIFE]: 'Extra life',
-      [PowerupType.BULLET]: 'Gun upgrade',
-      [PowerupType.BOMB]: 'Extra bomb',
-      [PowerupType.FREEZE]: 'Freeze asteroids',
-      [PowerupType.INVINCIBLE]: 'Invincibility',
+      LIFE: 'Extra life',
+      BULLET: 'Gun upgrade',
+      BOMB: 'Extra bomb',
+      FREEZE: 'Freeze asteroids',
+      INVINCIBLE: 'Invincibility',
     },
     color: {
-      [PowerupType.BULLET]: bulletColor,
-      [PowerupType.LIFE]: shipColor,
-      [PowerupType.BOMB]: 'orange',
-      [PowerupType.FREEZE]: 'lightblue',
-      [PowerupType.INVINCIBLE]: 'purple',
+      BULLET: bulletColor,
+      LIFE: shipColor,
+      BOMB: 'orange',
+      FREEZE: 'lightblue',
+      INVINCIBLE: 'purple',
     },
     bullet: {
       spreadDegrees: 15,
@@ -181,60 +182,60 @@ export const SETTINGS: SettingsType = {
   },
 
   startingLives: {
-    [Mode.CLASSIC]: 2,
-    [Mode.DODGEBALL]: 0,
-    [Mode.BOSS]: 2,
-    [Mode.SUPER_BOSS]: 6,
+    CLASSIC: 2,
+    DODGEBALL: 0,
+    BOSS: 2,
+    SUPER_BOSS: 6,
   },
   startingBombs: {
-    [Mode.CLASSIC]: 2,
-    [Mode.DODGEBALL]: 0,
-    [Mode.BOSS]: 0,
-    [Mode.SUPER_BOSS]: 0,
+    CLASSIC: 2,
+    DODGEBALL: 0,
+    BOSS: 0,
+    SUPER_BOSS: 0,
   },
   pointsForBreak: 2,
   pointsForDestroy: 10,
 
   audioFile: {
-    [Sound.ASTEROID_BREAK]: 'asteroidBreak',
-    [Sound.ASTEROID_DESTROY]: 'asteroidDestroy',
-    [Sound.GAME_OVER]: 'gameOver',
-    [Sound.LASER]: 'laser',
+    ASTEROID_BREAK: 'asteroidBreak',
+    ASTEROID_DESTROY: 'asteroidDestroy',
+    GAME_OVER: 'gameOver',
+    LASER: 'laser',
   },
 
   modes: {
     name: {
-      [Mode.CLASSIC]: 'Classic',
-      [Mode.DODGEBALL]: 'Dodgeball',
-      [Mode.BOSS]: 'Bossteroid',
-      [Mode.SUPER_BOSS]: 'Super Bossteroid',
+      CLASSIC: 'Classic',
+      DODGEBALL: 'Dodgeball',
+      BOSS: 'Bossteroid',
+      SUPER_BOSS: 'Super Bossteroid',
     },
     description: {
-      [Mode.CLASSIC]: 'Score as many points as you can before running out of lives',
-      [Mode.DODGEBALL]: 'If you can dodge an asteroid, you can dodge a ball',
-      [Mode.BOSS]: 'Kill the Bossteroid as quickly as possible. Like a boss',
-      [Mode.SUPER_BOSS]: 'Like the Bossteroid, but three times bigger',
+      CLASSIC: 'Score as many points as you can before running out of lives',
+      DODGEBALL: 'If you can dodge an asteroid, you can dodge a ball',
+      BOSS: 'Kill the Bossteroid as quickly as possible. Like a boss',
+      SUPER_BOSS: 'Like the Bossteroid, but three times bigger',
     },
     powerups: {
-      [Mode.CLASSIC]: [
-        PowerupType.LIFE,
-        PowerupType.BULLET,
-        PowerupType.BOMB,
-        PowerupType.FREEZE,
-        PowerupType.INVINCIBLE,
+      CLASSIC: [
+        'LIFE',
+        'BULLET',
+        'BOMB',
+        'FREEZE',
+        'INVINCIBLE',
       ],
-      [Mode.DODGEBALL]: [],
-      [Mode.BOSS]: [
-        PowerupType.LIFE,
-        PowerupType.BULLET,
-        PowerupType.FREEZE,
-        PowerupType.INVINCIBLE,
+      DODGEBALL: [],
+      BOSS: [
+        'LIFE',
+        'BULLET',
+        'FREEZE',
+        'INVINCIBLE',
       ],
-      [Mode.SUPER_BOSS]: [
-        PowerupType.LIFE,
-        PowerupType.BULLET,
-        PowerupType.FREEZE,
-        PowerupType.INVINCIBLE,
+      SUPER_BOSS: [
+        'LIFE',
+        'BULLET',
+        'FREEZE',
+        'INVINCIBLE',
       ],
     },
   },

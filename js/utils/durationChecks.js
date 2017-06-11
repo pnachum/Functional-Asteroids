@@ -2,7 +2,6 @@
 
 import { FRAMES_PER_SECOND, SETTINGS } from '../constants';
 import type { Ship } from '../types/types';
-import { PowerupType } from '../types/enums';
 
 function hasTimePassed(
   startFrame: ?number,
@@ -22,7 +21,7 @@ export function isShipInvincible({ invincibilityStartFrame }: Ship, frameCount: 
 export function isBulletPoweredUp(bulletPowerupStartFrame: ?number, frameCount: number): boolean {
   return !hasTimePassed(
     bulletPowerupStartFrame,
-    SETTINGS.powerups.duration[PowerupType.BULLET],
+    SETTINGS.powerups.duration.BULLET,
     frameCount
   );
 }
@@ -30,7 +29,7 @@ export function isBulletPoweredUp(bulletPowerupStartFrame: ?number, frameCount: 
 export function areAsteroidsFrozen(freezePowerupStartFrame: ?number, frameCount: number): boolean {
   return !hasTimePassed(
     freezePowerupStartFrame,
-    SETTINGS.powerups.duration[PowerupType.FREEZE],
+    SETTINGS.powerups.duration.FREEZE,
     frameCount
   );
 }

@@ -16,7 +16,7 @@ import type {
   ThrustShipAction,
   MoveAction,
 } from './types/types';
-import { Mode } from './types/enums';
+import type { Mode } from './types/enums';
 
 export const MOVE = 'MOVE';
 export const ADD_ASTEROID = 'ADD_ASTEROID';
