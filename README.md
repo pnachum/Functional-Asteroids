@@ -16,7 +16,6 @@ Asteroids is built using the following tools:
 * [Aphrodite](https://github.com/Khan/aphrodite) for styling in JS
 * [Keymaster](https://github.com/madrobby/keymaster) for key press handling
 * [Lodash](https://github.com/lodash/lodash) for utility functions
-* [Enumify](https://github.com/rauschma/enumify) for enums
 * [ESLint](https://github.com/eslint/eslint) for linting
 
 ## New features
