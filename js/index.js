@@ -56,7 +56,7 @@ function gameOver(hasWon: boolean) {
   if (!hasWon && isSoundOn) {
     playSounds(['GAME_OVER']);
   }
-  const endMessage: string = getEndMessage({
+  const endMessage = getEndMessage({
     score,
     frameCount,
     mode,
@@ -92,14 +92,14 @@ function step() {
   if (lives < 0) {
     gameOver(false);
   }
-  const isBossMode: boolean = BOSS_MODES.includes(mode);
+  const isBossMode = BOSS_MODES.includes(mode);
   if (frameCount !== 0 && asteroids.length === 0 && isBossMode) {
     gameOver(true);
   }
 }
 
 function start() {
-  const interval: number = Math.floor(1000 / FRAMES_PER_SECOND);
+  const interval = Math.floor(1000 / FRAMES_PER_SECOND);
   intervalId = setInterval(step, interval);
 }
 
@@ -133,7 +133,7 @@ function bindKeyHandlers() {
 }
 
 store.subscribe(() => {
-  const state = store.getState();
+  const state: Store = store.getState();
   draw(state);
   if (state.isSoundOn) {
     playSounds(state.movingObjects.queuedSounds);
